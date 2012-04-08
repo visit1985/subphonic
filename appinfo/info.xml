@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<info>
+	<id>minisub</id>
+	<name>MiniSub</name>
+	<description>MiniSub is an Mini Subsonic player for ownCloud</description>
+	<version>0.2</version>
+	<licence>AGPL</licence>
+	<author>Create by tsquillario adapted to owncloud by Loïc Gevrey (Zoic21)</author>
+	<require>2</require>
+</info>
