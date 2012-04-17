@@ -1,16 +1,16 @@
 body 
 {
-	font: 100% Trebuchet MS, Arial, Helvetica, sans-serif;
-	background: #fafafa;
-	margin: 0;
-	padding: 0;
-	text-align: center; 
-	color: #5b5b4e;
+    font: 100% Trebuchet MS, Arial, Helvetica, sans-serif;
+    background: #fafafa;
+    margin: 0;
+    padding: 0;
+    text-align: center; 
+    color: #5b5b4e;
 }
 img 
 {
-	border: none;
-	background: none;
+    border: none;
+    background: none;
 }
 h3.title
 {
@@ -37,8 +37,8 @@ h3.title
 .italic { font-style: italic; }
 
 #container {
-	text-align: left;
-	min-height: 600px;
+    text-align: left;
+    min-height: 600px;
     min-width: 810px;
 }
 #nav 
@@ -53,7 +53,7 @@ h3.title
 }
 #nav ul 
 {
-	list-style-type: none;
+    list-style-type: none;
     padding: 0;
     margin: 0 0 0 4px;
 }
@@ -64,13 +64,13 @@ h3.title
 #nav a 
 {
     display: block;
-	padding: 13px 9px 13px 15px;
+    padding: 13px 9px 13px 15px;
     color: #7C7C7C;
     letter-spacing: -1px;
     font-weight: bold;
     font-size: 17px;
-	text-decoration: none;
-	background: #f4f4f4;
+    text-decoration: none;
+    background: #f4f4f4;
     border: 1px solid #E4E4E4;
     border-right: 1px solid #D5D5D5;
     border-bottom: none;
@@ -104,14 +104,14 @@ h3.title
 {
     color: #545454; 
     background: #ffffff; 
-	border: 1px solid #CBCBCB;
-	border-right: none;
+    border: 1px solid #CBCBCB;
+    border-right: none;
 }
 #nav a.active:hover  
 {
     color: #545454; 
     border: 1px solid #CBCBCB;
-	border-right: none;
+    border-right: none;
 }
 #nav a img 
 {
@@ -127,7 +127,7 @@ h3.title
 #content 
 {
     background: #EDEDED;
-	overflow: hidden;
+    overflow: hidden;
 }
 #content h2
 {
@@ -194,7 +194,7 @@ h3.title
     display: none;
     height: 100%;
     width: 100%;
-    background: url('../images/ressources/ajax-loader.gif') no-repeat center center #f4f4f4;
+    background: url('../images/ajax-loader.gif') no-repeat center center #f4f4f4;
 }
 .toploading
 {
@@ -202,7 +202,7 @@ h3.title
     height: 35px;
     width: 40px;
     margin: 0 0 0 7px;
-    background: url('../images/ressources/ajax-loader.gif') no-repeat center center;
+    background: url('../images/ajax-loader.gif') no-repeat center center;
     float: left;
 }
 #messages
@@ -223,9 +223,9 @@ h3.title
 /* Library Style */
 ul.simplelist
 {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 ul.simplelist li
 {
@@ -274,6 +274,20 @@ ul.mainlist li.item a.play:hover
 {
     background: url('../images/play_6x8.png') no-repeat 6px center #DEECFB;
 }
+ul.mainlist li.item a.download
+{
+    float: left;
+    width: 20px;
+    height: 18px;
+    display: block;
+    background: url('../images/download_gl_9x12.png') no-repeat 5px center;
+}
+ul.mainlist li.item a.download:hover
+{
+    background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
+}
+
+
 ul.mainlist li.item a.add
 {
     width: 20px;
@@ -410,10 +424,10 @@ table.songlist tr.album a.remove
 table.songlist tr.album a.rate
 {
     float: left;
-	height: 50px;
+    height: 50px;
     width: 20px;
     display: block;
-	background: url('../images/star_wo_12x12.png') 2px center no-repeat;	
+    background: url('../images/star_wo_12x12.png') 2px center no-repeat;	
 }
 table.songlist tr.album a.rate:hover
 {
@@ -422,11 +436,11 @@ table.songlist tr.album a.rate:hover
 table.songlist tr.album a.favorite
 {
     float: left;
-	height: 50px;
+    height: 50px;
     width: 20px;
     margin: 0 5px 0 0;
     display: block;
-	background: url('../images/star_yo_12x12.png') 2px center no-repeat;	
+    background: url('../images/star_yo_12x12.png') 2px center no-repeat;	
 }
 table.songlist tr.song
 {
@@ -497,14 +511,27 @@ table.songlist tr.song a.add:hover
 {
     background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
 }
+table.songlist tr.song a.download
+{
+    float: left;
+    width: 20px;
+    height: 20px;
+    display: block;
+    background: url('../images/download_gl_9x12.png') no-repeat 5px center;
+}
+table.songlist tr.song a.download:hover
+{
+    background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
+}
+
 table.songlist tr.song a.rate
 {
     float: left;
-	height: 20px;
+    height: 20px;
     width: 20px;
     margin: 0;
     display: block;
-	background: url('../images/star_wo_12x12.png') center 3px no-repeat;	
+    background: url('../images/star_wo_12x12.png') center 3px no-repeat;	
 }
 table.songlist tr.song a.rate:hover
 {
@@ -513,11 +540,11 @@ table.songlist tr.song a.rate:hover
 table.songlist tr.song a.favorite
 {
     float: left;
-	height: 20px;
+    height: 20px;
     width: 20px;
     margin: 0;
     display: block;
-	background: url('../images/star_yo_12x12.png') center 3px no-repeat;	
+    background: url('../images/star_yo_12x12.png') center 3px no-repeat;	
 }
 table.songlist tr.playing
 {
@@ -539,42 +566,42 @@ table.songlist tr.selected td:first-child
 }
 /* tablesorter style */
 table.tablesorter {
-	font-family:arial;
-	background-color: #CDCDCD;
-	margin:10px 0pt 15px;
-	font-size: 8pt;
-	width: 100%;
-	text-align: left;
+    font-family:arial;
+    background-color: #CDCDCD;
+    margin:10px 0pt 15px;
+    font-size: 8pt;
+    width: 100%;
+    text-align: left;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	background-color: #e6EEEE;
-	border: 1px solid #FFF;
-	font-size: 8pt;
-	padding: 4px;
+    background-color: #e6EEEE;
+    border: 1px solid #FFF;
+    font-size: 8pt;
+    padding: 4px;
 }
 table.tablesorter thead tr .header {
-	background-image: url(../images/bg.gif);
-	background-repeat: no-repeat;
-	background-position: center right;
-	cursor: pointer;
+    background-image: url(../images/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
 }
 table.tablesorter tbody td {
-	color: #3D3D3D;
-	padding: 4px;
-	background-color: #FFF;
-	vertical-align: top;
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+    vertical-align: top;
 }
 table.tablesorter tbody tr.odd td {
-	background-color:#F0F0F6;
+    background-color:#F0F0F6;
 }
 table.tablesorter thead tr .headerSortUp {
-	background-image: url(../images/asc.gif);
+    background-image: url(../images/asc.gif);
 }
 table.tablesorter thead tr .headerSortDown {
-	background-image: url(../images/desc.gif);
+    background-image: url(../images/desc.gif);
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-background-color: #8dbdd8;
+    background-color: #8dbdd8;
 }
 
 #ArtistContainer
@@ -591,9 +618,9 @@ background-color: #8dbdd8;
 }
 #BottomContainer ul 
 {
-  list-style-type: none;
-  margin: 0;
-  padding: 0 0 0 10px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 10px;
 }
 #BottomContainer #BottomIndex li
 {
@@ -859,14 +886,14 @@ background-color: #8dbdd8;
 }
 #songdetails ul
 {
-	list-style-type: none;
-	margin: 4px 0;
-	padding: 0;
-	height: 52px;
-	width: 185px;
-	overflow: hidden;
-	white-space: nowrap;
-	float: left;
+    list-style-type: none;
+    margin: 4px 0;
+    padding: 0;
+    height: 52px;
+    width: 185px;
+    overflow: hidden;
+    white-space: nowrap;
+    float: left;
 }
 #songdetails li
 {
@@ -1062,4 +1089,24 @@ label
 {
     float: left;
     margin: 5px 5px 0 5px;
+}
+
+#loading{
+    position: absolute;
+    margin:auto;
+    height: 100%;
+    width: 100%;
+    top : 0px;
+    left : 0px;
+    display: none;
+}
+
+#img_loading{
+    position: relative;
+    top : 30%;
+    left : 12%
+}
+
+a:link{
+    text-decoration:none
 }

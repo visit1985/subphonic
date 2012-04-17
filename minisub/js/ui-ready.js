@@ -56,17 +56,17 @@
                 var key = findKeyForCode(unicode);
                 var el = '#index_' + key.toUpperCase();
                 $('#Artists').stop().scrollTo(el, 400);
-                // right arrow
+            // right arrow
             } else if (unicode == 39 || unicode == 176) {
                 var next = $('#CurrentPlaylistContainer tr.playing').next();
                 if (!next.length) next = $('#CurrentPlaylistContainer li').first();
                 changeTrack(next);
-                // back arrow
+            // back arrow
             } else if (unicode == 37 || unicode == 177) {
                 var prev = $('#CurrentPlaylistContainer tr.playing').prev();
                 if (!prev.length) prev = $('#CurrentPlaylistContainer tr').last();
                 changeTrack(prev);
-                // spacebar
+            // spacebar
             } else if (unicode == 32 || unicode == 179 || unicode == 0179) {
                 playPauseSong();
             } else if (unicode == 36) {
@@ -80,7 +80,9 @@
     $('#MusicFolders').live('change', function () {
         var folder = $(this).val();
         loadArtists(folder, true);
-        $.cookie('MusicFolders', folder, { expires: 365 });
+        $.cookie('MusicFolders', folder, {
+            expires: 365
+        });
     });
     $('#ArtistContainer li.item').live('click', function () {
         $('#AutoAlbumContainer li').removeClass('selected');
@@ -113,7 +115,7 @@
     });
     $('tr.album a.download').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
-        downloadItem(itemid);
+        downloadItem(itemid,'item');
         return false;
     });
     $('tr.album a.rate').live('click', function (event) {
@@ -177,7 +179,36 @@
     $('table.songlist tr.song a.play').live('click', function (event) {
         var songid = $(this).parent().parent().attr('childid');
         var albumid = $(this).parent().parent().attr('parentid');
-        playSong($(this).parent().parent(), songid, albumid);
+        if(!$('#tabCurrent').is(':visible')){
+            $('#CurrentPlaylistContainer tbody').empty();
+            var track = $(this).parent().parent();
+            $(track).clone().appendTo('#CurrentPlaylistContainer');
+            if($('#tabPlaylists').is(':visible')){
+                id=0;
+                while(id !== undefined){
+                    track = track.next();
+                    id = $(track).attr('childid');
+                    $(track.next()).clone().appendTo('#CurrentPlaylistContainer');
+                }
+                var firstsong = $('#CurrentPlaylistContainer tr.song:first');
+                songid = $(firstsong).attr('childid');
+                albumid = $(firstsong).attr('parentid');
+                playSong(firstsong, songid, albumid);
+            }else{
+                var lastadd = $('#CurrentPlaylistContainer tr.song:last');
+                songid = $(lastadd).attr('childid');
+                albumid = $(lastadd).attr('parentid');
+                playSong(lastadd, songid, albumid);
+            }
+        }else{
+            playSong($(this).parent().parent(), songid, albumid);
+        } 
+       
+        return false;
+    });
+    $('table.songlist tr.song a.download').live('click', function (event) {
+        var itemid = $(this).parent().parent().attr('childid');
+        downloadItem(itemid,'item');
         return false;
     });
     $('table.songlist tr.song a.add').live('click', function (event) {
@@ -222,7 +253,10 @@
             width = $(this).width();
             height = $(this).height();
             //show the menu directly over the placeholder
-            submenu.css({ "left": (pos.left) + "px", "top": (pos.top + height + 14) + "px" }).fadeIn(400);
+            submenu.css({
+                "left": (pos.left) + "px", 
+                "top": (pos.top + height + 14) + "px"
+            }).fadeIn(400);
         }
         return false;
     });
@@ -232,7 +266,9 @@
     });
     $('div.submenu').mouseleave(function () {
         submenu_active = false;
-        setTimeout(function () { if (submenu_active == false) $('div.submenu').fadeOut(); }, 400);
+        setTimeout(function () {
+            if (submenu_active == false) $('div.submenu').fadeOut();
+        }, 400);
     });
     $('a#action_AddToCurrent').click(function () {
         addToCurrent(false);
@@ -307,7 +343,10 @@
             width = $(this).width();
             height = $(this).height();
             //show the menu directly over the placeholder
-            submenu.css({ "left": (pos.left) + "px", "top": (pos.top + height + 14) + "px" }).fadeIn(400);
+            submenu.css({
+                "left": (pos.left) + "px", 
+                "top": (pos.top + height + 14) + "px"
+            }).fadeIn(400);
         }
     });
     $('#action_CurrentSelectAll').click(function () {
@@ -333,6 +372,7 @@
         getRandomSongList('autoplay', '#CurrentPlaylistContainer');
         return false;
     });
+    
     $('#AutoPlaylistContainer li.item a.add').live('click', function () {
         getRandomSongList('', '#CurrentPlaylistContainer');
         return false;
@@ -345,6 +385,11 @@
     });
     $('#PlaylistContainer li.item a.play').live('click', function () {
         getPlaylist($(this).parent().parent().attr("id"), 'autoplay', '#CurrentPlaylistContainer tbody');
+        return false;
+    });
+    $('#PlaylistContainer li.item a.download').live('click', function (event) {
+        var itemid = $(this).parent().parent().attr('id');
+        downloadItem(itemid,'playlist');
         return false;
     });
     $('#PlaylistContainer li.item a.add').live('click', function () {
@@ -417,7 +462,9 @@
             stopUpdateChatMessages();
             stopUpdateNowPlaying();
         } else {
-            $.cookie('sidebar', true, { expires: 365 });
+            $.cookie('sidebar', true, {
+                expires: 365
+            });
             $('#SideBar').show();
             updateChatMessages();
             updateNowPlaying();
@@ -440,25 +487,39 @@
     $('#SavePreferences').live('click', function () {
         var username = $('#Username').val();
         var password = $('#Password').val();
-        $.cookie('username', username, { expires: 365 });
-        $.cookie('password', password, { expires: 365 });
+        $.cookie('username', username, {
+            expires: 365
+        });
+        $.cookie('password', password, {
+            expires: 365
+        });
         var AutoAlbumSize = $('#AutoAlbumSize').val();
         var AutoPlaylistSize = $('#AutoPlaylistSize').val();
-        $.cookie('AutoAlbumSize', AutoAlbumSize, { expires: 365 });
-        $.cookie('AutoPlaylistSize', AutoPlaylistSize, { expires: 365 });
+        $.cookie('AutoAlbumSize', AutoAlbumSize, {
+            expires: 365
+        });
+        $.cookie('AutoPlaylistSize', AutoPlaylistSize, {
+            expires: 365
+        });
         var server = $('#Server').val();
         if (server != "") {
-            $.cookie('Server', server, { expires: 365 });
+            $.cookie('Server', server, {
+                expires: 365
+            });
         }
         var applicationname = $('#ApplicationName').val();
         if (applicationname != "") {
-            $.cookie('ApplicationName', applicationname, { expires: 365 });
+            $.cookie('ApplicationName', applicationname, {
+                expires: 365
+            });
         }
         location.reload(true);
     });
     $('#HideAZ').live('click', function () {
         if ($('#HideAZ').is(':checked')) {
-            $.cookie('HideAZ', '1', { expires: 365 });
+            $.cookie('HideAZ', '1', {
+                expires: 365
+            });
             $('#BottomContainer').hide();
         } else {
             $.cookie('HideAZ', null);
@@ -469,7 +530,9 @@
         if ($('#EnableNotifications').is(':checked')) {
             requestPermissionIfRequired();
             if (hasNotificationPermission()) {
-                $.cookie('EnableNotifications', '1', { expires: 365 });
+                $.cookie('EnableNotifications', '1', {
+                    expires: 365
+                });
             }
         } else {
             $.cookie('EnableNotifications', null);
@@ -477,7 +540,9 @@
     });
     $('#ScrollTitle').live('click', function () {
         if ($('#ScrollTitle').is(':checked')) {
-            $.cookie('ScrollTitle', '1', { expires: 365 });
+            $.cookie('ScrollTitle', '1', {
+                expires: 365
+            });
         }
     });
     $('input#Password').keydown(function (e) {

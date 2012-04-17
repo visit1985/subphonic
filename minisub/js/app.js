@@ -1,4 +1,4 @@
-﻿// Global Variables
+// Global Variables
 var debug = false;
 var audio;
 var hostURL = location.href;
@@ -172,7 +172,9 @@ function getMusicFolders() {
     });
 }
 function getAlbums(id, action, appendto) {
-    inProgress();
+    
+    $('.first').trigger('click');
+    showLoad();
     $.ajax({
         url: baseURL + '/getMusicDirectory.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + id,
         method: 'GET',
@@ -182,6 +184,7 @@ function getAlbums(id, action, appendto) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (action === '') {
                 $('#AlbumRows').empty();
             }
@@ -240,7 +243,7 @@ function getAlbums(id, action, appendto) {
     });
 }
 function getAlbumListBy(id) {
-    inProgress();
+    showLoad()
     var size;
     if ($.cookie('AutoAlbumSize') === null) {
         size = 15;
@@ -256,6 +259,7 @@ function getAlbumListBy(id) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (data["subsonic-response"].albumList.album !== undefined) {
                 $("#AlbumRows").empty();
                 var header = generateAlbumHeaderHTML();
@@ -290,7 +294,7 @@ function getAlbumListBy(id) {
     });
 }
 function getRandomSongList(action, appendto) {
-    inProgress();
+    showLoad()
     var size;
     if ($.cookie('AutoPlaylistSize') === null) {
         size = 25;
@@ -306,6 +310,7 @@ function getRandomSongList(action, appendto) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (data["subsonic-response"].randomSongs.song !== undefined) {
                 if (appendto === '#TrackContainer') {
                     $("#TrackContainer").empty();
@@ -385,6 +390,7 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" title=\"Add To Current Playlist\"></a>';
     html += '<a class=\"remove\" href=\"\" title=\"Remove\"></a>';
     html += '<a class=\"play\" href=\"\" title=\"Play\"></a>';
+    html += '<a class=\"download\" href=\"\" title=\"Download\"></a>';
     if (rating === 5) {
         html += '<a class=\"favorite\" href=\"\" title=\"Favorite\"></a>';
     } else {
@@ -394,7 +400,7 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '<td class=\"track\">' + track + '</td>';
     html += '<td class=\"title\">' + title + '</td>';
     html += '<td class=\"artist\">' + artist + '</td>';
-    html += '<td class=\"album\">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></td>';
+    html += '<td class=\"album\"><a href="javascript:getAlbums(\''+parentid+'\',\'\',\'#AlbumRows\')">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></a></td>';
     html += '<td class=\"time\">' + m + ':' + s + '</td>';
     html += '</tr>';
     return html;
@@ -413,6 +419,14 @@ function refreshRowColor() {
     });
 }
 var scrobbled = false;
+
+function autoPlay() {
+    var firstsong = $('#CurrentPlaylistContainer tr.song:first');
+    var songid = $(firstsong).attr('childid');
+    var albumid = $(firstsong).attr('parentid');
+    playSong(firstsong, songid, albumid);
+}
+
 function playSong(el, songid, albumid) {
     $.ajax({
         url: baseURL + '/getMusicDirectory.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + albumid,
@@ -584,14 +598,9 @@ function changeTrack(next) {
         return false;
     }
 }
-function autoPlay() {
-    var firstsong = $('#CurrentPlaylistContainer tr.song:first');
-    var songid = $(firstsong).attr('childid');
-    var albumid = $(firstsong).attr('parentid');
-    playSong(firstsong, songid, albumid);
-}
+
 function search(type, query) {
-    inProgress();
+    showLoad()
     $.ajax({
         url: baseURL + '/search2.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&query=' + query,
         method: 'GET',
@@ -601,6 +610,7 @@ function search(type, query) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (data["subsonic-response"].searchResult2 !== "") {
                 $("#AlbumRows").empty();
                 var header = generateSongHeaderHTML();
@@ -802,6 +812,7 @@ function loadPlaylists(refresh) {
                     html += '<li id=\"' + playlist.id + '\" class=\"item\">';
                     html += '<span>' + playlist.name + '</span>';
                     html += '<div class=\"floatright\"><a class=\"play\" href=\"\" title=\"Play\"></a></div>';
+                    html += '<div class=\"floatright\"><a class=\"download\" href=\"\" title=\"Download\"></a></div>';
                     html += '<div class=\"floatright\"><a class=\"add\" href=\"\" title=\"Add To Current Playlist\"></a></div>';
                     html += '</li>';
                     $(html).appendTo("#PlaylistContainer");
@@ -996,10 +1007,16 @@ function addToCurrent(addAll) {
         }
     }
 }
-function downloadItem(id) {
+function downloadItem(id,type) {
     var url;
-    if (id) {
-        url = baseURL + '/download.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + id;
+    if(type=='item' && id){
+        reqDownload = 'id=' + id;
+    }
+    if(type=='playlist' && id){
+        reqDownload = 'playlistUtf8Hex=' + id;
+    }
+    if (reqDownload) {
+        url = baseURL + '/download.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&' + reqDownload;
         window.location = url;
     }
 /*
@@ -1044,8 +1061,7 @@ function savePlaylist(playlistid) {
     }
 }
 function getPlaylist(id, action, appendto) {
-    $(appendto).empty();
-    $(appendto).append('<img src="images/ressources/ajax-loader.gif">');
+    showLoad();
     $.ajax({
         url: baseURL + '/getPlaylist.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + id,
         method: 'GET',
@@ -1055,6 +1071,7 @@ function getPlaylist(id, action, appendto) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (data["subsonic-response"].playlist.entry !== undefined) {
                 if (appendto === '#TrackContainer tbody') {
                     $(appendto).empty();
@@ -1367,10 +1384,4 @@ function closeAllNotifications() {
     for (notification in notifications) {
         notifications[notification].cancel();
     }
-}
-
-function inProgress(){
-    $("#AlbumHeader").empty();
-    $("#AlbumRows").empty();
-    $("#AlbumRows").append('<img src="images/ressources/ajax-loader.gif">');
 }
