@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     // Tabs
     $(".tabcontent").hide(); //Hide all content
     if (!$.cookie('username') && !$.cookie('password') && !$.cookie('Server')) {
@@ -568,4 +568,15 @@
         return false;
     });
 
-});                                 // End document.ready
+
+    var fixHelper = function(e, ui) {
+        ui.children().each(function() {
+            $(this).width($(this).width());
+        });
+        return ui;
+    };
+ 
+    $("#CurrentPlaylistContainer tbody").sortable({
+        helper: fixHelper
+    }).disableSelection();
+});// End document.ready
