@@ -1045,7 +1045,7 @@ function savePlaylist(playlistid) {
 }
 function getPlaylist(id, action, appendto) {
     $(appendto).empty();
-    $(appendto).append('<img src="images/ajax-loader.gif">');
+    $(appendto).append('<img src="images/ressources/ajax-loader.gif">');
     $.ajax({
         url: baseURL + '/getPlaylist.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + id,
         method: 'GET',
@@ -1372,5 +1372,5 @@ function closeAllNotifications() {
 function inProgress(){
     $("#AlbumHeader").empty();
     $("#AlbumRows").empty();
-    $("#AlbumRows").append('<img src="images/ajax-loader.gif">');
+    $("#AlbumRows").append('<img src="images/ressources/ajax-loader.gif">');
 }

@@ -194,7 +194,7 @@ h3.title
     display: none;
     height: 100%;
     width: 100%;
-    background: url('../images/ajax-loader.gif') no-repeat center center #f4f4f4;
+    background: url('../images/ressources/ajax-loader.gif') no-repeat center center #f4f4f4;
 }
 .toploading
 {
@@ -202,7 +202,7 @@ h3.title
     height: 35px;
     width: 40px;
     margin: 0 0 0 7px;
-    background: url('../images/ajax-loader.gif') no-repeat center center;
+    background: url('../images/ressources/ajax-loader.gif') no-repeat center center;
     float: left;
 }
 #messages
