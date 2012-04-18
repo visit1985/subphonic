@@ -518,9 +518,6 @@ function playSong(el, songid, albumid) {
                 }
             });
             audio.play('audio');
-            
-            
-
             $('table.songlist tr.song').removeClass('playing');
             $(el).addClass('playing');
             $('#PlayTrack').find('img').attr('src', 'images/pause_24x32.png');
