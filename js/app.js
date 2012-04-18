@@ -1,4 +1,4 @@
-﻿// Global Variables
+// Global Variables
 var debug = false;
 var audio;
 var hostURL = location.href;
@@ -10,13 +10,19 @@ var p = getParameterByName('p');
 var s = getParameterByName('s');
 if (u && p && s) {
     if (!$.cookie('username')) {
-        $.cookie('username', u, { expires: 365 });
+        $.cookie('username', u, {
+            expires: 1
+        });
     }
     if (!$.cookie('password')) {
-        $.cookie('password', p, { expires: 365 });
+        $.cookie('password', p, {
+            expires: 1
+        });
     }
     if (!$.cookie('Server')) {
-        $.cookie('Server', s, { expires: 365 });
+        $.cookie('Server', s, {
+            expires: 1
+        });
     }
     window.location.href = getPathFromUrl(window.location);
 }
@@ -123,8 +129,8 @@ function loadArtists(id, refresh) {
                     var errorcode = data["subsonic-response"].error.code;
                     var errormsg = data["subsonic-response"].error.message;
                     alert('Status: ' + error + ', Code: ' + errorcode + ', Message: ' + errormsg);
-                    //var errorhtml = '<li class=\"item\"><span>' + error + '</span></li>';
-                    //$(errorhtml).appendTo("#IndexList");
+                //var errorhtml = '<li class=\"item\"><span>' + error + '</span></li>';
+                //$(errorhtml).appendTo("#IndexList");
                 }
             }
         });
@@ -166,6 +172,9 @@ function getMusicFolders() {
     });
 }
 function getAlbums(id, action, appendto) {
+    
+    $('.first').trigger('click');
+    showLoad();
     $.ajax({
         url: baseURL + '/getMusicDirectory.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + id,
         method: 'GET',
@@ -175,6 +184,7 @@ function getAlbums(id, action, appendto) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (action === '') {
                 $('#AlbumRows').empty();
             }
@@ -205,7 +215,11 @@ function getAlbums(id, action, appendto) {
                         albumhtml = generateAlbumHTML(rowcolor, child.id, child.parent, child.coverArt, child.title, child.artist, child.userRating);
                     } else {
                         var track;
-                        if (child.track === undefined) { track = "&nbsp;"; } else { track = child.track; }
+                        if (child.track === undefined) {
+                            track = "&nbsp;";
+                        } else {
+                            track = child.track;
+                        }
                         var time = secondsToTime(child.duration);
                         albumhtml = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
                     }
@@ -229,6 +243,7 @@ function getAlbums(id, action, appendto) {
     });
 }
 function getAlbumListBy(id) {
+    showLoad()
     var size;
     if ($.cookie('AutoAlbumSize') === null) {
         size = 15;
@@ -244,6 +259,7 @@ function getAlbumListBy(id) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (data["subsonic-response"].albumList.album !== undefined) {
                 $("#AlbumRows").empty();
                 var header = generateAlbumHeaderHTML();
@@ -278,6 +294,7 @@ function getAlbumListBy(id) {
     });
 }
 function getRandomSongList(action, appendto) {
+    showLoad()
     var size;
     if ($.cookie('AutoPlaylistSize') === null) {
         size = 25;
@@ -293,6 +310,7 @@ function getRandomSongList(action, appendto) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (data["subsonic-response"].randomSongs.song !== undefined) {
                 if (appendto === '#TrackContainer') {
                     $("#TrackContainer").empty();
@@ -317,7 +335,11 @@ function getRandomSongList(action, appendto) {
                         rowcolor = 'odd';
                     }
                     var track;
-                    if (item.track === undefined) { track = "&nbsp;"; } else { track = item.track; }
+                    if (item.track === undefined) {
+                        track = "&nbsp;";
+                    } else {
+                        track = item.track;
+                    }
                     var time = secondsToTime(item.duration);
                     html = generateSongHTML(rowcolor, item.id, item.parent, track, item.title, item.artist, item.album, item.coverArt, item.userRating, time['m'], time['s']);
                     $(html).appendTo(appendto);
@@ -368,6 +390,7 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" title=\"Add To Current Playlist\"></a>';
     html += '<a class=\"remove\" href=\"\" title=\"Remove\"></a>';
     html += '<a class=\"play\" href=\"\" title=\"Play\"></a>';
+    html += '<a class=\"download\" href=\"\" title=\"Download\"></a>';
     if (rating === 5) {
         html += '<a class=\"favorite\" href=\"\" title=\"Favorite\"></a>';
     } else {
@@ -377,7 +400,7 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '<td class=\"track\">' + track + '</td>';
     html += '<td class=\"title\">' + title + '</td>';
     html += '<td class=\"artist\">' + artist + '</td>';
-    html += '<td class=\"album\">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></td>';
+    html += '<td class=\"album\"><a href="javascript:getAlbums(\''+parentid+'\',\'\',\'#AlbumRows\')">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></a></td>';
     html += '<td class=\"time\">' + m + ':' + s + '</td>';
     html += '</tr>';
     return html;
@@ -396,6 +419,14 @@ function refreshRowColor() {
     });
 }
 var scrobbled = false;
+
+function autoPlay() {
+    var firstsong = $('#CurrentPlaylistContainer tr.song:first');
+    var songid = $(firstsong).attr('childid');
+    var albumid = $(firstsong).attr('parentid');
+    playSong(firstsong, songid, albumid);
+}
+
 function playSong(el, songid, albumid) {
     $.ajax({
         url: baseURL + '/getMusicDirectory.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + albumid,
@@ -456,13 +487,12 @@ function playSong(el, songid, albumid) {
                     var scrubber = $('#audio_wrapper0').find(".scrubber");
                     var progress = $('#audio_wrapper0').find(".progress");
                     progress.css('width', (scrubber.get(0).offsetWidth * percent) + 'px');
-
                     var played = $('#audio_wrapper0').find(".played");
                     var p = (this.duration / 1000) * percent,
-                        m = Math.floor(p / 60),
-                        s = Math.floor(p % 60);
+                    m = Math.floor(p / 60),
+                    s = Math.floor(p % 60);
                     played.html((m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s);
-
+                        
                     // Scrobble song once percentage is reached
                     if (!scrobbled && p > 30 && (percent > 0.5 || p > 480)) {
                         scrobbleSong(true);
@@ -471,9 +501,16 @@ function playSong(el, songid, albumid) {
                 onload: function () {
                     var duration = $('#audio_wrapper0').find(".duration");
                     var dp = this.duration / 1000,
-                        dm = Math.floor(dp / 60),
-                        ds = Math.floor(dp % 60);
+                    dm = Math.floor(dp / 60),
+                    ds = Math.floor(dp % 60);
                     duration.html((dm < 10 ? '0' : '') + dm + ':' + (ds < 10 ? '0' : '') + ds);
+                    var scrubber = $('#audio_wrapper0').find(".scrubber");
+                    scrubber.unbind("click");
+                    scrubber.click(function(e){
+                        var x = (e.pageX - this.offsetLeft)/scrubber.width();
+                        var position = Math.round(dp*1000*x);
+                        audio.play({position:position});
+                    }); 
                 },
                 onfinish: function () {
                     var next = $('#CurrentPlaylistContainer tr.playing').next();
@@ -481,7 +518,6 @@ function playSong(el, songid, albumid) {
                 }
             });
             audio.play('audio');
-
             $('table.songlist tr.song').removeClass('playing');
             $(el).addClass('playing');
             $('#PlayTrack').find('img').attr('src', 'images/pause_24x32.png');
@@ -565,13 +601,9 @@ function changeTrack(next) {
         return false;
     }
 }
-function autoPlay() {
-    var firstsong = $('#CurrentPlaylistContainer tr.song:first');
-    var songid = $(firstsong).attr('childid');
-    var albumid = $(firstsong).attr('parentid');
-    playSong(firstsong, songid, albumid);
-}
+
 function search(type, query) {
+    showLoad()
     $.ajax({
         url: baseURL + '/search2.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&query=' + query,
         method: 'GET',
@@ -581,6 +613,7 @@ function search(type, query) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (data["subsonic-response"].searchResult2 !== "") {
                 $("#AlbumRows").empty();
                 var header = generateSongHeaderHTML();
@@ -603,11 +636,18 @@ function search(type, query) {
                     }
 
                     var track;
-                    if (child.track === undefined) { track = "&nbsp;"; } else { track = child.track; }
+                    if (child.track === undefined) {
+                        track = "&nbsp;";
+                    } else {
+                        track = child.track;
+                    }
                     var time = secondsToTime(child.duration);
                     albumhtml = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
                     $(albumhtml).appendTo("#AlbumRows");
                 });
+            }else{
+                $("#AlbumRows").empty();
+                $("#AlbumRows").append('<center>No result</center>');
             }
         }
     });
@@ -615,7 +655,11 @@ function search(type, query) {
 var starttime;
 var updater;
 function updateChatMessages() {
-    updater = $.periodic({ period: 1000, decay: 1.5, max_period: 1800000 }, function () {
+    updater = $.periodic({
+        period: 1000, 
+        decay: 1.5, 
+        max_period: 1800000
+    }, function () {
         $.ajax({
             periodic: this,
             url: baseURL + '/getChatMessages.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&since=' + starttime,
@@ -653,7 +697,9 @@ function updateChatMessages() {
                         x++;
                     });
                     $("#ChatMsgs").linkify();
-                    $("#ChatMsgs").attr({ scrollTop: $("#ChatMsgs").attr("scrollHeight") });
+                    $("#ChatMsgs").attr({
+                        scrollTop: $("#ChatMsgs").attr("scrollHeight")
+                    });
                 }
             }
         });
@@ -668,7 +714,14 @@ function addChatMessage(msg) {
         url: baseURL + '/addChatMessage.view',
         dataType: 'jsonp',
         timeout: 10000,
-        data: { u: username, p: passwordenc, v: version, c: applicationName, f: "jsonp", message: msg },
+        data: {
+            u: username, 
+            p: passwordenc, 
+            v: version, 
+            c: applicationName, 
+            f: "jsonp", 
+            message: msg
+        },
         beforeSend: function (req) {
             req.setRequestHeader('Authorization', auth);
         },
@@ -681,7 +734,11 @@ function addChatMessage(msg) {
 var updaterNowPlaying;
 var updaterNowPlayingData;
 function updateNowPlaying() {
-    updaterNowPlaying = $.periodic({ period: 4000, decay: 1.5, max_period: 1800000 }, function () {
+    updaterNowPlaying = $.periodic({
+        period: 4000, 
+        decay: 1.5, 
+        max_period: 1800000
+    }, function () {
         $.ajax({
             periodic: this,
             url: baseURL + '/getNowPlaying.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp',
@@ -758,6 +815,7 @@ function loadPlaylists(refresh) {
                     html += '<li id=\"' + playlist.id + '\" class=\"item\">';
                     html += '<span>' + playlist.name + '</span>';
                     html += '<div class=\"floatright\"><a class=\"play\" href=\"\" title=\"Play\"></a></div>';
+                    html += '<div class=\"floatright\"><a class=\"download\" href=\"\" title=\"Download\"></a></div>';
                     html += '<div class=\"floatright\"><a class=\"add\" href=\"\" title=\"Add To Current Playlist\"></a></div>';
                     html += '</li>';
                     $(html).appendTo("#PlaylistContainer");
@@ -790,7 +848,7 @@ function loadPlaylistsForMenu(menu) {
                     $("<a href=\"#\" onclick=\"javascript:addToPlaylist('" + playlist.id + "', ''); return false;\">" + playlist.name + "</a><br />").appendTo("#" + menu);
                 }
             });
-            //$("<a href=\"#\" onclick=\"javascript:addToPlaylist('new'); return false;\">+ New Playlist</a><br />").appendTo("#submenu");
+        //$("<a href=\"#\" onclick=\"javascript:addToPlaylist('new'); return false;\">+ New Playlist</a><br />").appendTo("#submenu");
         }
     });
 }
@@ -876,7 +934,15 @@ function addToPlaylist(playlistid, from) {
                             url: baseURL + '/createPlaylist.view',
                             dataType: 'jsonp',
                             timeout: 10000,
-                            data: { u: username, p: passwordenc, v: version, c: applicationName, f: "jsonp", playlistId: playlistid, songId: currentsongs },
+                            data: {
+                                u: username, 
+                                p: passwordenc, 
+                                v: version, 
+                                c: applicationName, 
+                                f: "jsonp", 
+                                playlistId: playlistid, 
+                                songId: currentsongs
+                            },
                             beforeSend: function (req) {
                                 req.setRequestHeader('Authorization', auth);
                             },
@@ -897,7 +963,15 @@ function addToPlaylist(playlistid, from) {
                 url: baseURL + '/createPlaylist.view',
                 dataType: 'jsonp',
                 timeout: 10000,
-                data: { u: username, p: passwordenc, v: version, c: applicationName, f: "jsonp", name: 'New Playlist', songId: selected },
+                data: {
+                    u: username, 
+                    p: passwordenc, 
+                    v: version, 
+                    c: applicationName, 
+                    f: "jsonp", 
+                    name: 'New Playlist', 
+                    songId: selected
+                },
                 beforeSend: function (req) {
                     req.setRequestHeader('Authorization', auth);
                 },
@@ -910,7 +984,9 @@ function addToPlaylist(playlistid, from) {
                 traditional: true // Fixes POST with an array in JQuery 1.4
             });
         }
-        setTimeout(function () { $('div.submenu').fadeOut(); }, 100);
+        setTimeout(function () {
+            $('div.submenu').fadeOut();
+        }, 100);
     }
 }
 function addToCurrent(addAll) {
@@ -934,13 +1010,19 @@ function addToCurrent(addAll) {
         }
     }
 }
-function downloadItem(id) {
+function downloadItem(id,type) {
     var url;
-    if (id) {
-        url = baseURL + '/download.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + id;
+    if(type=='item' && id){
+        reqDownload = 'id=' + id;
+    }
+    if(type=='playlist' && id){
+        reqDownload = 'playlistUtf8Hex=' + id;
+    }
+    if (reqDownload) {
+        url = baseURL + '/download.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&' + reqDownload;
         window.location = url;
     }
-    /*
+/*
     $('table.songlist tr.selected').each(function (index) {
         id = $(this).attr('childid');
         if (id) {
@@ -961,7 +1043,15 @@ function savePlaylist(playlistid) {
             url: baseURL + '/createPlaylist.view',
             dataType: 'jsonp',
             timeout: 10000,
-            data: { u: username, p: passwordenc, v: version, c: applicationName, f: "jsonp", playlistId: playlistid, songId: songs },
+            data: {
+                u: username, 
+                p: passwordenc, 
+                v: version, 
+                c: applicationName, 
+                f: "jsonp", 
+                playlistId: playlistid, 
+                songId: songs
+            },
             beforeSend: function (req) {
                 req.setRequestHeader('Authorization', auth);
             },
@@ -974,6 +1064,7 @@ function savePlaylist(playlistid) {
     }
 }
 function getPlaylist(id, action, appendto) {
+    showLoad();
     $.ajax({
         url: baseURL + '/getPlaylist.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + id,
         method: 'GET',
@@ -983,6 +1074,7 @@ function getPlaylist(id, action, appendto) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
+            hideLoad();
             if (data["subsonic-response"].playlist.entry !== undefined) {
                 if (appendto === '#TrackContainer tbody') {
                     $(appendto).empty();
@@ -1009,7 +1101,11 @@ function getPlaylist(id, action, appendto) {
                         rowcolor = 'odd';
                     }
                     var track;
-                    if (child.track === undefined) { track = "&nbsp;"; } else { track = child.track; }
+                    if (child.track === undefined) {
+                        track = "&nbsp;";
+                    } else {
+                        track = child.track;
+                    }
                     var time = secondsToTime(child.duration);
                     html = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
                     $(html).appendTo(appendto);
@@ -1052,34 +1148,114 @@ function HexEncode(n) {
     return r.join("") 
 }
 function findKeyForCode(code) {
-    var map = { 'keymap': [
-	                { 'key': 'a', 'code': 65 },
-	                { 'key': 'b', 'code': 66 },
-	                { 'key': 'c', 'code': 67 },
-	                { 'key': 'd', 'code': 68 },
-	                { 'key': 'e', 'code': 69 },
-	                { 'key': 'f', 'code': 70 },
-	                { 'key': 'g', 'code': 71 },
-	                { 'key': 'h', 'code': 72 },
-	                { 'key': 'i', 'code': 73 },
-	                { 'key': 'j', 'code': 74 },
-	                { 'key': 'k', 'code': 75 },
-	                { 'key': 'l', 'code': 76 },
-	                { 'key': 'm', 'code': 77 },
-	                { 'key': 'n', 'code': 78 },
-	                { 'key': 'o', 'code': 79 },
-	                { 'key': 'p', 'code': 80 },
-	                { 'key': 'q', 'code': 81 },
-	                { 'key': 'r', 'code': 82 },
-	                { 'key': 's', 'code': 83 },
-	                { 'key': 't', 'code': 84 },
-	                { 'key': 'u', 'code': 85 },
-	                { 'key': 'v', 'code': 86 },
-	                { 'key': 'w', 'code': 87 },
-	                { 'key': 'x', 'code': 88 },
-	                { 'key': 'y', 'code': 89 },
-	                { 'key': 'z', 'code': 90 }
-                 ]
+    var map = {
+        'keymap': [
+
+        {
+            'key': 'a', 
+            'code': 65
+        },
+        {
+            'key': 'b', 
+            'code': 66
+        },
+        {
+            'key': 'c', 
+            'code': 67
+        },
+        {
+            'key': 'd', 
+            'code': 68
+        },
+        {
+            'key': 'e', 
+            'code': 69
+        },
+        {
+            'key': 'f', 
+            'code': 70
+        },
+        {
+            'key': 'g', 
+            'code': 71
+        },
+        {
+            'key': 'h', 
+            'code': 72
+        },
+        {
+            'key': 'i', 
+            'code': 73
+        },
+        {
+            'key': 'j', 
+            'code': 74
+        },
+        {
+            'key': 'k', 
+            'code': 75
+        },
+        {
+            'key': 'l', 
+            'code': 76
+        },
+        {
+            'key': 'm', 
+            'code': 77
+        },
+        {
+            'key': 'n', 
+            'code': 78
+        },
+        {
+            'key': 'o', 
+            'code': 79
+        },
+        {
+            'key': 'p', 
+            'code': 80
+        },
+        {
+            'key': 'q', 
+            'code': 81
+        },
+        {
+            'key': 'r', 
+            'code': 82
+        },
+        {
+            'key': 's', 
+            'code': 83
+        },
+        {
+            'key': 't', 
+            'code': 84
+        },
+        {
+            'key': 'u', 
+            'code': 85
+        },
+        {
+            'key': 'v', 
+            'code': 86
+        },
+        {
+            'key': 'w', 
+            'code': 87
+        },
+        {
+            'key': 'x', 
+            'code': 88
+        },
+        {
+            'key': 'y', 
+            'code': 89
+        },
+        {
+            'key': 'z', 
+            'code': 90
+        }
+        ]
     };
     var keyFound = 0;
     $.each(map.keymap, function (i, mapping) {
@@ -1115,7 +1291,9 @@ function secondsToTime(secs) {
 function updateMessage(msg) {
     $('#messages').text(msg);
     $('#messages').fadeIn();
-    setTimeout(function () { $('#messages').fadeOut(); }, 5000);
+    setTimeout(function () {
+        $('#messages').fadeOut();
+    }, 5000);
 }
 // Convert to unicode support
 var toHTML = {
@@ -1127,9 +1305,9 @@ var toHTML = {
     },
     un: function (str) {
         return str.replace(/&#(x)?([^&]{1,5});?/g,
-        function (a, b, c) {
-            return String.fromCharCode(parseInt(c, b ? 16 : 10))
-        })
+            function (a, b, c) {
+                return String.fromCharCode(parseInt(c, b ? 16 : 10))
+            })
     }
 };
 function getParameterByName(name) {
@@ -1181,7 +1359,7 @@ function scrollTitle(text) {
     } else {
         timer = window.setTimeout("scrollTitle()", speed);
     }
-    // To stop timer, clearTimeout(timer);
+// To stop timer, clearTimeout(timer);
 }
 function requestPermissionIfRequired() {
     if (!hasNotificationPermission() && (window.webkitNotifications)) {
@@ -1198,7 +1376,7 @@ function showNotification(pic, title, text) {
         var popup = window.webkitNotifications.createNotification(pic, title, text);
         notifications.push(popup);
         setTimeout(function (notWin) {
-        notWin.cancel();
+            notWin.cancel();
         }, 10000, popup);
         popup.show();
     } else {
