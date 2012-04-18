@@ -900,13 +900,27 @@ function addToPlaylist(playlistid, from) {
     var selected = [];
     var el;
     if (from === 'current') {
-        el = $('#CurrentPlaylist table.songlist tbody tr');
+        el = $('#CurrentPlaylist table.songlist tbody tr.selected');
     } else {
-        el = $('#Albums table.songlist tr.selected');
+        el = $('#Albums table.songlist tbody tr.selected');
     }
     el.each(function (index) {
         selected.push($(this).attr('childid'));
     });
+    
+    
+    if (selected.length <= 0) {
+        if (from === 'current') {
+            el = $('#CurrentPlaylist table.songlist tbody tr');
+        } else {
+            el = $('#Albums table.songlist tbody tr');
+        }
+        el.each(function (index) {
+            selected.push($(this).attr('childid'));
+        });
+    }
+    
+    
     if (selected.length > 0) {
         if (playlistid !== 'new') { // Create new playlist from here, will implement in UI later
             // Get songs from playlist

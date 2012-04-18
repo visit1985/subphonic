@@ -177,15 +177,14 @@ $(document).ready(function () {
             $('#CurrentPlaylistContainer tbody').empty();
             var track = $(this);
             $(track).clone().appendTo('#CurrentPlaylistContainer');
-            if($('#tabPlaylists').is(':visible')){
+            track = track.next();
+            id = $(track).attr('childid');
+            while(id !== undefined){
+                $(track).clone().appendTo('#CurrentPlaylistContainer');
                 track = track.next();
                 id = $(track).attr('childid');
-                while(id !== undefined){
-                    $(track).clone().appendTo('#CurrentPlaylistContainer');
-                    track = track.next();
-                    id = $(track).attr('childid');
-                }
             }
+            
             autoPlay();
         }else{
             playSong($(this), songid, albumid);
@@ -199,14 +198,12 @@ $(document).ready(function () {
             $('#CurrentPlaylistContainer tbody').empty();
             var track = $(this).parent().parent();
             $(track).clone().appendTo('#CurrentPlaylistContainer');
-            if($('#tabPlaylists').is(':visible')){
+            track = track.next();
+            id = $(track).attr('childid');
+            while(id !== undefined){
+                $(track).clone().appendTo('#CurrentPlaylistContainer');
                 track = track.next();
                 id = $(track).attr('childid');
-                while(id !== undefined){
-                    $(track).clone().appendTo('#CurrentPlaylistContainer');
-                    track = track.next();
-                    id = $(track).attr('childid');
-                }
             }
             autoPlay();
         }else{
