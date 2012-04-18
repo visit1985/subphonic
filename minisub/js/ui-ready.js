@@ -190,16 +190,8 @@ $(document).ready(function () {
                     id = $(track).attr('childid');
                     $(track.next()).clone().appendTo('#CurrentPlaylistContainer');
                 }
-                var firstsong = $('#CurrentPlaylistContainer tr.song:first');
-                songid = $(firstsong).attr('childid');
-                albumid = $(firstsong).attr('parentid');
-                playSong(firstsong, songid, albumid);
-            }else{
-                var lastadd = $('#CurrentPlaylistContainer tr.song:last');
-                songid = $(lastadd).attr('childid');
-                albumid = $(lastadd).attr('parentid');
-                playSong(lastadd, songid, albumid);
             }
+            autoPlay();
         }else{
             playSong($(this).parent().parent(), songid, albumid);
         } 
