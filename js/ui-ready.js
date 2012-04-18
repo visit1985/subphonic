@@ -171,10 +171,26 @@ $(document).ready(function () {
     // Double Click
     $('table.songlist tr.song').live('dblclick', function (e) {
         e.preventDefault();
-        //$(this).addClass('playing').siblings().removeClass('playing');
         var songid = $(this).attr('childid');
         var albumid = $(this).attr('parentid');
-        playSong('', this, songid, albumid);
+        if(!$('#tabCurrent').is(':visible')){
+            $('#CurrentPlaylistContainer tbody').empty();
+            var track = $(this);
+            $(track).clone().appendTo('#CurrentPlaylistContainer');
+            if($('#tabPlaylists').is(':visible')){
+                track = track.next();
+                id = $(track).attr('childid');
+                while(id !== undefined){
+                    $(track).clone().appendTo('#CurrentPlaylistContainer');
+                    track = track.next();
+                    id = $(track).attr('childid');
+                }
+            }
+            autoPlay();
+        }else{
+            playSong($(this), songid, albumid);
+        } 
+        return false;
     });
     $('table.songlist tr.song a.play').live('click', function (event) {
         var songid = $(this).parent().parent().attr('childid');
@@ -184,18 +200,18 @@ $(document).ready(function () {
             var track = $(this).parent().parent();
             $(track).clone().appendTo('#CurrentPlaylistContainer');
             if($('#tabPlaylists').is(':visible')){
-                id=0;
+                track = track.next();
+                id = $(track).attr('childid');
                 while(id !== undefined){
+                    $(track).clone().appendTo('#CurrentPlaylistContainer');
                     track = track.next();
                     id = $(track).attr('childid');
-                    $(track.next()).clone().appendTo('#CurrentPlaylistContainer');
                 }
             }
             autoPlay();
         }else{
             playSong($(this).parent().parent(), songid, albumid);
         } 
-       
         return false;
     });
     $('table.songlist tr.song a.download').live('click', function (event) {

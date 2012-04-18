@@ -158,13 +158,18 @@ function getMusicFolders() {
                 var savedMusicFolder = $.cookie('MusicFolders');
                 var options = [];
                 options.push('<option value="all">All Folders</option>');
+                nbFolders = 0;
                 $.each(folders, function (i, folder) {
+                    nbFolders++;
                     if (savedMusicFolder == folder.id) {
                         options.push('<option value="' + folder.id + '" selected>' + folder.name + '</option>');
                     } else {
                         options.push('<option value="' + folder.id + '">' + folder.name + '</option>');
                     }
                 });
+                if(nbFolders<2){
+                    $('#MusicFolders').hide();
+                }
                 $('#MusicFolders').html(options.join(''));
             } else {
             }
@@ -509,7 +514,9 @@ function playSong(el, songid, albumid) {
                     scrubber.click(function(e){
                         var x = (e.pageX - this.offsetLeft)/scrubber.width();
                         var position = Math.round(dp*1000*x);
-                        audio.play({position:position});
+                        audio.play({
+                            position:position
+                        });
                     }); 
                 },
                 onfinish: function () {
@@ -848,7 +855,12 @@ function loadPlaylistsForMenu(menu) {
                     $("<a href=\"#\" onclick=\"javascript:addToPlaylist('" + playlist.id + "', ''); return false;\">" + playlist.name + "</a><br />").appendTo("#" + menu);
                 }
             });
-        //$("<a href=\"#\" onclick=\"javascript:addToPlaylist('new'); return false;\">+ New Playlist</a><br />").appendTo("#submenu");
+            if (menu === 'submenu_AddCurrentToPlaylist') {
+                $("<a href=\"#\" onclick=\"javascript:addToPlaylist('new','current'); return false;\">+ New Playlist</a><br />").appendTo("#" + menu);
+            } else {
+                $("<a href=\"#\" onclick=\"javascript:addToPlaylist('new',''); return false;\">+ New Playlist</a><br />").appendTo("#" + menu);
+            }
+        
         }
     });
 }
@@ -888,7 +900,7 @@ function addToPlaylist(playlistid, from) {
     var selected = [];
     var el;
     if (from === 'current') {
-        el = $('#CurrentPlaylist table.songlist tr.selected');
+        el = $('#CurrentPlaylist table.songlist tbody tr');
     } else {
         el = $('#Albums table.songlist tr.selected');
     }
@@ -958,6 +970,7 @@ function addToPlaylist(playlistid, from) {
                 }
             });
         } else {
+            var reply = prompt("Choose a name for your new playlist.", "");
             $.ajax({
                 type: 'GET',
                 url: baseURL + '/createPlaylist.view',
@@ -969,7 +982,7 @@ function addToPlaylist(playlistid, from) {
                     v: version, 
                     c: applicationName, 
                     f: "jsonp", 
-                    name: 'New Playlist', 
+                    name: ""+reply+"", 
                     songId: selected
                 },
                 beforeSend: function (req) {
@@ -980,6 +993,7 @@ function addToPlaylist(playlistid, from) {
                         $(this).removeClass('selected');
                     });
                     updateMessage('Playlist Created!');
+                    loadPlaylists(true);
                 },
                 traditional: true // Fixes POST with an array in JQuery 1.4
             });

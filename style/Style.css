@@ -799,7 +799,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 .audiojs .scrubber
 {
-    height: 2px;
+    height: 5px;
     margin: 26px 5px 0px 5px;
     float: none;
     width: auto;
