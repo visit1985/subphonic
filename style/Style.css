@@ -274,6 +274,7 @@ ul.mainlist li.item a.play:hover
 {
     background: url('../images/play_6x8.png') no-repeat 6px center #DEECFB;
 }
+
 ul.mainlist li.item a.download
 {
     float: left;
@@ -300,7 +301,15 @@ ul.mainlist li.item a.add:hover
 {
     background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
 }
+#ArtistSearchContainer
+{
+    margin: 5px 5px 20px 206px;
+}
 #AlbumContainer
+{
+    margin: 5px 5px 20px 206px;
+}
+#SongContainer
 {
     margin: 5px 5px 5px 206px;
 }
@@ -348,6 +357,17 @@ table.songlist th
 table.songlist tr:hover
 {
     background: #EEF5FD;
+}
+table.songlist tr.artist
+{
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    height: 40px;
+}
+table.songlist tr.artist td
+{
+    padding: 4px 0 0 2px;
 }
 table.songlist tr.album
 {
