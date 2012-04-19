@@ -181,7 +181,6 @@ function getMusicFolders() {
     });
 }
 function getAlbums(id, action, appendto) {
-    
     $('.first').trigger('click');
     showLoad();
     $.ajax({
@@ -195,7 +194,7 @@ function getAlbums(id, action, appendto) {
         success: function (data) {
             hideLoad();
             if (action === '') {
-                $('#AlbumRows').empty();
+                emptyAll();
             }
             if (action === 'autoplay') {
                 $('#CurrentPlaylistContainer tbody').empty();
@@ -214,36 +213,58 @@ function getAlbums(id, action, appendto) {
                 var isDir;
                 var header;
                 $.each(children, function (i, child) {
-                    if (i % 2 === 0) {
-                        rowcolor = 'even';
-                    } else {
-                        rowcolor = 'odd';
-                    }
-                    isDir = child.isDir;
-                    if (isDir === true) {
-                        albumhtml = generateAlbumHTML(rowcolor, child.id, child.parent, child.coverArt, child.title, child.artist, child.userRating);
-                    } else {
-                        var track;
-                        if (child.track === undefined) {
-                            track = "&nbsp;";
-                        } else {
-                            track = child.track;
+                    if(appendto === '#CurrentPlaylistContainer'){    
+                        find = false;
+                        track = $('#CurrentPlaylistContainer tr.song:first');
+                        while($(track).attr('childid') !== undefined){
+                            if($(track).attr('childid') == child.id){
+                                find = true;
+                            }
+                            track = track.next();
                         }
-                        var time = secondsToTime(child.duration);
-                        albumhtml = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
                     }
-                    $(albumhtml).appendTo(appendto);
+                    if((appendto === '#CurrentPlaylistContainer' && !find) || appendto != '#CurrentPlaylistContainer'){
+                        if (i % 2 === 0) {
+                            rowcolor = 'even';
+                        } else {
+                            rowcolor = 'odd';
+                        }
+                        isDir = child.isDir;
+                        if (isDir === true) {
+                            albumhtml = generateAlbumHTML(rowcolor, child.id, child.parent, child.coverArt, child.title, child.artist, child.userRating);
+                            $(albumhtml).appendTo(appendto);
+                        } else {
+                            var track;
+                            if (child.track === undefined) {
+                                track = "&nbsp;";
+                            } else {
+                                track = child.track;
+                            }
+                            var time = secondsToTime(child.duration);
+                            songhtml = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
+                            if (appendto == '#AlbumRows') {
+                                header = generateSongHeaderHTML();
+                                $("#SongHeader").html(header);
+                                $(songhtml).appendTo('#SongRows');
+                            }else{
+                                $(songhtml).appendTo(appendto);
+                            }
+                        }
+                        
+                    }
                 });
                 if (appendto === '#CurrentPlaylistContainer') {
                     updateMessage(children.length + ' Song(s) Added');
                 }
                 if (appendto === '#AlbumRows' && isDir === true) {
                     header = generateAlbumHeaderHTML();
+                    $("#AlbumHeader").html(header);
                 }
-                if (appendto === '#AlbumRows' && isDir === false) {
+                if (appendto === '#SongRows' && isDir === false) {
                     header = generateSongHeaderHTML();
+                    $("#SongHeader").html(header);
                 }
-                $("#AlbumHeader").html(header);
+                
                 if (action === 'autoplay') {
                     autoPlay();
                 }else if(action === 'add' && appendto === '#CurrentPlaylistContainer'){
@@ -274,9 +295,9 @@ function getAlbumListBy(id) {
         success: function (data) {
             hideLoad();
             if (data["subsonic-response"].albumList.album !== undefined) {
-                $("#AlbumRows").empty();
+                emptyAll();
                 var header = generateAlbumHeaderHTML();
-                $("#AlbumHeader").html(header);
+                $("#SongHeader").html(header);
                 // There is a bug in the API that doesn't return a JSON array for one artist
                 var albums = [];
                 if (data["subsonic-response"].albumList.album.length > 0) {
@@ -286,7 +307,6 @@ function getAlbumListBy(id) {
                 }
 
                 var rowcolor;
-                var html;
                 $.each(albums, function (i, album) {
                     if (i % 2 === 0) {
                         rowcolor = 'even';
@@ -301,7 +321,7 @@ function getAlbumListBy(id) {
                     $(albumhtml).appendTo("#AlbumRows");
                 });
             } else {
-                $('#AlbumRows').empty();
+                emptyAll();
             }
         }
     });
@@ -392,6 +412,20 @@ function generateAlbumHTML(rowcolor, childid, parentid, coverart, title, artist,
     html += '</tr>';
     return html;
 }
+function generateArtistHeaderHTML() {
+    var html;
+    html = '<tr><th></th><th>Artist</th></tr>';
+    return html;
+}
+function generateArtistHTML(rowcolor, childid, artist) {
+    var html;
+    html = '<tr class=\"artist ' + rowcolor + '\" childid=\"' + childid +'\">';
+    html += '<td></td>';
+    html += '<td class=\"artist\">' + artist + '</td>';
+    html += '</tr>';
+    return html;
+}
+
 function generateSongHeaderHTML() {
     var html;
     html = '<tr><th></th><th>Track</th><th>Title</th><th>Artist</th><th>Album</th><th class=\"alignright\">Time</th></tr>';
@@ -410,7 +444,13 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     }
    
     var html;
-    html = '<tr class=\"song ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\" userrating=\"' + rating + '\">';
+    if(track == '-'){
+        html = '<tr class=\"album ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\" userrating=\"' + rating + '\">';
+    }else{
+        html = '<tr class=\"song ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\" userrating=\"' + rating + '\">';
+    }
+    
+    
     html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" title=\"Add To Current Playlist\"></a>';
     html += '<a class=\"remove\" href=\"\" title=\"Remove\"></a>';
     html += '<a class=\"play\" href=\"\" title=\"Play\"></a>';
@@ -424,12 +464,16 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '<td class=\"track\">' + track + '</td>';
     html += '<td class=\"title\">' + title + '</td>';
     if(artistid!=-1){
-        html += '<td class=\"artist\"><a href="javascript:getAlbums(\''+artistid+'\',\'\',\'#AlbumRows\')">' + artist + '</a></td>';
+        html += '<td class=\"artist\"><a href="javascript:getAlbums(\''+artistid+'\',\'\',\'#SongRows\')">' + artist + '</a></td>';
     }else{
         html += '<td class=\"artist\">' + artist + '</td>';
     }
-    html += '<td class=\"album\"><a href="javascript:getAlbums(\''+parentid+'\',\'\',\'#AlbumRows\')">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></a></td>';
-    html += '<td class=\"time\">' + m + ':' + s + '</td>';
+    html += '<td class=\"album\"><a href="javascript:getAlbums(\''+parentid+'\',\'\',\'#SongRows\')">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></a></td>';
+    if(m != '' || s!=''){
+        html += '<td class=\"time\">' + m + ':' + s + '</td>';
+    }else{
+        html += '<td class=\"time\"></td>';
+    }
     html += '</tr>';
     return html;
 }
@@ -645,39 +689,87 @@ function search(type, query) {
         success: function (data) {
             hideLoad();
             if (data["subsonic-response"].searchResult2 !== "") {
-                $("#AlbumRows").empty();
-                var header = generateSongHeaderHTML();
-                $("#AlbumHeader").html(header);
+                emptyAll();
+                
                 // There is a bug in the API that doesn't return a JSON array for one artist
                 var children = [];
-                if (data["subsonic-response"].searchResult2.song.length > 0) {
-                    children = data["subsonic-response"].searchResult2.song;
-                } else {
-                    children[0] = data["subsonic-response"].searchResult2.song;
+                var rowcolor;
+                var songhtml;
+                var albumhtml;
+  
+                if (data["subsonic-response"].searchResult2.artist != undefined) {
+                    header = generateArtistHeaderHTML();
+                    $("#ArtistHeader").html(header);
+                    if(data["subsonic-response"].searchResult2.album.length > 0){
+                        children = data["subsonic-response"].searchResult2.artist;
+                    }else{
+                        children[0] = data["subsonic-response"].searchResult2.artist;
+                    }
+              
+                    $.each(children, function (i, child) {
+                        if (rowcolor == 'odd') {
+                            rowcolor = 'even';
+                        } else {
+                            rowcolor = 'odd';
+                        }
+                        artisthtml = generateArtistHTML(rowcolor, child.id,child.name);
+                        $(artisthtml).appendTo("#ArtistRows");
+                    }); 
                 }
 
-                var rowcolor;
-                var albumhtml;
-                $.each(children, function (i, child) {
-                    if (i % 2 === 0) {
-                        rowcolor = 'even';
-                    } else {
-                        rowcolor = 'odd';
-                    }
+                if (data["subsonic-response"].searchResult2.album != undefined) {          
+                    header = generateAlbumHeaderHTML();
+                    $(header).appendTo("#AlbumHeader");
 
-                    var track;
-                    if (child.track === undefined) {
-                        track = "&nbsp;";
-                    } else {
-                        track = child.track;
+                    if(data["subsonic-response"].searchResult2.album.length > 0){
+                        children = data["subsonic-response"].searchResult2.album;
+                    }else{
+                        children[0] = data["subsonic-response"].searchResult2.album;
                     }
-                    var time = secondsToTime(child.duration);
-                    albumhtml = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
-                    $(albumhtml).appendTo("#AlbumRows");
-                });
+                    $.each(children, function (i, child) {
+                        if (rowcolor == 'odd') {
+                            rowcolor = 'even';
+                        } else {
+                            rowcolor = 'odd';
+                        }
+                        albumhtml = generateAlbumHTML(rowcolor, child.id, parent.id, child.coverArt, child.title, child.artist, child.userRating);
+                        $(albumhtml).appendTo("#AlbumRows");
+                    }); 
+                }
+                
+                
+                if (data["subsonic-response"].searchResult2.song != undefined) {
+                    
+                    header = generateSongHeaderHTML();
+                    $(header).appendTo("#SongHeader");
+                    
+                    if (data["subsonic-response"].searchResult2.song.length >0){
+                        children = data["subsonic-response"].searchResult2.song;
+                    }else{
+                        children[0] = data["subsonic-response"].searchResult2.song;
+                        
+                    }
+                    $.each(children, function (i, child) {
+                        if (rowcolor == 'odd') {
+                            rowcolor = 'even';
+                        } else {
+                            rowcolor = 'odd';
+                        }
+
+                        var track;
+                        if (child.track === undefined) {
+                            track = "&nbsp;";
+                        } else {
+                            track = child.track;
+                        }
+                        var time = secondsToTime(child.duration);
+                        songhtml = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
+                        $(songhtml).appendTo("#SongRows");
+                    });
+                }
             }else{
-                $("#AlbumRows").empty();
-                $("#AlbumRows").append('<center>No result</center>');
+                emptyAll();
+                $("#SongRows").append('<center>No result</center>');
             }
         }
     });
@@ -1050,13 +1142,13 @@ function addToCurrent(addAll) {
     }
     if (count > 0) {
         if (addAll) {
+            $('#SongContainer tr.song').each(function (index) {
+                $(this).clone().appendTo('#CurrentPlaylistContainer tbody');
+                updateMessage(count + ' Song(s) Added');
+            });
             $('#AlbumContainer tr.album').each(function (index) {
                 var albumid = $(this).attr('childid');
                 getAlbums(albumid, 'add', '#CurrentPlaylistContainer');
-            });
-            $('#AlbumContainer tr.song').each(function (index) {
-                $(this).clone().appendTo('#CurrentPlaylistContainer tbody');
-                updateMessage(count + ' Song(s) Added');
             });
         } else {
             $('#AlbumContainer tr.selected').each(function (index) {
@@ -1443,4 +1535,13 @@ function closeAllNotifications() {
     for (notification in notifications) {
         notifications[notification].cancel();
     }
+}
+
+function emptyAll(){
+    $("#ArtistHeader").empty();
+    $("#ArtistRows").empty();
+    $("#AlbumRows").empty();
+    $("#AlbumHeader").empty();
+    $("#SongHeader").empty();
+    $("#SongRows").empty();
 }

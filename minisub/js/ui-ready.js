@@ -134,8 +134,13 @@ $(document).ready(function () {
     });
     $('tr.album').live('click', function (e) {
         var albumid = $(this).attr('childid');
-        var artistid = $(this).attr('parentid');
-        getAlbums(albumid, '', '#AlbumRows');
+        getAlbums(albumid, '', '#SongRows');
+        return false;
+    });
+    
+    $('tr.artist').live('click', function (e) {
+        var albumid = $(this).attr('childid');
+        getAlbums(albumid, '', '#SongRows');
         return false;
     });
 
