@@ -3,6 +3,7 @@ var debug = false;
 var audio;
 var hostURL = location.href;
 var baseURL;
+var rootdirectoryid = -1;
 
 // Set auth cookies if specified in URL on launch
 var u = getParameterByName('u'); 
@@ -96,6 +97,8 @@ function loadArtists(id, refresh) {
                     } else {
                         indexes[0] = data["subsonic-response"].indexes.index;
                     }
+                    
+                    rootdirectoryid =indexes[0].artist[0].id.substring(0,indexes[0].artist[0].id.lastIndexOf('2f'));
 
                     $.each(indexes, function (i, index) {
                         if (index.name === '#') {
@@ -111,6 +114,7 @@ function loadArtists(id, refresh) {
                         } else {
                             artists[0] = index.artist;
                         }
+
                         $.each(artists, function (i, artist) {
                             if (artist.name !== undefined) {
                                 var html = "";
@@ -242,6 +246,10 @@ function getAlbums(id, action, appendto) {
                 $("#AlbumHeader").html(header);
                 if (action === 'autoplay') {
                     autoPlay();
+                }else if(action === 'add' && appendto === '#CurrentPlaylistContainer'){
+                    if(audio== undefined || audio.playState == 0){
+                        autoPlay();
+                    }
                 }
             }
         }
@@ -389,7 +397,18 @@ function generateSongHeaderHTML() {
     html = '<tr><th></th><th>Track</th><th>Title</th><th>Artist</th><th>Album</th><th class=\"alignright\">Time</th></tr>';
     return html;
 }
-function generateSongHTML(rowcolor, childid, parentid, track, title, artist, album, coverart, rating, m, s) {
+function generateSongHTML(rowcolor, childid, parentid, track, title, artist, album, coverart, rating, m, s) {    
+    pos = parentid.lastIndexOf('2f');
+    if(pos != 1){
+        artistid = parentid.substring(0, pos)
+    }else{
+        artistid = -1;
+    }
+    
+    if(artistid == rootdirectoryid){
+        artistid = parentid;
+    }
+   
     var html;
     html = '<tr class=\"song ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\" userrating=\"' + rating + '\">';
     html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" title=\"Add To Current Playlist\"></a>';
@@ -404,7 +423,11 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '</td>';
     html += '<td class=\"track\">' + track + '</td>';
     html += '<td class=\"title\">' + title + '</td>';
-    html += '<td class=\"artist\">' + artist + '</td>';
+    if(artistid!=-1){
+        html += '<td class=\"artist\"><a href="javascript:getAlbums(\''+artistid+'\',\'\',\'#AlbumRows\')">' + artist + '</a></td>';
+    }else{
+        html += '<td class=\"artist\">' + artist + '</td>';
+    }
     html += '<td class=\"album\"><a href="javascript:getAlbums(\''+parentid+'\',\'\',\'#AlbumRows\')">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></a></td>';
     html += '<td class=\"time\">' + m + ':' + s + '</td>';
     html += '</tr>';
@@ -956,10 +979,10 @@ function addToPlaylist(playlistid, from) {
                     });
                     if (count > 0) {
                         $.ajax({
-                            type: 'GET',
+                            type: 'POST',
                             url: baseURL + '/createPlaylist.view',
                             dataType: 'jsonp',
-                            timeout: 10000,
+                            timeout: 100000,
                             data: {
                                 u: username, 
                                 p: passwordenc, 
@@ -1021,11 +1044,16 @@ function addToCurrent(addAll) {
     var count;
     if (addAll) {
         count = $('#AlbumContainer tr.song').length;
+        count += $('#AlbumContainer tr.album').length;
     } else {
         count = $('#AlbumContainer tr.selected').length;
     }
     if (count > 0) {
         if (addAll) {
+            $('#AlbumContainer tr.album').each(function (index) {
+                var albumid = $(this).attr('childid');
+                getAlbums(albumid, 'add', '#CurrentPlaylistContainer');
+            });
             $('#AlbumContainer tr.song').each(function (index) {
                 $(this).clone().appendTo('#CurrentPlaylistContainer tbody');
                 updateMessage(count + ' Song(s) Added');

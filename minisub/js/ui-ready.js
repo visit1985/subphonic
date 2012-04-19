@@ -285,10 +285,10 @@ $(document).ready(function () {
     });
     $('a#action_PlayAlbum').click(function () {
         $('#CurrentPlaylistContainer tbody').empty();
+        if(audio != undefined){
+            audio.stop();
+        }
         addToCurrent(true);
-        // Start playing song
-        var first = $('#CurrentPlaylistContainer tr.song').first();
-        changeTrack(first);
         return false;
     });
     $('#action_RefreshArtists').click(function () {
