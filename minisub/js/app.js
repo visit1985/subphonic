@@ -231,8 +231,17 @@ function getAlbums(id, action, appendto) {
                         }
                         isDir = child.isDir;
                         if (isDir === true) {
-                            albumhtml = generateAlbumHTML(rowcolor, child.id, child.parent, child.coverArt, child.title, child.artist, child.userRating);
-                            $(albumhtml).appendTo(appendto);
+                            if(child.artist == undefined){
+                                child.artist = '';
+                            }
+                            albumhtml = generateAlbumHTML(rowcolor, child.id, child.parent, child.coverArt, child.title, data["subsonic-response"].directory.name, child.userRating);
+                             if (appendto == '#AlbumRows') {
+                                header = generateAlbumHeaderHTML();
+                                $("#AlbumHeader").html(header);
+                                $(albumhtml).appendTo(appendto);
+                            }else{
+                                $(albumhtml).appendTo(appendto);
+                            }
                         } else {
                             var track;
                             if (child.track === undefined) {
@@ -242,7 +251,7 @@ function getAlbums(id, action, appendto) {
                             }
                             var time = secondsToTime(child.duration);
                             songhtml = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
-                            if (appendto == '#AlbumRows') {
+                            if (appendto == '#AlbumRows' || appendto == '#SongRows') {
                                 header = generateSongHeaderHTML();
                                 $("#SongHeader").html(header);
                                 $(songhtml).appendTo('#SongRows');
@@ -255,16 +264,7 @@ function getAlbums(id, action, appendto) {
                 });
                 if (appendto === '#CurrentPlaylistContainer') {
                     updateMessage(children.length + ' Song(s) Added');
-                }
-                if (appendto === '#AlbumRows' && isDir === true) {
-                    header = generateAlbumHeaderHTML();
-                    $("#AlbumHeader").html(header);
-                }
-                if (appendto === '#SongRows' && isDir === false) {
-                    header = generateSongHeaderHTML();
-                    $("#SongHeader").html(header);
-                }
-                
+                }                
                 if (action === 'autoplay') {
                     autoPlay();
                 }else if(action === 'add' && appendto === '#CurrentPlaylistContainer'){
@@ -464,11 +464,11 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '<td class=\"track\">' + track + '</td>';
     html += '<td class=\"title\">' + title + '</td>';
     if(artistid!=-1){
-        html += '<td class=\"artist\"><a href="javascript:getAlbums(\''+artistid+'\',\'\',\'#SongRows\')">' + artist + '</a></td>';
+        html += '<td class=\"artist\"><a href="javascript:getAlbums(\''+artistid+'\',\'\',\'#AlbumRows\')">' + artist + '</a></td>';
     }else{
         html += '<td class=\"artist\">' + artist + '</td>';
     }
-    html += '<td class=\"album\"><a href="javascript:getAlbums(\''+parentid+'\',\'\',\'#SongRows\')">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></a></td>';
+    html += '<td class=\"album\"><a href="javascript:getAlbums(\''+parentid+'\',\'\',\'#AlbumRows\')">' + album + '<img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=25&id=' + coverart + '\" /></a></td>';
     if(m != '' || s!=''){
         html += '<td class=\"time\">' + m + ':' + s + '</td>';
     }else{
@@ -700,7 +700,7 @@ function search(type, query) {
                 if (data["subsonic-response"].searchResult2.artist != undefined) {
                     header = generateArtistHeaderHTML();
                     $("#ArtistHeader").html(header);
-                    if(data["subsonic-response"].searchResult2.album.length > 0){
+                    if(data["subsonic-response"].searchResult2.artist.length > 0){
                         children = data["subsonic-response"].searchResult2.artist;
                     }else{
                         children[0] = data["subsonic-response"].searchResult2.artist;
