@@ -297,7 +297,7 @@ function getAlbumListBy(id) {
             if (data["subsonic-response"].albumList.album !== undefined) {
                 emptyAll();
                 var header = generateAlbumHeaderHTML();
-                $("#SongHeader").html(header);
+                $("#AlbumRows").html(header);
                 // There is a bug in the API that doesn't return a JSON array for one artist
                 var albums = [];
                 if (data["subsonic-response"].albumList.album.length > 0) {
