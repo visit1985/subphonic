@@ -29,6 +29,26 @@
             soundManager.debugMode = false; 
             //soundManager.flashVersion = 9; // optional: shiny features (default = 8)
             //soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
+
+
+            //Empeche la selection de texte sur l'affichage
+            //<!--
+            function ffalse()
+            {
+                return false;
+            }
+            function ftrue()
+            {
+                return true;
+            }
+            document.onselectstart = new Function ("return false");
+            if(window.sidebar)
+            {
+                document.onmousedown = ffalse;
+                document.onclick = ftrue;
+            }
+            //-->
+
         </script>
     </head>
     <body>
@@ -79,7 +99,7 @@
                             </div>
                             <div id="BottomContainer"><ul id="BottomIndex"></ul></div>
                         </div>
-                         <table id="ArtistSearchContainer" class="simplelist songlist noselect" cellspacing="1">
+                        <table id="ArtistSearchContainer" class="simplelist songlist noselect" cellspacing="1">
                             <thead id="ArtistHeader"></thead>
                             <tbody id="ArtistRows"></tbody>
                         </table>
@@ -148,6 +168,7 @@
                             $('#AutoAlbumSize').val($.cookie('AutoAlbumSize'));
                             $('#AutoPlaylistSize').val($.cookie('AutoPlaylistSize'));
                             $('#Server').val($.cookie('Server'));
+                            $('#CacheSize').val($.cookie('CacheSize'));
                             $('#ApplicationName').val($.cookie('ApplicationName'));
                             if ($.cookie('HideAZ')) {
                                 $('#HideAZ').attr('checked', true);
@@ -199,6 +220,8 @@
                             <input type="text" id="AutoAlbumSize" name="AutoAlbumSize" class="large" title="Number of Albums to Get on the Music Library tab"/><br />
                             <label for="AutoPlaylistSize">Auto Playlist Size (Default 25)</label><br />
                             <input type="text" id="AutoPlaylistSize" name="AutoPlaylistSize" class="large" title="Number of Songs to Get on the Playlist tab"/><br />
+                            <label for="CacheSize">Cache Size (Default 3)</label><br />
+                            <input type="text" id="CacheSize" name="CacheSize" class="large" title="Custom Cache Size"/><br />
                             <label for="ApplicationName">Application Name (Default MiniSub)</label><br />
                             <input type="text" id="ApplicationName" name="ApplicationName" class="large" title="Custom Player Name"/><br />
                         </div>
@@ -223,8 +246,9 @@
                                     <span class="changes"></span>
                                 </li>
                                 -->
-                                <li class="log"><span class="version">19/4/2012 - 1.9.7 (by Zoic21)</span>
-                                    <span class="changes"> Improved presentation when there is music and albums at the same time</span>
+                                <li class="log"><span class="version">24/4/2012 - MiniSub Reload 2.0 (by Zoic21)</span>
+                                    <span class="changes">Add cache system</span>
+                                    <span class="changes">Improved presentation when there is music and albums at the same time</span>
                                     <span class="changes">Big improvement research</span>
                                     <span class="changes">Play all button add music and album</span>
                                     <span class="changes">Double click on music launch it</span>
@@ -336,7 +360,7 @@
                 <div class="clear"></div>
             </div><!-- end #content -->
         </div><!-- end #container -->
-        
+
         <div id="loading">
             <img id="img_loading" src="images/load-circle.gif" />
         </div><!-- end #loading -->

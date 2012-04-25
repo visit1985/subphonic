@@ -26,29 +26,49 @@ $(window).resize(function () {
 });
 function resizeContent() {
     var screenwidth = $(window).width();
-    $('.tabcontent').css({'height': (($(window).height() - 109)) + 'px'});
-    $('.smsection').css({'height': (($(window).height() - 152)) + 'px'});
+    $('.tabcontent').css({
+        'height': (($(window).height() - 109)) + 'px'
+    });
+    $('.smsection').css({
+        'height': (($(window).height() - 152)) + 'px'
+    });
     var smheight = $('.smsection').height();
     var smwidth = $('.smsection').width();
-    $('#BottomContainer').css({'top': smheight + 35 + 'px'});
+    $('#BottomContainer').css({
+        'top': smheight + 35 + 'px'
+    });
     if ($.cookie('sidebar')) {
         var tabwidth = $(window).width() - 264;
         if (tabwidth >= 700) {
-            $('.tabcontent').css({'width': tabwidth + 'px'});
+            $('.tabcontent').css({
+                'width': tabwidth + 'px'
+            });
         }
         var sbheight = $(window).height() - 152;
-        $('#SideBar').css({'height': (sbheight + 108) + 'px'});
-        $('#ChatMsgs').css({'height': (sbheight - 166) + 'px'});
+        $('#SideBar').css({
+            'height': (sbheight + 108) + 'px'
+        });
+        $('#ChatMsgs').css({
+            'height': (sbheight - 166) + 'px'
+        });
     } else {
         var tabwidth = $(window).width() - 58;
         if (tabwidth >= 700) {
-            $('.tabcontent').css({'width': tabwidth + 'px'});
+            $('.tabcontent').css({
+                'width': tabwidth + 'px'
+            });
         }
     }
     var tabwidth = $('.tabcontent').width();
-    $('#AlbumContainer, #TrackContainer, #CurrentPlaylistContainer, #ArtistSearchContainer, #SongContainer').css({'width': (tabwidth - smwidth - 30) + 'px'});
-    $('#CurrentPlaylistContainer').css({'width': (tabwidth - 30) + 'px'});
-    $('#player').css({'width': tabwidth + 'px'});
+    $('#AlbumContainer, #TrackContainer, #CurrentPlaylistContainer, #ArtistSearchContainer, #SongContainer').css({
+        'width': (tabwidth - smwidth - 30) + 'px'
+    });
+    $('#CurrentPlaylistContainer').css({
+        'width': (tabwidth - 30) + 'px'
+    });
+    $('#player').css({
+        'width': tabwidth + 'px'
+    });
 }
 function resizeSMSection(x) {
     var defwidth = 200;
@@ -56,13 +76,32 @@ function resizeSMSection(x) {
     var newsmwidth = smwidth + parseInt(x);
     var newwidth = newsmwidth - defwidth;
     if (smwidth != newsmwidth && newsmwidth > 150 && newsmwidth < 500) {
-        $('.smsection').css({'width': (newsmwidth) + 'px'});
-        $('.actions').css({'width': (newsmwidth - 5) + 'px'});
-        $('#BottomContainer').css({'width': (newsmwidth - 16) + 'px'});
-        $.cookie('defaultsmwidth', newwidth, {expires: 365, path: '/'});
+        $('.smsection').css({
+            'width': (newsmwidth) + 'px'
+        });
+        $('.actions').css({
+            'width': (newsmwidth - 5) + 'px'
+        });
+        $('#BottomContainer').css({
+            'width': (newsmwidth - 16) + 'px'
+        });
+        $.cookie('defaultsmwidth', newwidth, {
+            expires: 365, 
+            path: '/'
+        });
         var ulwidth = newsmwidth + 6;
-        $('#AlbumContainer').css({'margin-left': ulwidth + 'px'});
-        $('#TrackContainer').css({'margin-left': ulwidth + 'px'});
+        $('#AlbumContainer').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#ArtistSearchContainer').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#SongContainer').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#TrackContainer').css({
+            'margin-left': ulwidth + 'px'
+        });
     }
 }
 

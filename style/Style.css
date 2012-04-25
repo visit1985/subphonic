@@ -633,8 +633,8 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
     border-top: 1px solid #F2F2F2;
     background: #fff;
     position: fixed;
-    height: 43px;
     width: 184px;
+    height: 43px;
 }
 #BottomContainer ul 
 {
