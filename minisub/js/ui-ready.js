@@ -517,11 +517,15 @@ $(document).ready(function () {
                 expires: 365
             });
         }
-        var applicationname = $('#ApplicationName').val();
-        if (applicationname != "") {
-            $.cookie('ApplicationName', applicationname, {
+        var cachesize = $('#CacheSize').val();
+        if (cachesize != "") {
+            $.cookie('CacheSize', cachesize, {
                 expires: 365
             });
+        }
+        var applicationname = $('#ApplicationName').val();
+        if (applicationname != "") {
+            $.cookie('ApplicationName', applicationname, { expires: 365 });
         }
         location.reload(true);
     });
@@ -569,6 +573,7 @@ $(document).ready(function () {
         $.cookie('Server', null);
         $.cookie('ApplicationName', null);
         $.cookie('HideAZ', null);
+        $.cookie('CacheSize', null);
         location.reload(true);
     });
     $('#ChangeLogShowMore').live('click', function () {
