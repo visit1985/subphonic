@@ -560,6 +560,8 @@ function playSong(el, songid, albumid) {
                 audio = cache[cacheID]['song'];
                 var duration = $('#audio_wrapper0').find(".duration");
                 duration.html((cache[cacheID]['dm'] < 10 ? '0' : '') + cache[cacheID]['dm'] + ':' + (cache[cacheID]['ds'] < 10 ? '0' : '') + cache[cacheID]['ds']);
+                var loaded = $('#audio_wrapper0').find(".loaded");
+                loaded.css('width', '100%');
                 var scrubber = $('#audio_wrapper0').find(".scrubber");
                 scrubber.unbind("click");
                 scrubber.click(function(e){
@@ -569,7 +571,7 @@ function playSong(el, songid, albumid) {
                         position:position
                     });
                 });
-                updateCache(cacheID);
+                
             }else{
                 var salt = Math.floor(Math.random() * 100000);
                 audio = soundManager.createSound({
@@ -618,7 +620,7 @@ function playSong(el, songid, albumid) {
                             });
                         }); 
 
-                        setCache($('#CurrentPlaylistContainer tr.playing').next(),0,cacheSize);
+                        updateCache();
                     },
                     onfinish: function () {
                         var next = $('#CurrentPlaylistContainer tr.playing').next();
@@ -633,6 +635,9 @@ function playSong(el, songid, albumid) {
             $(el).addClass('playing');
             $('#PlayTrack').find('img').attr('src', 'images/pause_24x32.png');
             $('#PlayTrack').addClass('playing');
+            if(inCache){
+                updateCache();
+            }
             scrobbleSong(false);
             scrobbled = false;
 
@@ -648,32 +653,41 @@ function playSong(el, songid, albumid) {
     });
 }
 
-function updateCache(cacheID){
-    if(cacheID>1){
-        for(j=1;j<cacheID;j++){
-            for(i=1;i<cacheSize;i++){
-                cache[i-1] = cache[i];
+function updateCache(){
+    var track = $('#CurrentPlaylistContainer tr.playing');
+    var temp_cache = new Array();
+    var no_found_track = new Array();
+
+    for(i=0;i<cacheSize;i++){
+        track = track.next();
+        find = false;
+        $.each(cache, function (j) {
+
+            if(cache[j]['songid'] == track.attr('childid') && track.attr('childid')!= undefined && cache[j]['complete'] == 1){
+                temp_cache.push(cache[j]);
+                find = true;
             }
+        }); 
+        
+        if(!find && track.attr('childid')!= undefined){
+            no_found_track.push(track);
         }
-        track = $('#CurrentPlaylistContainer tr.playing');
-        inCache = true;
-        while(inCache){
-            inCache = false;
-            $.each(cache, function (i) {
-                if(cache[i]['songid'] == track.attr('childid')){
-                    inCache = true;
-                    track = $('#CurrentPlaylistContainer tr.playing');
-                }
-            });
-            
-        }
-        setCache(track.next(),cacheID+1,cacheSize);
+        
     }
+    
+    for(i=0;i<temp_cache.length;i++){
+        cache[i] = temp_cache[i];
+    }
+    setCache(no_found_track,temp_cache.length,0);
 }
 
 
-function setCache(track,numCache,maxCache){
-    if(track.attr('childid') != undefined){
+function setCache(list_track,numCache,current){
+   
+    
+    track = list_track[current];
+    
+    if(track.attr('childid') != undefined){   
         if(!$.isArray(cache[numCache])){
             cache[numCache] = new Array();
         }
@@ -711,8 +725,8 @@ function setCache(track,numCache,maxCache){
                 cache[numCache]['ds'] = ds;
                 cache[numCache]['dm'] = dm;
                 cache[numCache]['complete'] = 1;
-                if((numCache+1)<maxCache){
-                    setCache(track.next(),(numCache+1),maxCache);
+                if((numCache+1)<cacheSize && current<list_track.length){
+                    setCache(list_track,(numCache+1),current+1);
                 }
             },
             onfinish: function () {
