@@ -1,9 +1,12 @@
+var langue;
+
 $(document).ready(function () {
     if($.cookie('langue') == 'fr'){
         langue = fr;
     }else{
         langue = en;
     }
+    
     $('#action_SelectAll').html(langue['action_SelectAll']); 
     $('#action_SelectNone').html(langue['action_SelectNone']);
     $('#action_AddToPlaylist').html(langue['action_AddToPlaylist']);
@@ -65,6 +68,8 @@ $(document).ready(function () {
     $('#unlimitedDebit').html(langue['unlimitedDebit']);
     
     $('#labelLangue').html(langue['labelLangue']);
+    
+    $('#changeLog').html(langue['changeLog']);
     
     $('#thanks').html(langue['thanks']);
     $('#minisubBase').html(langue['minisubBase']);
