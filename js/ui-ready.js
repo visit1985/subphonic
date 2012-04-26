@@ -523,6 +523,12 @@ $(document).ready(function () {
                 expires: 365
             });
         }
+        var maxbit = $('#Maxbit').val();
+        if (maxbit != "") {
+            $.cookie('Maxbit', maxbit, {
+                expires: 365
+            });
+        }
         var applicationname = $('#ApplicationName').val();
         if (applicationname != "") {
             $.cookie('ApplicationName', applicationname, { expires: 365 });
@@ -574,6 +580,7 @@ $(document).ready(function () {
         $.cookie('ApplicationName', null);
         $.cookie('HideAZ', null);
         $.cookie('CacheSize', null);
+        $.cookie('Maxbit', null);
         location.reload(true);
     });
     $('#ChangeLogShowMore').live('click', function () {
