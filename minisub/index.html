@@ -29,6 +29,9 @@
         <script src="js/app.js" type="text/javascript"></script>
         <script src="js/ui-load.js" type="text/javascript"></script>
         <script src="js/ui-ready.js" type="text/javascript"></script>
+        <script src="js/i18n/fr.js" type="text/javascript"></script>
+        <script src="js/i18n/en.js" type="text/javascript"></script>
+        <script src="js/langue.js" type="text/javascript"></script>
         <script type="text/javascript">
             soundManager.url = 'js/sm/swf';
             soundManager.preferFlash = true;
@@ -71,7 +74,7 @@
                         <div id="Artists" class="smsection floatleft" tabindex="0">
                             <div class="padder">
                                 <select id="MusicFolders">
-                                    <option value="All Folders">All Folders</option>
+                                    <option value="All Folders" id="allForlder">All Folders</option>
                                 </select>
                                 <ul id="AutoAlbumContainer" class="simplelist mainlist noselect">
                                     <li class="index" id="auto">Auto Albums</li>
@@ -134,9 +137,9 @@
                             <div class="padder">
                                 <ul id="AutoPlaylistContainer" class="simplelist mainlist">
                                     <li class="index" id="autoplaylist">Auto Playlists</li>
-                                    <li class="item"><span>Random</span><div class="floatright"><a class="play" title="Play" href=""></a></div><div class="floatright"><a class="add" title="Add To Current Playlist" href=""></a></div></li>
+                                    <li class="item" id="randomPlaylist"><span>Random</span><div class="floatright"><a class="play" title="Play" href=""></a></div><div class="floatright"><a class="add" title="Add To Current Playlist" href=""></a></div></li>
                                 </ul>
-                                <ul class="simplelist"><li class="index">Saved Playlists</li></ul>
+                                <ul class="simplelist"><li class="index" id="savePlaylist">Saved Playlists</li></ul>
                                 <ul id="PlaylistContainer" class="simplelist mainlist"></ul>
                             </div>
                         </div>
@@ -154,56 +157,64 @@
                     <div class="clear"></div>
                     <div class="lgsection floatleft">
                         <div class="subsection floatleft">
-                            <h3 class="title">Login</h3>
-                            <label for="Username">Username <span class="red">*</span></label><br />
+                            <h3 class="title" id="h3Login">Login</h3>
+                            <label for="Username" id="labelUsername">Username <span class="red">*</span></label><br />
                             <input type="text" id="Username" name="Username" class="large"/><br />
-                            <label for="Password">Password <span class="red">*</span></label><br />
+                            <label for="Password" id="labelPassword">Password <span class="red">*</span></label><br />
                             <input type="password" id="Password" name="Password" class="large"/><br />
-                            <label for="Server">Server <span class="red">*</span></label><br />
+                            <label for="Server" id="labelServer">Server <span class="red">*</span></label><br />
                             <input type="text" id="Server" name="Server" class="xlarge" title="Subsonic Server URL Ex: http://host:port/subsonic"/><br />
                         </div>
                         <div class="subsection floatleft">
-                            <h3 class="title">Keyboard Shortcuts</h3>
+                            <h3 class="title" id="keyboardShortcuts">Keyboard Shortcuts</h3>
                             <ul class="preferences">
-                                <li><em>[a-z]</em> Use to Quickly Browse to an Artist</li>
-                                <li><em>Home</em> Scroll to Top of Artist List</li>
-                                <li><em>Spacebar</em> Play/Pause</li>
-                                <li><em>&rarr;</em> Next Track</li>
-                                <li><em>&larr;</em> Previous Track</li>
+                                <li id="shortcutsAz"><em>[a-z]</em> Use to Quickly Browse to an Artist</li>
+                                <li id="shortcutsHome"><em>Home</em> Scroll to Top of Artist List</li>
+                                <li id="shortcutsSpacebar"><em>Spacebar</em> Play/Pause</li>
+                                <li id="shortcutsNextTrack"><em>&rarr;</em> Next Track</li>
+                                <li id="shortcutsPreviousTrack"><em>&larr;</em> Previous Track</li>
                                 <li><span></span></li>
                             </ul>
                         </div>
                         <div class="clear"></div>
                         <div class="subsection floatleft">
-                            <h3 class="title">Options</h3>
-                            <label for="AutoAlbumSize">Auto Album Size (Default 15)</label><br />
+                            <h3 class="title" id="options">Options</h3>
+                            <label for="AutoAlbumSize" id="labelAutoAlbumSize">Auto Album Size (Default 15)</label><br />
                             <input type="text" id="AutoAlbumSize" name="AutoAlbumSize" class="large" title="Number of Albums to Get on the Music Library tab"/><br />
-                            <label for="AutoPlaylistSize">Auto Playlist Size (Default 25)</label><br />
+                            <label for="AutoPlaylistSize" id="labelAutoPlaylistSize">Auto Playlist Size (Default 25)</label><br />
                             <input type="text" id="AutoPlaylistSize" name="AutoPlaylistSize" class="large" title="Number of Songs to Get on the Playlist tab"/><br />
-                            <label for="CacheSize">Cache Size (Default 3)</label><br />
+                            <label for="CacheSize" id="labelCacheSize">Cache Size (Default 3)</label><br />
                             <input type="text" id="CacheSize" name="CacheSize" class="large" title="Custom Cache Size"/><br />
-                            <label for="ApplicationName">Application Name (Default MiniSub)</label><br />
+                            <label for="ApplicationName" id="labelApplicationName">Application Name (Default MiniSub)</label><br />
                             <input type="text" id="ApplicationName" name="ApplicationName" class="large" title="Custom Player Name"/><br />
                         </div>
                         <div class="subsection floatleft">
                             <div class="checkboxes">
                                 <div class="inputwrap"><input type="checkbox" id="HideAZ" name="HideAZ" value="1" title="Hide A-Z at Bottom of Artists"/></div>
-                                <label for="HideAZ">Hide A-Z</label>
+                                <label for="HideAZ" id="labelHideAZ">Hide A-Z</label>
                                 <div class="clear"></div>
                                 <div class="inputwrap"><input type="checkbox" id="EnableNotifications" name="EnableNotifications" value="1" title="Enable Notifications When Tracks Change"/></div>
-                                <label for="EnableNotifications">Desktop Notifications <small>[Beta]</small></label>
+                                <label for="EnableNotifications" id="labelEnableNotifications">Desktop Notifications <small>[Beta]</small></label>
                                 <div class="clear"></div>
                                 <div class="inputwrap"><input type="checkbox" id="ScrollTitle" name="ScrollTitle" value="1" title="Scroll the Title Once"/></div>
-                                <label for="ScrollTitle">Scroll Title</label>
+                                <label for="ScrollTitle" id="labelScrollTitle">Scroll Title</label>
                                 <div class="clear"></div>
                                 <div class="inputwrap">
-                                    <label for="Maxbit">Max Bitrate</label>
+                                    <label for="Maxbit" id="labelMaxbit">Max Bitrate</label>
                                     <select id="Maxbit" name="Maxbit">
-                                        <option value="0">Unlimited</option>
+                                        <option value="0" id="unlimitedDebit">Unlimited</option>
                                         <option value="320">320</option>
                                         <option value="192">192</option>
                                         <option value="128">128</option>
                                         <option value="64">64</option>
+                                    </select>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="inputwrap">
+                                    <label for="langue" id="labelLangue">Langue</label>
+                                    <select id="langue" name="langue">
+                                        <option value="en">English</option>
+                                        <option value="fr">Frençais</option>
                                     </select>
                                 </div>
                             </div>
@@ -282,10 +293,11 @@
                         </div>
                         <div class="clear"></div>
                         <div class="subsection floatleft">
-                            <h3 class="title">Thanks</h3>
+                            <h3 class="title" id="thanks">Thanks</h3>
                             <ul class="preferences">
-                                <li>Icons - <a href="http://somerandomdude.com/work/iconic" target="_blank">http://somerandomdude.com/work/iconic</a></li>
-                                <li>Audio Library - <a href="http://www.schillmania.com/projects/soundmanager2" target="_blank">http://www.schillmania.com/projects/soundmanager2</a></li>
+                                <li id="minisubBase">Minisub (base) to Tsquillario</li>
+                                <li id="icons">Icons - <a href="http://somerandomdude.com/work/iconic" target="_blank">http://somerandomdude.com/work/iconic</a></li>
+                                <li id="audioLibrary">Audio Library - <a href="http://www.schillmania.com/projects/soundmanager2" target="_blank">http://www.schillmania.com/projects/soundmanager2</a></li>
                             </ul>
                         </div>
                     </div>
@@ -294,11 +306,11 @@
 
                 <div id="SideBar">
                     <div id="NowPlaying">
-                        <div class="header"><img src="images/rss_12x12.png" /> Now Playing</div>
+                        <div class="header" id="divNowPlaying"><img src="images/rss_12x12.png" /> Now Playing</div>
                         <div id="NowPlayingList"><span class="user">Loading...</span></div>
                     </div>
                     <div id="Chat">
-                        <div class="header"><img src="images/chat_alt_stroke_12x12.png" /> Chat</div>
+                        <div class="header" id="divChat"><img src="images/chat_alt_stroke_12x12.png" /> Chat</div>
                         <div id="ChatMsgs"></div>
                         <div class="submit"><img src="images/comment_stroke_gl_12x11.png" /><input type="text" id="ChatMsg" class="chat" title="Hit [Enter] to Post" /></div>
                     </div>

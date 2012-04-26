@@ -7,6 +7,7 @@ function authentification(){
     $('#CacheSize').val($.cookie('CacheSize'));
     $('#ApplicationName').val($.cookie('ApplicationName'));
     $('#Maxbit option[value='+$.cookie('Maxbit')+']').attr("selected", "selected");
+    $('#langue option[value='+$.cookie('langue')+']').attr("selected", "selected");
 
     if ($.cookie('HideAZ')) {
         $('#HideAZ').attr('checked', true);
