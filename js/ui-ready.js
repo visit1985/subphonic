@@ -379,12 +379,12 @@ $(document).ready(function () {
         getRandomSongList('', '#TrackContainer');
     });
     $('#AutoPlaylistContainer li.item a.play').live('click', function () {
-        getRandomSongList('autoplay', '#CurrentPlaylistContainer');
+        getRandomSongList('autoplay', '#CurrentPlaylistContainer tbody');
         return false;
     });
     
     $('#AutoPlaylistContainer li.item a.add').live('click', function () {
-        getRandomSongList('', '#CurrentPlaylistContainer');
+        getRandomSongList('', '#CurrentPlaylistContainer tbody');
         return false;
     });
     $('#PlaylistContainer li.item').live('click', function () {

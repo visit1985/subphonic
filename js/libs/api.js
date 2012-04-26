@@ -312,6 +312,7 @@ function getRandomSongList(action, appendto) {
                         track = item.track;
                     }
                     var time = secondsToTime(item.duration);
+
                     html = generateSongHTML(rowcolor, item.id, item.parent, track, item.title, item.artist, item.album, item.coverArt, item.userRating, time['m'], time['s']);
                     $(html).appendTo(appendto);
                 });
