@@ -1,6 +1,6 @@
 /* Reusable Functions */
 function confirmDelete() {
-    var question = confirm('Are you sure you want to delete the selected item(s)?');
+    var question = confirm(langue['areYouSure']);
     if (question) {
         return true;
     }

@@ -42,7 +42,7 @@ function loadArtists(id, refresh) {
                         } else {
                             indexname = index.name;
                         }
-                        $('<li class=\"index\" id=\"index_' + indexname + '\" title=\"Scroll to Top\">' + indexname + '<span class=\"floatright\">&uarr;</span></li>').appendTo("#ArtistContainer");
+                        $('<li class=\"index\" id=\"index_' + indexname + '\" title=\"'+langue['scrollTop']+'\">' + indexname + '<span class=\"floatright\">&uarr;</span></li>').appendTo("#ArtistContainer");
                         indexlist += '<li><a href=\"#\">' + indexname + '</a></li>';
                         var artists = [];
                         if (index.artist.length > 0) {
@@ -457,9 +457,9 @@ function loadPlaylists(refresh) {
                     var html = "";
                     html += '<li id=\"' + playlist.id + '\" class=\"item\">';
                     html += '<span>' + playlist.name + '</span>';
-                    html += '<div class=\"floatright\"><a class=\"play\" href=\"\" title=\"Play\"></a></div>';
-                    html += '<div class=\"floatright\"><a class=\"download\" href=\"\" title=\"Download\"></a></div>';
-                    html += '<div class=\"floatright\"><a class=\"add\" href=\"\" title=\"Add To Current Playlist\"></a></div>';
+                    html += '<div class=\"floatright\"><a class=\"play\" href=\"\" title=\"'+langue['tPlay']+'"></a></div>';
+                    html += '<div class=\"floatright\"><a class=\"download\" href=\"\" title=\"'+langue['tDownload']+'"></a></div>';
+                    html += '<div class=\"floatright\"><a class=\"add\" href=\"\" title=\"'+langue['tAddToCurrentPlaylist']+'\"></a></div>';
                     html += '</li>';
                     $(html).appendTo("#PlaylistContainer");
                 });
@@ -492,9 +492,9 @@ function loadPlaylistsForMenu(menu) {
                 }
             });
             if (menu === 'submenu_AddCurrentToPlaylist') {
-                $("<a href=\"#\" onclick=\"javascript:addToPlaylist('new','current'); return false;\">+ New Playlist</a><br />").appendTo("#" + menu);
+                $("<a href=\"#\" onclick=\"javascript:addToPlaylist('new','current'); return false;\">"+langue['action_NewPlaylist']+"</a><br />").appendTo("#" + menu);
             } else {
-                $("<a href=\"#\" onclick=\"javascript:addToPlaylist('new',''); return false;\">+ New Playlist</a><br />").appendTo("#" + menu);
+                $("<a href=\"#\" onclick=\"javascript:addToPlaylist('new',''); return false;\">"+langue['action_NewPlaylist']+"</a><br />").appendTo("#" + menu);
             }
         
         }

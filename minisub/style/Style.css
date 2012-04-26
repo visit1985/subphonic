@@ -660,7 +660,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 .actions
 {
-    width: 195px;
+    width: 300px;
     height: 29px;
     margin: 4px 0 0 0;
     padding: 0 0 0 5px;
