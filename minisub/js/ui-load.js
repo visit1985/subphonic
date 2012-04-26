@@ -1,4 +1,4 @@
-﻿$(window).load(function () {
+$(window).load(function () {
     if ($.cookie('defaultsmwidth')) {
         var width = $.cookie('defaultsmwidth');
         resizeSMSection(width);
@@ -17,15 +17,34 @@
         }
     });
     resizeContent();
+
+
+    function ffalse()
+    {
+        return false;
+    }
+    function ftrue()
+    {
+        return true;
+    }
+    document.onselectstart = new Function ("return false");
+    if(window.sidebar)
+    {
+        document.onmousedown = ffalse;
+        document.onclick = ftrue;
+    }
+
 });
+
 window.onbeforeunload = function () {
     closeAllNotifications();
 };
+
 $(window).resize(function () {
     resizeContent();
 });
+
 function resizeContent() {
-    var screenwidth = $(window).width();
     $('.tabcontent').css({
         'height': (($(window).height() - 109)) + 'px'
     });
@@ -104,7 +123,6 @@ function resizeSMSection(x) {
         });
     }
 }
-
 
 function showLoad(){
     $('#loading').show();

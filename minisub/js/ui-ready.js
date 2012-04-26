@@ -601,4 +601,7 @@ $(document).ready(function () {
     $("#CurrentPlaylistContainer tbody").sortable({
         helper: fixHelper
     }).disableSelection();
+    
+    
+    authentification();
 });// End document.ready
