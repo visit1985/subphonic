@@ -37,6 +37,13 @@ if ($.cookie('CacheSize')) {
 } else {
     cacheSize = 3;
 }
+var maxbit;
+if ($.cookie('Maxbit')) {
+    maxbit = $.cookie('Maxbit');
+} else {
+    maxbit = 0;
+}
+
 var applicationName;
 if ($.cookie('ApplicationName')) {
     applicationName = $.cookie('ApplicationName');
@@ -268,6 +275,7 @@ function getAlbums(id, action, appendto) {
                         }
                         
                     }
+                    updateCssContainer();
                 });
                 if (appendto === '#CurrentPlaylistContainer') {
                     updateMessage(children.length + ' Song(s) Added');
@@ -327,6 +335,7 @@ function getAlbumListBy(id) {
                     }
                     $(albumhtml).appendTo("#AlbumRows");
                 });
+                updateCssContainer();
             } else {
                 emptyAll();
             }
@@ -390,6 +399,7 @@ function getRandomSongList(action, appendto) {
                 if (action === 'autoplay') {
                     autoPlay();
                 }
+                updateCssContainer();
             } else {
                 $(appendto).empty();
             }
@@ -576,7 +586,7 @@ function playSong(el, songid, albumid) {
                 var salt = Math.floor(Math.random() * 100000);
                 audio = soundManager.createSound({
                     id: 'audio',
-                    url: baseURL + '/stream.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&id=' + songid + '&salt=' + salt,
+                    url: baseURL + '/stream.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&id=' + songid + '&maxBitRate='+ maxbit +'&salt=' + salt,
                     stream: true,
                     whileloading: function () {
                         if (debug) {
@@ -683,10 +693,7 @@ function updateCache(){
 
 
 function setCache(list_track,numCache,current){
-   
-    
     track = list_track[current];
-    
     if(track.attr('childid') != undefined){   
         if(!$.isArray(cache[numCache])){
             cache[numCache] = new Array();
@@ -699,7 +706,7 @@ function setCache(list_track,numCache,current){
         }
         cache[numCache]['song'] = soundManager.createSound({
             id: cache[numCache]['songid'],
-            url: baseURL + '/stream.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&id=' + cache[numCache]['songid'] + '&salt=' + salt,
+            url: baseURL + '/stream.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&id=' + cache[numCache]['songid'] + '&maxBitRate='+ maxbit + '&salt=' + salt,
             whileplaying: function () {
                 var percent = this.position / this.duration;
                 var scrubber = $('#audio_wrapper0').find(".scrubber");
@@ -895,6 +902,7 @@ function search(type, query) {
                         songhtml = generateSongHTML(rowcolor, child.id, child.parent, track, child.title, child.artist, child.album, child.coverArt, child.userRating, time['m'], time['s']);
                         $(songhtml).appendTo("#SongRows");
                     });
+                    updateCssContainer();
                 }
             }else{
                 emptyAll();
@@ -903,6 +911,9 @@ function search(type, query) {
         }
     });
 }
+
+
+
 var starttime;
 var updater;
 function updateChatMessages() {
@@ -1673,4 +1684,19 @@ function emptyAll(){
     $("#AlbumHeader").empty();
     $("#SongHeader").empty();
     $("#SongRows").empty();
+}
+
+
+function updateCssContainer(){
+    if ($('#ArtistRows').html()){
+        $('#ArtistSearchContainer').show();
+    }else{
+        $('#ArtistSearchContainer').hide();
+    }
+    
+    if ($('#AlbumRows').html()){
+        $('#AlbumContainer').show();
+    }else{
+        $('#AlbumContainer').hide();
+    }
 }

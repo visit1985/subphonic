@@ -170,6 +170,8 @@
                             $('#Server').val($.cookie('Server'));
                             $('#CacheSize').val($.cookie('CacheSize'));
                             $('#ApplicationName').val($.cookie('ApplicationName'));
+                            $('#Maxbit option[value='+$.cookie('Maxbit')+']').attr("selected", "selected");
+
                             if ($.cookie('HideAZ')) {
                                 $('#HideAZ').attr('checked', true);
                             } else {
@@ -235,6 +237,17 @@
                                 <div class="clear"></div>
                                 <div class="inputwrap"><input type="checkbox" id="ScrollTitle" name="ScrollTitle" value="1" title="Scroll the Title Once"/></div>
                                 <label for="ScrollTitle">Scroll Title</label>
+                                <div class="clear"></div>
+                                <div class="inputwrap">
+                                    <label for="Maxbit">Max Bitrate</label>
+                                    <select id="Maxbit" name="Maxbit">
+                                        <option value="0">Unlimited</option>
+                                        <option value="320">320</option>
+                                        <option value="192">192</option>
+                                        <option value="128">128</option>
+                                        <option value="64">64</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="clear"></div>
