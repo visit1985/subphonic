@@ -113,7 +113,7 @@ en['tHideAZ'] = 'Hide A-Z at Bottom of Artists';
 en['tEnableNotifications'] = 'Enable Notifications When Tracks Change';
 en['tScrollTitle'] = 'Scroll the Title Once';
 
-en['labelLangue'] = 'Langue';
+en['labellanguage'] = 'language';
 
 en['changeLog'] = 'Change Log';
 

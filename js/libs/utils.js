@@ -1,6 +1,6 @@
 /* Reusable Functions */
 function confirmDelete() {
-    var question = confirm(langue['areYouSure']);
+    var question = confirm(language['areYouSure']);
     if (question) {
         return true;
     }

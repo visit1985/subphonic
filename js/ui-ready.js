@@ -529,9 +529,9 @@ $(document).ready(function () {
                 expires: 365
             });
         }
-        var langue = $('#langue').val();
-        if (langue != "") {
-            $.cookie('langue', langue, {
+        var language = $('#language').val();
+        if (language != "") {
+            $.cookie('language', language, {
                 expires: 365
             });
         }
@@ -587,7 +587,7 @@ $(document).ready(function () {
         $.cookie('HideAZ', null);
         $.cookie('CacheSize', null);
         $.cookie('Maxbit', null);
-        $.cookie('langue', null);
+        $.cookie('language', null);
         location.reload(true);
     });
     $('#ChangeLogShowMore').live('click', function () {
