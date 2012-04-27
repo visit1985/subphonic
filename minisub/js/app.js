@@ -10,6 +10,7 @@ var cache = new Array();
 var u = getParameterByName('u'); 
 var p = getParameterByName('p');
 var s = getParameterByName('s');
+var l = getParameterByName('l');
 if (u && p && s) {
     if (!$.cookie('username')) {
         $.cookie('username', u, {
@@ -26,8 +27,16 @@ if (u && p && s) {
             expires: 1
         });
     }
+    if(l){
+        if (!$.cookie('language')) {
+            $.cookie('language', l, {
+                expires: 1
+            });
+        }
+    }
     window.location.href = getPathFromUrl(window.location);
 }
+
 if ($.cookie('Server')) {
     baseURL = $.cookie('Server') + '/rest';
 }

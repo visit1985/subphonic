@@ -1,19 +1,19 @@
 
 function generateAlbumHeaderHTML() {
     var html;
-    html = '<tr><th></th><th></th><th>'+langue['album']+'</th><th>'+langue['artist']+'</th></tr>';
+    html = '<tr><th></th><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th></tr>';
     return html;
 }
 function generateAlbumHTML(rowcolor, childid, parentid, coverart, title, artist, rating) {
     var html;
     html = '<tr class=\"album ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\" userrating=\"' + rating + '\">';
-    html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" title=\"'+langue['tAddToCurrentPlaylist']+'\"></a>';
-    html += '<a class=\"play\" href=\"\" title=\"'+langue['tPlay']+'\"></a>';
-    html += '<a class=\"download\" href=\"\" title=\"'+langue['tDownload']+'\"></a>';
+    html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" title=\"'+language['tAddToCurrentPlaylist']+'\"></a>';
+    html += '<a class=\"play\" href=\"\" title=\"'+language['tPlay']+'\"></a>';
+    html += '<a class=\"download\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
     if (rating === 5) {
-        html += '<a class=\"favorite\" href=\"\" title=\"'+langue['tFavorite']+'\"></a>';
+        html += '<a class=\"favorite\" href=\"\" title=\"'+language['tFavorite']+'\"></a>';
     } else {
-        html += '<a class=\"rate\" href=\"\" title=\"'+langue['tAddToFavorite']+'\"></a>';
+        html += '<a class=\"rate\" href=\"\" title=\"'+language['tAddToFavorite']+'\"></a>';
     }
     html += '</td>';
     html += '<td class=\"albumart\"><img src=\"' + baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=50&id=' + coverart + '\" /></td>';
@@ -24,7 +24,7 @@ function generateAlbumHTML(rowcolor, childid, parentid, coverart, title, artist,
 }
 function generateArtistHeaderHTML() {
     var html;
-    html = '<tr><th></th><th>'+langue['artist']+'</th></tr>';
+    html = '<tr><th></th><th>'+language['artist']+'</th></tr>';
     return html;
 }
 function generateArtistHTML(rowcolor, childid, artist) {
@@ -38,7 +38,7 @@ function generateArtistHTML(rowcolor, childid, artist) {
 
 function generateSongHeaderHTML() {
     var html;
-    html = '<tr><th></th><th>'+langue['track']+'</th><th>'+langue['title']+'</th><th>'+langue['artist']+'</th><th>'+langue['album']+'</th><th class=\"alignright\">'+langue['time']+'</th></tr>';
+    html = '<tr><th></th><th>'+language['track']+'</th><th>'+language['title']+'</th><th>'+language['artist']+'</th><th>'+language['album']+'</th><th class=\"alignright\">'+language['time']+'</th></tr>';
     return html;
 }
 function generateSongHTML(rowcolor, childid, parentid, track, title, artist, album, coverart, rating, m, s) {    
@@ -60,14 +60,14 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
         html = '<tr class=\"song ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\" userrating=\"' + rating + '\">';
     }
     
-    html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" title=\"'+langue['tAddToCurrentPlaylist']+'\"></a>';
-    html += '<a class=\"remove\" href=\"\" title=\"'+langue['tRemove']+'\"></a>';
-    html += '<a class=\"play\" href=\"\" title=\"'+langue['tPlay']+'\"></a>';
-    html += '<a class=\"download\" href=\"\" title=\"'+langue['tDownload']+'\"></a>';
+    html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" title=\"'+language['tAddToCurrentPlaylist']+'\"></a>';
+    html += '<a class=\"remove\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
+    html += '<a class=\"play\" href=\"\" title=\"'+language['tPlay']+'\"></a>';
+    html += '<a class=\"download\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
     if (rating === 5) {
-        html += '<a class=\"favorite\" href=\"\" title=\"'+langue['tFavorite']+'"></a>';
+        html += '<a class=\"favorite\" href=\"\" title=\"'+language['tFavorite']+'"></a>';
     } else {
-        html += '<a class=\"rate\" href=\"\" title=\"'+langue['tAddToFavorite']+'\"></a>';
+        html += '<a class=\"rate\" href=\"\" title=\"'+language['tAddToFavorite']+'\"></a>';
     }
     html += '</td>';
     html += '<td class=\"track\">' + track + '</td>';

@@ -113,7 +113,7 @@ fr['tHideAZ'] = 'Masquer A-Z en dessous de la liste d\'artistes';
 fr['tEnableNotifications'] = 'Activer les notifications lors du changement de musique';
 fr['tScrollTitle'] = 'Faire défiler le titre de la musique';
 
-fr['labelLangue'] = 'Langue';
+fr['labellanguage'] = 'language';
 
 fr['changeLog'] = 'Mise à jour';
 

@@ -1,5 +1,5 @@
 
-<iframe src="<?php echo 'minisub/index.html?s='.$_['url'].'&u='.$_['user'].'&p='.$_['pass']; ?>" width="100%" id="ifm" ></iframe>
+<iframe src="<?php echo 'minisub/index.html?s='.$_['url'].'&u='.$_['user'].'&p='.$_['pass'].'&l='.$_['lang']; ?>" width="100%" id="ifm" ></iframe>
 
 
 <script language="JavaScript">
