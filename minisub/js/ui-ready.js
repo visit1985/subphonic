@@ -75,6 +75,29 @@ $(document).ready(function () {
         }
     });
 
+    //headphones clic
+    $('#HeadphonesArtistContainer li.item').live('click', function () {
+        $('#HeadphonesArtistContainer li').removeClass('selected');
+        $('#HeadphonesArtistContainer li').removeClass('selected');
+        $(this).addClass('selected');
+        getArtistHead($(this).attr("id"));
+    });
+    
+    $('table.songlist tr.albumHead a.want').live('click', function (event) {
+        var itemid = $(this).parent().parent().attr('childid');
+        var parentid = $(this).parent().parent().attr('parentid');
+        wantAlbum(itemid,parentid);
+        return false;
+    });
+    
+    $('tr.albumHead').live('click', function (e) {
+        var albumid = $(this).attr('childid');
+        getAlbumHead(albumid);
+        return false;
+    });
+
+
+
     // Main Click Events
     // Albums Click Event
     $('#MusicFolders').live('change', function () {
@@ -118,6 +141,10 @@ $(document).ready(function () {
         downloadItem(itemid,'item');
         return false;
     });
+    
+    
+    
+    
     $('tr.album a.rate').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
         rateSong(itemid, 5);
@@ -221,6 +248,9 @@ $(document).ready(function () {
         downloadItem(itemid,'item');
         return false;
     });
+    
+    
+    
     $('table.songlist tr.song a.add').live('click', function (event) {
         var track = $(this).parent().parent();
         $(track).clone().appendTo('#CurrentPlaylistContainer');

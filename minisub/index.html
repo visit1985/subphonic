@@ -25,7 +25,8 @@
         <script src="js/language.js" type="text/javascript"></script>
         <script src="js/libs/utils.js" type="text/javascript"></script>
         <script src="js/libs/player.js" type="text/javascript"></script>
-        <script src="js/libs/api.js" type="text/javascript"></script>
+        <script src="js/libs/subsonic-api.js" type="text/javascript"></script>
+        <script src="js/libs/headphones-api.js" type="text/javascript"></script>
         <script src="js/libs/auth.js" type="text/javascript"></script>
         <script src="js/libs/generator.js" type="text/javascript"></script>
         <script src="js/libs/chat.js" type="text/javascript"></script>
@@ -49,6 +50,7 @@
                     <li><a href="#tabLibrary" class="first" id="liTabLibrary"><img src="images/headphones_gd_16x14.png" /></a></li>
                     <li><a href="#tabCurrent" id="liTabCurrent"><img src="images/play_alt_gd_16x16.png" /></a></li>
                     <li><a href="#tabPlaylists" id="liTabPlaylists"><img src="images/list_gd_16x14.png" /></a></li>
+                    <li><a href="#tabHeadphones" id="liTabHeadphones"><img src="images/headphones_gd_16x14.png" /></a></li>
                     <li><a href="#tabPreferences" id="liPreferences" class="last"><img src="images/cog_16x16.png" /></a></li>
                 </ul>
                 <div class="toploading"></div>
@@ -150,6 +152,40 @@
                         </table>
                     </div>
                 </div>
+
+
+                <div id="tabHeadphones" class="tabcontent">
+                    <div class="actions floatleft">
+
+                    </div>
+                    <div class="subactions floatleft">
+
+                        <input type="text" id="HeadphonesSearch" class="medium" /><a href="#" class="button" id="HeadphonesAction_Search"><img src="images/magnifying_glass_alt_12x12.png" /></a>
+                    </div>
+                    <div id="HeadphonesAlbums" class="lgsection floatleft">
+                        <div class="loading"></div>
+                        <div id="HeadphonesArtists" class="smsection floatleft" tabindex="0">
+                            <div class="padder">
+                                <ul id="HeadphonesArtistContainer" class="simplelist mainlist noselect"></ul>
+                            </div>
+                        </div>
+
+                        <table id="ArtistSearchHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="ArtistHeaderHead"></thead>
+                            <tbody id="ArtistRowsHead"></tbody>
+                        </table>
+                        <table id="AlbumContainerHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="AlbumHeaderHead"></thead>
+                            <tbody id="AlbumRowsHead"></tbody>
+                        </table>
+                        <table id="SongContainerHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="SongHeaderHead"></thead>
+                            <tbody id="SongRowsHead"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
                 <div id="tabPreferences" class="tabcontent">
                     <div class="actions floatleft">
                         <a href="#" class="button" id="ResetPreferences"></a>

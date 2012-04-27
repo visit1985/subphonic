@@ -84,6 +84,9 @@ function loadTabContent(tab) {
             break;
         case '#tabPreferences':
             break;
+        case '#tabHeadphones':
+            getIndexHead();
+            break;
         default:
             break;
     }

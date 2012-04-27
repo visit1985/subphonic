@@ -5,6 +5,7 @@ fr['title'] = 'Titre';
 fr['artist'] = 'Artiste';
 fr['album'] = 'Album';
 fr['time'] = 'Durée';
+fr['typeAlbum'] = 'Type';
 
 fr['scrollTop'] = 'Remonter';
 

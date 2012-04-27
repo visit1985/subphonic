@@ -22,6 +22,42 @@ function generateAlbumHTML(rowcolor, childid, parentid, coverart, title, artist,
     html += '</tr>';
     return html;
 }
+
+function generateAlbumHeaderHTMLHead() {
+    var html;
+    html = '<tr><th></th><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th><th>'+language['typeAlbum']+'</th></tr>';
+    return html;
+}
+function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart,type) {
+    var html;
+    var rowcolor = 'odd';
+    if(status == 'Downloaded'){
+        rowcolor = 'green';
+    }
+    if(status == 'Skipped'){
+        rowcolor = 'blue';
+    }
+    if(status == 'Wanted'){
+        rowcolor = 'red';
+    }
+    if(status == 'Snatched'){
+        rowcolor = 'purple';
+    }
+    html = '<tr class=\"albumHead ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\">';
+    html += '<td class=\"itemactions\">';
+    if(status != 'Downloaded'){
+        html += '<a class=\"want\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
+    }
+    html += '</td>';
+    html += '<td class=\"albumart\"><img src=\"http://ec1.images-amazon.com/images/P/'+coverart+'.01.jpg\" height=60 width=60 /></td>';
+    html += '<td class=\"album\">' + title + '</td>';
+    html += '<td class=\"artist\">' + artist + '</td>';
+    html += '<td class=\"type\">' + type + '</td>';
+    html += '</tr>';
+    return html;
+}
+
+
 function generateArtistHeaderHTML() {
     var html;
     html = '<tr><th></th><th>'+language['artist']+'</th></tr>';
@@ -86,6 +122,27 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '</tr>';
     return html;
 }
+function generateSongHTMLHead(rowcolor, parentid, track, title, artist, album, coverart, m, s) {
+    var html;
+    if(track.Location != 'null'){
+        rowcolor = 'green';
+    }else{
+        rowcolor = 'red';
+    }
+    html = '<tr class=\"songHead ' + rowcolor + '\" parentid=\"' + parentid + '\">';
+    html += '<td></td>';
+    html += '<td class=\"track\">' + track + '</td>';
+    html += '<td class=\"title\">' + title + '</td>';
+    html += '<td class=\"artist\"><a href="javascript:getArtistHead(\''+parentid+'\',\'\',\'#AlbumRows\')">' + artist + '</a></td>';
+    html += '<td class=\"album\">' + album + '<img src=\"http://ec1.images-amazon.com/images/P/'+coverart+'.01.jpg\" height=25 width=25 /></td>';
+    if(m != '' || s!=''){
+        html += '<td class=\"time\">' + m + ':' + s + '</td>';
+    }else{
+        html += '<td class=\"time\"></td>';
+    }
+    html += '</tr>';
+    return html;
+}
 
 function emptyAll(){
     $("#ArtistHeader").empty();
@@ -109,6 +166,30 @@ function updateCssContainer(){
         $('#AlbumContainer').hide();
     }
 }
+
+function emptyAllHead(){
+    $("#ArtistHeaderHead").empty();
+    $("#ArtistRowsHead").empty();
+    $("#AlbumRowsHead").empty();
+    $("#AlbumHeaderHead").empty();
+    $("#SongHeaderHead").empty();
+    $("#SongRowsHead").empty();
+}
+
+function updateCssContainerHead(){
+    if ($('#ArtistRowsHead').html()){
+        $('#ArtistSearchHead').show();
+    }else{
+        $('#ArtistSearchHead').hide();
+    }
+    
+    if ($('#AlbumRowsHead').html()){
+        $('#AlbumContainerHead').show();
+    }else{
+        $('#AlbumContainerHead').hide();
+    }
+}
+
 
 function refreshRowColor() {
     $.each($('table.songlist tr.song'), function (i) {

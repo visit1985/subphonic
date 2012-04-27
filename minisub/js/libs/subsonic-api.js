@@ -563,13 +563,17 @@ function addToPlaylist(playlistid, from) {
             // Get songs from playlist
             var currentsongs = [];
             $.ajax({
-                url: baseURL + '/getPlaylist.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + playlistid,
-                method: 'GET',
-                dataType: 'jsonp',
-                timeout: 10000,
-                beforeSend: function (req) {
-                    req.setRequestHeader('Authorization', auth);
+                url: baseURL + '/getPlaylist.view',
+                type: 'POST',
+                data : {
+                    u : username,
+                    p : passwordenc,
+                    v : version,
+                    c : applicationName,
+                    f : 'jsonp',
+                    id : playlistid
                 },
+                dataType: 'jsonp',
                 success: function (data) {
                     // There is a bug in the API that doesn't return a JSON array for one artist
                     var children = [];
@@ -623,7 +627,7 @@ function addToPlaylist(playlistid, from) {
         } else {
             var reply = prompt("Choose a name for your new playlist.", "");
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: baseURL + '/createPlaylist.view',
                 dataType: 'jsonp',
                 timeout: 10000,

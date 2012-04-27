@@ -5,6 +5,7 @@ en['title'] = 'Title';
 en['artist'] = 'Artist';
 en['album'] = 'Album';
 en['time'] = 'Time';
+en['typeAlbum'] = 'Type';
 
 en['scrollTop'] = 'Scroll to top';
 en['areYouSure'] = 'Are you sure you want to delete the selected item(s)?';
