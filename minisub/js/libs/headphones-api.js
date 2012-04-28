@@ -104,7 +104,7 @@ function getAlbumHead(id) {
 }
 
 
-function wantAlbum(id,id_parent){
+function wantAlbum(id){
     showLoad();
     $.ajax({
         url: '/apps/minisub/templates/req.php',
@@ -118,7 +118,12 @@ function wantAlbum(id,id_parent){
         success: function (data) {
             hideLoad();
             if(data == 'OK'){
-                getArtistHead(id_parent);
+                 if($('#headphonesSystem li.selected').html() != null){
+                    $('#headphonesSystem li.selected').click();
+                }
+                if($('#HeadphonesArtistContainer li.selected').html() != null){
+                    $('#HeadphonesArtistContainer li.selected').click();
+                }
             }else{
                 alert(data);
             }
@@ -183,6 +188,11 @@ function searchHead(name) {
                 }
                 artisthtml = generateArtistHTMLHead(rowcolor, artist.id, artist.uniquename,artist.score,artist.url)
                 $('#ArtistRowsHead').append(artisthtml);
+            });
+            
+            $('a[rel="external"]').click(function() {
+                window.open($(this).attr('href'));
+                return false;
             });
             
             updateCssContainerHead();
@@ -322,7 +332,7 @@ function getUpcoming(){
                 } else {
                     rowcolor = 'odd';
                 }
-                albumhtml = generateWantUpHTMLHead(rowcolor,'',album.AlbumTitle, album.ArtistName,album.DateAdded,album.ReleaseDate,album.Type,album.Status)
+                albumhtml = generateWantUpHTMLHead(rowcolor,album.AlbumID,album.AlbumTitle, album.ArtistName,album.DateAdded,album.ReleaseDate,album.Type,album.Status)
                 $('#WantUpRowsHead').append(albumhtml);
             });
             updateCssContainerHead();

@@ -76,6 +76,9 @@ $(document).ready(function () {
     });
 
     //headphones clic
+    
+    
+    
     $('#getHistory').live('click', function () {
         $('#headphonesSystem li').removeClass('selected');
         $('#HeadphonesArtistContainer li').removeClass('selected');
@@ -107,12 +110,15 @@ $(document).ready(function () {
         getArtistHead($(this).attr("id"));
     });
     
-    $('table.songlist tr.albumHead a.want').live('click', function (event) {
+    $('table.songlist a.want').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
-        var parentid = $(this).parent().parent().attr('parentid');
-        wantAlbum(itemid,parentid);
+        wantAlbum(itemid);
         return false;
     });
+
+    
+    
+    
     $('table.songlist tr.albumHead a.wantSearchAlbum').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
         var parentid = $(this).parent().parent().attr('parentid');

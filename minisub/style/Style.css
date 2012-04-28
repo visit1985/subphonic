@@ -500,7 +500,7 @@ table.songlist tr.song td
 }
 table.songlist tr.song td.itemactions
 {
-    width: 80px;
+    width: 100px;
     padding-left: 27px;
 }
 table.songlist tr.song td.track
@@ -1177,7 +1177,7 @@ table.songlist tr.albumHead td
 table.songlist tr.albumHead td.itemactions
 {
     width: 85px;
-    padding-left: 10px;
+    padding-left: 27px;
 }
 table.songlist tr.albumHead td.albumart
 {
@@ -1282,8 +1282,6 @@ table.songlist tr.songHead td.time
     text-align: right;
 }
 
-
-
 table.songlist tr.artistHead
 {
     font-size: 13px;
@@ -1327,6 +1325,11 @@ table.songlist tr.historyHead td
 {
     padding: 4px 0 0 2px;
 }
+table.songlist tr.historyHead td.itemactions
+{
+    width: 80px;
+    padding-left: 27px;
+}
 table.songlist tr a.remove
 {
     width: 20px;
@@ -1339,4 +1342,34 @@ table.songlist tr a.remove
 table.songlist tr a.remove:hover
 {
     background: url('../images/minus_8x2.png') no-repeat 6px center #DEECFB;
+}
+
+
+table.songlist tr.wantUpHead td.itemactions
+{
+    width: 80px;
+    padding-left: 27px;
+}
+table.songlist tr.wantUpHead
+{
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    height: 50px;
+}
+table.songlist tr.wantUpHead td
+{
+    padding: 4px 0 0 2px;
+}
+table.songlist tr.wantUpHead a.want
+{
+    float: left;
+    width: 20px;
+    height: 50px;
+    display: block;
+    background: url('../images/plus_8x8.png') no-repeat 6px center;
+}
+table.songlist tr.wantUpHead a.want:hover
+{
+    background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
 }

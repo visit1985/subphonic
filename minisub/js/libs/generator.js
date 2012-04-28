@@ -86,16 +86,15 @@ function generateSearchHTMLHead(rowcolor, childid,parentid,title, artist,score,l
 
 function generateArtistHeaderHTMLHead() {
     var html;
-    html = '<tr><th></th><th>'+language['artist']+'</th><th>'+language['score']+'</th><th>'+language['link']+'</th></tr>';
+    html = '<tr><th></th><th>'+language['artist']+'</th><th>'+language['score']+'</th></tr>';
     return html;
 }
 function generateArtistHTMLHead(rowcolor, childid, artist,score,link) {
     var html;
     html = '<tr class=\"artistHead ' + rowcolor + '\" childid=\"' + childid +'\">';
     html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" "></a></td>';
-    html += '<td class=\"artist\">' + artist + '</td>';
+    html += '<td class=\"artist\"><a href=\"'+link+'\" rel=\"external\">' + artist + '</a></td>';
     html += '<td class=\"artist\">' + score + '</td>';
-    html += '<td class=\"artist\">' + link + '</td>';
     html += '</tr>';
     return html;
 }
@@ -195,7 +194,7 @@ function generateHistoryHeaderHTMLHead() {
 function generateHistoryHTMLHead(rowcolor,title, folder,date,status) {
     var html;
     html = '<tr class=\"historyHead ' + rowcolor + '\" >';
-    html += '<td></td>';
+    html += '<td class=\"itemactions\"></td>';
     html += '<td >' + title + '</td>';
     html += '<td >' + folder + '</td>';
     html += '<td >' + date + '</td>';
@@ -211,33 +210,29 @@ function generateWantUpHeaderHTMLHead() {
 }
 function generateWantUpHTMLHead(rowcolor,albumid,title, artist,addDate,releaseDate,type,status) {
     var html;
-    html = '<tr class=\"historyHead ' + rowcolor + '\" childid=\"' + albumid + '\">';
-    html += '<td>';
+    html = '<tr class=\"wantUpHead ' + rowcolor + '\" childid=\"' + albumid + '\">';
+    html += '<td class=\"itemactions\">';
     if(status == 'Wanted'){
         html += '<a class=\"remove\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
     }
+    if(status == 'Skipped'){
+        html += '<a class=\"want\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
+    }
+    
     html += '</td>';
     html += '<td class=\"album\">' + title + '</td>';
     html += '<td class=\"artist\">' + artist + '</td>';
-    html += '<td class=\"type\">' + addDate + '</td>';
+    if(status == 'Skipped'){
+        html += '<td class=\"type\"></td>'; 
+    }else{
+       html += '<td class=\"type\">' + addDate + '</td>'; 
+    }
     html += '<td class=\"type\">' + releaseDate + '</td>';
     html += '<td class=\"type\">' + type + '</td>';
     html += '<td class=\"type\">' + status + '</td>';
     html += '</tr>';
     return html;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 function emptyAll(){
     $("#ArtistHeader").empty();
