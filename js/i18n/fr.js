@@ -5,6 +5,14 @@ fr['title'] = 'Titre';
 fr['artist'] = 'Artiste';
 fr['album'] = 'Album';
 fr['time'] = 'Durée';
+fr['typeAlbum'] = 'Type';
+fr['status'] = 'Status';
+fr['score'] = 'Score';
+fr['link'] = 'Lien';
+fr['addDate'] = 'Ajouté le';
+fr['releaseDate'] = 'Date de sortie';
+fr['folder'] = 'Dossier';
+fr['search'] = 'Rechercher...';
 
 fr['scrollTop'] = 'Remonter';
 
@@ -82,11 +90,16 @@ fr['SavePreferences'] = 'Enregistrer';
 fr['tResetPreferences'] = 'Enregistrer les préférences';
 fr['tSavePreferences'] = 'Remettre à zéro les préférences';
 
-fr['h3Login'] = 'Connexion';
+fr['h3Login'] = 'Connexion à Subsonic';
 fr['labelUsername'] = 'Nom d\'utilisateur';
 fr['labelPassword'] = 'Mot de passe';
 fr['labelServer'] = 'Adresse du serveur';
 fr['tlabelServer'] = 'Adresse du serveur Subsonic Ex: http://host:port/subsonic';
+
+
+fr['h3LoginHeadphones'] = 'Connexion à Headphones';
+fr['apikey'] = 'Clefs API';
+
 
 fr['keyboardShortcuts'] = 'Raccourcis clavier';
 fr['shortcutsAz'] = '<em>[a-z]</em> Utiliser pour naviguer rapidement dans les artistes';
@@ -99,7 +112,7 @@ fr['options'] = 'Options';
 fr['labelAutoAlbumSize'] = 'Taille des albums automatiques (par défaut 15)';
 fr['labelAutoPlaylistSize'] = 'Taille des playlists automatiques (par défaut 25)';
 fr['labelCacheSize'] = 'Nombre de musiques dans le cache (par défaut 3)';
-fr['labelApplicationName'] = 'Nom de l\'application (Défaut MiniSub)';
+fr['labelApplicationName'] = 'Nom de l\'application (Défaut Subphonic)';
 fr['tAutoAlbumSize'] = 'Nombre d\'album à récupérer dans la bibliothèque';
 fr['tAutoPlaylistSize'] = 'Taille des playlists aléatoires';
 fr['tApplicationName'] = 'Modifier le nom de l\'application';
@@ -113,12 +126,12 @@ fr['tHideAZ'] = 'Masquer A-Z en dessous de la liste d\'artistes';
 fr['tEnableNotifications'] = 'Activer les notifications lors du changement de musique';
 fr['tScrollTitle'] = 'Faire défiler le titre de la musique';
 
-fr['labellanguage'] = 'language';
+fr['labellanguage'] = 'Langue : ';
 
 fr['changeLog'] = 'Mise à jour';
 
 fr['thanks'] = 'Remerciements';
-fr['minisubBase'] = 'Base de MiniSub à Tsquillario';
+fr['SubphonicBase'] = 'Base de Subphonic à Tsquillario';
 fr['icons'] = 'Icones - <a href="http://somerandomdude.com/work/iconic" target="_blank">http://somerandomdude.com/work/iconic</a>';
 fr['audioLibrary'] = 'Librairie Audio - <a href="http://www.schillmania.com/projects/soundmanager2" target="_blank">http://www.schillmania.com/projects/soundmanager2</a>';
 
@@ -133,3 +146,9 @@ fr['tPlayTrack'] = 'Jouer/Pause';
 fr['tNextTrack'] = 'Musique suivante';
 
 fr['taction_ToggleSideBar'] = 'Montrer le menu latéral';
+
+fr['paramHead'] = 'Options';
+fr['getHistory'] = 'Historique';
+fr['getLogs'] = 'Logs';
+fr['getWanted'] = 'Wanted';
+fr['getUpcoming'] = 'Prochainement';

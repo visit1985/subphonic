@@ -34,6 +34,8 @@ $(window).load(function () {
         document.onclick = ftrue;
     }
 
+    $(document).bind('contextmenu',function(e){ return false; });
+
 });
 
 window.onbeforeunload = function () {
@@ -71,15 +73,15 @@ function resizeContent() {
             'height': (sbheight - 166) + 'px'
         });
     } else {
-        var tabwidth = $(window).width() - 58;
+        tabwidth = $(window).width() - 58;
         if (tabwidth >= 700) {
             $('.tabcontent').css({
                 'width': tabwidth + 'px'
             });
         }
     }
-    var tabwidth = $('.tabcontent').width();
-    $('#AlbumContainer, #TrackContainer, #CurrentPlaylistContainer, #ArtistSearchContainer, #SongContainer').css({
+    tabwidth = $('.tabcontent').width();
+    $('#AlbumContainer, #TrackContainer, #CurrentPlaylistContainer, #ArtistSearchContainer, #SongContainer, #ArtistSearchHead, #AlbumContainerHead, #SongContainerHead, #HistoryContainerHead, #WantUpContainerHead').css({
         'width': (tabwidth - smwidth - 30) + 'px'
     });
     $('#CurrentPlaylistContainer').css({
@@ -119,6 +121,24 @@ function resizeSMSection(x) {
             'margin-left': ulwidth + 'px'
         });
         $('#TrackContainer').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#ArtistSearchHead').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#AlbumContainerHead').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#SongContainerHead').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#SongContainerHead').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#HistoryContainerHead').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#WantUpContainerHead').css({
             'margin-left': ulwidth + 'px'
         });
     }

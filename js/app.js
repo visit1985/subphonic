@@ -11,7 +11,17 @@ var u = getParameterByName('u');
 var p = getParameterByName('p');
 var s = getParameterByName('s');
 var l = getParameterByName('l');
+var uh = getParameterByName('uh'); 
+var ph = getParameterByName('ph');
+var sh = getParameterByName('sh');
+var ah = getParameterByName('ah');
+
+reload = false;
 if (u && p && s) {
+    $.cookie('username', null);
+    $.cookie('password', null);
+    $.cookie('Server', null);
+    
     if (!$.cookie('username')) {
         $.cookie('username', u, {
             expires: 1
@@ -27,15 +37,58 @@ if (u && p && s) {
             expires: 1
         });
     }
-    if(l){
-        if (!$.cookie('language')) {
-            $.cookie('language', l, {
-                expires: 1
-            });
-        }
+    reload = true;
+}
+
+if(l){
+    $.cookie('language', null);
+    
+    if (!$.cookie('language')) {
+        $.cookie('language', l, {
+            expires: 1
+        });
     }
+    reload = true;
+}
+
+if(uh && ph && sh && ah){
+    $.cookie('username_headphones', null);
+    $.cookie('password_headphones', null);
+    $.cookie('server_headphones', null);
+    $.cookie('apikey_headphones', null);
+    
+    if (!$.cookie('username_headphones')) {
+        $.cookie('username_headphones', uh, {
+            expires: 1
+        });
+    }
+    if (!$.cookie('password_headphones')) {
+        $.cookie('password_headphones', ph, {
+            expires: 1
+        });
+    }
+    if (!$.cookie('server_headphones')) {
+        $.cookie('server_headphones', sh, {
+            expires: 1
+        });
+    }
+    if (!$.cookie('apikey_headphones')) {
+        $.cookie('apikey_headphones', ah, {
+            expires: 1
+        });
+    }
+    reload = true;
+}
+    
+    
+    
+    
+    
+    
+if(reload){
     window.location.href = getPathFromUrl(window.location);
 }
+
 
 if ($.cookie('Server')) {
     baseURL = $.cookie('Server') + '/rest';
@@ -57,13 +110,9 @@ var applicationName;
 if ($.cookie('ApplicationName')) {
     applicationName = $.cookie('ApplicationName');
 } else {
-    applicationName = 'MiniSub';
+    applicationName = 'Subphonic';
 }
-var username = $.cookie('username');
-var password = $.cookie('password');
-var auth = makeBaseAuth(username, password);
-var passwordenc = 'enc:' + HexEncode($.cookie('password'));
-var version = '1.6.0';
+
 
 function loadTabContent(tab) {
     switch (tab) {
@@ -83,6 +132,9 @@ function loadTabContent(tab) {
             loadPlaylists();
             break;
         case '#tabPreferences':
+            break;
+        case '#tabHeadphones':
+            getIndexHead();
             break;
         default:
             break;

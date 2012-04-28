@@ -8,6 +8,11 @@ function authentification(){
     $('#ApplicationName').val($.cookie('ApplicationName'));
     $('#Maxbit option[value='+$.cookie('Maxbit')+']').attr("selected", "selected");
     $('#language option[value='+$.cookie('language')+']').attr("selected", "selected");
+    
+    $('#UsernameHeadphones').val($.cookie('username_headphones'));
+    $('#PasswordHeadphones').val($.cookie('password_headphones'));
+    $('#ServerHeadphones').val($.cookie('server_headphones'));
+    $('#ApikeyHeadphones').val($.cookie('apikey_headphones'));
 
     if ($.cookie('HideAZ')) {
         $('#HideAZ').attr('checked', true);
