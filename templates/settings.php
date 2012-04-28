@@ -1,6 +1,6 @@
-<form id="minisub">
+<form id="Subphonic">
     <fieldset class="personalblock">
-        <strong style="font-size: 1.2em;">Minisub settings : </strong><br />
+        <strong style="font-size: 1.2em;">Subphonic settings : </strong><br />
         <div style="position: relative; left: 10px;">
             <strong>Subsonic settings : </strong><br />
             <div style="position: relative; left: 10px;">

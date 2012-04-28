@@ -1,10 +1,15 @@
 <?xml version="1.0"?>
 <info>
-	<id>minisub</id>
-	<name>MiniSub</name>
-	<description>MiniSub is an Mini Subsonic player for ownCloud</description>
-	<version>0.2</version>
+	<id>subphonic</id>
+	<name>Subphonic</name>
+	<description>
+            Subphonic lets you play music from subsonic in owncloud and also to use headphones.
+            Tanks to : tsquillario for MiniSub (https://github.com/tsquillario/MiniSub), 
+            rembo10 for Headphones (https://github.com/rembo10/headphones) and 
+            Sindre for Subsonic (http://www.subsonic.org)
+        </description>
+	<version>1.0</version>
 	<licence>AGPL</licence>
-	<author>Create by tsquillario adapted to owncloud by Loïc Gevrey (Zoic21)</author>
+	<author>Create by Zoic21</author>
 	<require>2</require>
 </info>

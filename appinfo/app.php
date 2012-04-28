@@ -6,10 +6,10 @@
 * later.
 * See the COPYING-README file.
 */
-OC_APP::registerAdmin('minisub','settings');
+OC_APP::registerAdmin('subphonic','settings');
 
 
-OC_App::register( array( 'order' => 70, 'id' => 'minisub', 'name' => 'MiniSub' ));
+OC_App::register( array( 'order' => 70, 'id' => 'subphonic', 'name' => 'Subphonic' ));
 
-OC_App::addNavigationEntry( array( 'id' => 'minisub_index', 'order' => 70, 'href' => OC_Helper::linkTo( 'minisub', 'index.php' ), 'icon' => OC_Helper::imagePath( 'minisub', 'subsonic.png' ), 'name' => 'MiniSub' ));
+OC_App::addNavigationEntry( array( 'id' => 'subphonic_index', 'order' => 70, 'href' => OC_Helper::linkTo( 'subphonic', 'index.php' ), 'icon' => OC_Helper::imagePath( 'subphonic', 'subsonic.png' ), 'name' => 'Subphonic' ));
 
