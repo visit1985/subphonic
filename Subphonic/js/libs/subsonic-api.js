@@ -562,7 +562,6 @@ function addToPlaylist(playlistid, from) {
         });
     }
     
-    
     if (selected.length > 0) {
         if (playlistid !== 'new') { // Create new playlist from here, will implement in UI later
             // Get songs from playlist
@@ -592,7 +591,6 @@ function addToPlaylist(playlistid, from) {
                             currentsongs.push(child.id);
                         });
                     }
-                    var newsongs = [];
                     var count = 0;
                     $.each(selected, function (i, songid) {
                         if (jQuery.inArray(songid, currentsongs) === -1) {
@@ -602,21 +600,18 @@ function addToPlaylist(playlistid, from) {
                     });
                     if (count > 0) {
                         $.ajax({
-                            type: 'POST',
                             url: baseURL + '/createPlaylist.view',
-                            dataType: 'jsonp',
-                            timeout: 100000,
+                            dataType: 'text',
+                            type: 'POST',
+                            timeout: 10000,
                             data: {
                                 u: username, 
                                 p: passwordenc, 
                                 v: version, 
                                 c: applicationName, 
-                                f: "jsonp", 
+                                f: "xml", 
                                 playlistId: playlistid, 
-                                songId: currentsongs
-                            },
-                            beforeSend: function (req) {
-                                req.setRequestHeader('Authorization', auth);
+                                songId:  currentsongs
                             },
                             success: function () {
                                 $('table.songlist tr.song').each(function () {
@@ -634,7 +629,7 @@ function addToPlaylist(playlistid, from) {
             $.ajax({
                 type: 'POST',
                 url: baseURL + '/createPlaylist.view',
-                dataType: 'jsonp',
+                dataType: 'json',
                 timeout: 10000,
                 data: {
                     u: username, 
@@ -644,9 +639,6 @@ function addToPlaylist(playlistid, from) {
                     f: "jsonp", 
                     name: ""+reply+"", 
                     songId: selected
-                },
-                beforeSend: function (req) {
-                    req.setRequestHeader('Authorization', auth);
                 },
                 success: function () {
                     $('table.songlist tr.song').each(function () {

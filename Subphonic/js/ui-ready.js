@@ -39,10 +39,10 @@ $(document).ready(function () {
     });
 
     // Ajax Loading Screen
-    $(".toploading").ajaxStart(function () {
+    $('#loading').ajaxStart(function () {
         $(this).show();
     });
-    $(".toploading").ajaxStop(function () {
+    $('#loading').ajaxStop(function () {
         $(this).hide();
     });
 
@@ -112,13 +112,11 @@ $(document).ready(function () {
     
     $('table.songlist a.want').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
-        wantAlbum(itemid);
+        var parentid = $(this).parent().parent().attr('parentid');
+        wantAlbum(itemid,parentid);
         return false;
     });
 
-    
-    
-    
     $('table.songlist tr.albumHead a.wantSearchAlbum').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
         var parentid = $(this).parent().parent().attr('parentid');
@@ -157,7 +155,36 @@ $(document).ready(function () {
         return false;
     });
 
+    $('a#action_maintenanceHeadphones').live('click', function () {
+        $('div#submenu_maintenanceHeadphones').empty();
+        var submenu = $('div#submenu_maintenanceHeadphones');
+        if (submenu.is(":visible")) {
+            submenu.fadeOut();
+        } else {
+            $('#submenu_maintenanceHeadphones').append('<a id="forceSearch">'+language['forceSearchHead']+'<a/><br/>')
+            $('#submenu_maintenanceHeadphones').append('<a id="forceProcess">'+language['forceProcessHead']+'<a/><br/>')
+           getHeadVersion($('#submenu_maintenanceHeadphones'));
+            //get the position of the placeholder element
+            pos = $(this).offset();
+            width = $(this).width();
+            height = $(this).height();
+            //show the menu directly over the placeholder
+            submenu.css({
+                "left": (pos.left) + "px", 
+                "top": (pos.top + height + 14) + "px"
+            }).fadeIn(400);
+        }
+        return false;
+    });
 
+    $('#forceSearch').live('click', function (event) {
+        forceSearch();
+        return false;
+    });
+    $('#forceProcess').live('click', function (event) {
+        forceProcess();
+        return false;
+    });
 
     // Main Click Events
     // Albums Click Event

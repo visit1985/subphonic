@@ -96,7 +96,7 @@ function resizeSMSection(x) {
     var smwidth = $('.smsection').width();
     var newsmwidth = smwidth + parseInt(x);
     var newwidth = newsmwidth - defwidth;
-    if (smwidth != newsmwidth && newsmwidth > 150 && newsmwidth < 500) {
+    if (smwidth != newsmwidth && newsmwidth > 200 && newsmwidth < 500) {
         $('.smsection').css({
             'width': (newsmwidth) + 'px'
         });

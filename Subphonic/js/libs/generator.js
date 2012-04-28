@@ -48,7 +48,7 @@ function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart
     if(status != 'Downloaded' && status != 'Snatched' && status != 'Wanted'){
         html += '<a class=\"want\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
     }
-    if(status == 'Wanted'){
+    if(status == 'Wanted' || status == 'Snatched'){
         html += '<a class=\"remove\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
     }
     html += '</td>';

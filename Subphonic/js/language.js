@@ -143,7 +143,7 @@ $(document).ready(function () {
     
     $('#liArtist').html(language['artist']);
     
-
+    $('#action_maintenanceHeadphones').html(language['maintenanceHeadphones']);
 });
 
 

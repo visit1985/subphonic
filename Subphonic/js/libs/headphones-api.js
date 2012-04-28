@@ -3,7 +3,7 @@ var passwordHead = $.cookie('password_headphones');
 var urlHead = $.cookie('server_headphones');
 var apikeyHead = $.cookie('apikey_headphones');
 var baseURLHead = urlHead+'/api?apikey='+apikeyHead;
-
+var versionHead;
 
 function getIndexHead(refresh) {
     if (refresh) {
@@ -104,7 +104,7 @@ function getAlbumHead(id) {
 }
 
 
-function wantAlbum(id){
+function wantAlbum(id,parentid){
     showLoad();
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
@@ -118,12 +118,18 @@ function wantAlbum(id){
         success: function (data) {
             hideLoad();
             if(data == 'OK'){
-                 if($('#headphonesSystem li.selected').html() != null){
+                if($('#headphonesSystem li.selected').html() != null){
                     $('#headphonesSystem li.selected').click();
+                }else{
+                    if($('#HeadphonesArtistContainer li.selected').html() != null){
+                        $('#HeadphonesArtistContainer li.selected').click();
+                    }else{
+                        if(parentid){
+                            getArtistHead(parentid)
+                        }
+                    }
                 }
-                if($('#HeadphonesArtistContainer li.selected').html() != null){
-                    $('#HeadphonesArtistContainer li.selected').click();
-                }
+                
             }else{
                 alert(data);
             }
@@ -134,6 +140,7 @@ function wantAlbum(id){
 function searchHead(name) {
     showLoad();
     emptyAllHead();
+    name=name.replace(/ /g,'%20');
     /*$.ajax({
         url: '/apps/subphonic/templates/req.php',
         type: 'POST',
@@ -270,7 +277,8 @@ function getLogs(){
         },
         success: function (data) {
             hideLoad();
-            $('#ArtistRowsHead').append('Not implemented in the API headphones');
+            $('#ArtistRowsHead').append('<center>Not implemented in the API headphones (maybe soon)</center>');
+            updateCssContainerHead();
         }
     });
 }
@@ -341,7 +349,6 @@ function getUpcoming(){
     });
 }
 
-
 function removeWant(id){
     showLoad();
     $.ajax({
@@ -367,6 +374,58 @@ function removeWant(id){
             }
         }
     });
-    
-    
+}
+
+function getHeadVersion(appendto){
+    if(versionHead){
+        appendto.append(versionHead);
+    }else{
+        $.ajax({
+            url: '/apps/subphonic/templates/req.php',
+            type: 'POST',
+            dataType: 'json',
+            data: { 
+                u: usernameHead, 
+                p: passwordHead,
+                r : baseURLHead+'&cmd=getVersion'
+            },
+            success: function (data) {
+                versionHead = '<div style=\"font-size : 0.7em;\"><br/>Version :<br/>'+data.current_version;
+                versionHead += '<br/>Latest :<br/>'+data.latest_version+'</div>';
+                appendto.append(versionHead);
+            }
+        });
+    }
+}
+
+function forceProcess(){
+    $.ajax({
+        url: '/apps/subphonic/templates/req.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=forceProcess'
+        },
+        success: function (data) {
+            
+        }
+    });
+}
+
+function forceSearch(){
+    $.ajax({
+        url: '/apps/subphonic/templates/req.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=forceSearch'
+        },
+        success: function (data) {
+            
+        }
+    });
 }

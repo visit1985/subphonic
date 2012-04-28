@@ -152,3 +152,8 @@ en['getHistory'] = 'Historique';
 en['getLogs'] = 'Logs';
 en['getWanted'] = 'Wanted';
 en['getUpcoming'] = 'Upcoming';
+
+en['maintenanceHeadphones'] = 'Maintenance';
+
+en['forceSearchHead'] = 'Force search';
+en['forceProcessHead'] = 'Force process';

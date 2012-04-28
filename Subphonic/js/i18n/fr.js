@@ -160,3 +160,8 @@ fr['getHistory'] = 'Historique';
 fr['getLogs'] = 'Logs';
 fr['getWanted'] = 'Wanted';
 fr['getUpcoming'] = 'Prochainement';
+
+fr['maintenanceHeadphones'] = 'Maintenance';
+
+fr['forceSearchHead'] = 'Forcer la recherche';
+fr['forceProcessHead'] = 'Forcer le traitement';
