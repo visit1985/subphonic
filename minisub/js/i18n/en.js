@@ -10,7 +10,9 @@ en['status'] = 'Status';
 en['score'] = 'Score';
 en['link'] = 'Link';
 en['addDate'] = 'Date added';
+en['releaseDate'] = 'Release date';
 en['folder'] = 'Folder';
+en['search'] = 'Search...';
 
 en['scrollTop'] = 'Scroll to top';
 en['areYouSure'] = 'Are you sure you want to delete the selected item(s)?';

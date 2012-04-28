@@ -25,10 +25,10 @@ function generateAlbumHTML(rowcolor, childid, parentid, coverart, title, artist,
 
 function generateAlbumHeaderHTMLHead() {
     var html;
-    html = '<tr><th></th><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th><th>'+language['typeAlbum']+'</th><th>'+language['status']+'</th></tr>';
+    html = '<tr><th></th><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th><th>'+language['typeAlbum']+'</th><th>'+language['releaseDate']+'</th><th>'+language['status']+'</th></tr>';
     return html;
 }
-function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart,type) {
+function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart,type,date) {
     var html;
     var rowcolor = 'odd';
     if(status == 'Downloaded'){
@@ -45,14 +45,18 @@ function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart
     }
     html = '<tr class=\"albumHead ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\">';
     html += '<td class=\"itemactions\">';
-    if(status != 'Downloaded' || status != 'Snatched'){
+    if(status != 'Downloaded' && status != 'Snatched' && status != 'Wanted'){
         html += '<a class=\"want\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
+    }
+    if(status == 'Wanted'){
+        html += '<a class=\"remove\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
     }
     html += '</td>';
     html += '<td class=\"albumart\"><img src=\"http://ec1.images-amazon.com/images/P/'+coverart+'.01.jpg\" height=60 width=60 /></td>';
     html += '<td class=\"album\">' + title + '</td>';
     html += '<td class=\"artist\">' + artist + '</td>';
     html += '<td class=\"type\">' + type + '</td>';
+    html += '<td class=\"type\">' + date + '</td>';
     html += '<td class=\"type\">' + status + '</td>';
     html += '</tr>';
     return html;
@@ -205,10 +209,14 @@ function generateWantUpHeaderHTMLHead() {
     html = '<tr><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th><th>'+language['addDate']+'</th><th>'+language['releaseDate']+'</th><th>'+language['typeAlbum']+'</th><th>'+language['status']+'</th></tr>';
     return html;
 }
-function generateWantUpHTMLHead(rowcolor,title, artist,addDate,releaseDate,type,status) {
+function generateWantUpHTMLHead(rowcolor,albumid,title, artist,addDate,releaseDate,type,status) {
     var html;
-    html = '<tr class=\"historyHead ' + rowcolor + '\" >';
-    html += '<td></td>';
+    html = '<tr class=\"historyHead ' + rowcolor + '\" childid=\"' + albumid + '\">';
+    html += '<td>';
+    if(status == 'Wanted'){
+        html += '<a class=\"remove\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
+    }
+    html += '</td>';
     html += '<td class=\"album\">' + title + '</td>';
     html += '<td class=\"artist\">' + artist + '</td>';
     html += '<td class=\"type\">' + addDate + '</td>';

@@ -145,6 +145,11 @@ $(document).ready(function () {
         return false;
     });
     
+    $('table.songlist tr a.remove').live('click', function (event) {
+        var itemid = $(this).parent().parent().attr('childid');
+        removeWant(itemid);
+        return false;
+    });
 
 
 

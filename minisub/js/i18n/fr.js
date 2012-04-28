@@ -10,7 +10,9 @@ fr['status'] = 'Status';
 fr['score'] = 'Score';
 fr['link'] = 'Lien';
 fr['addDate'] = 'Ajouté le';
+fr['releaseDate'] = 'Date de sortie';
 fr['folder'] = 'Dossier';
+fr['search'] = 'Rechercher...';
 
 fr['scrollTop'] = 'Remonter';
 

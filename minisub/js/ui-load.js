@@ -34,6 +34,8 @@ $(window).load(function () {
         document.onclick = ftrue;
     }
 
+    $(document).bind('contextmenu',function(e){ return false; });
+
 });
 
 window.onbeforeunload = function () {

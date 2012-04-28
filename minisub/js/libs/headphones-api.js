@@ -24,10 +24,6 @@ function getIndexHead(refresh) {
             success: function (data) {     
                 var artists = [];
                 artists = data;
-                html = '<li class=\"index\">';
-                html += '<span>' + language['artist'] + '</span>';
-                html += '</li>';
-                $(html).appendTo("#HeadphonesArtistContainer");
                 
                 $.each(artists, function (i, artist) {
                     if (artist.ArtistName !== undefined) {
@@ -37,6 +33,10 @@ function getIndexHead(refresh) {
                         html += '</li>';
                         $(html).appendTo("#HeadphonesArtistContainer");
                     }
+                });
+                
+                $('#artist_filter_head').liveFilter({
+                    defaultText: language['search']
                 });
             }
         });
@@ -62,7 +62,7 @@ function getArtistHead(id) {
             $('#AlbumHeaderHead').html(header);
             
             $.each(data.albums, function (i, album) {
-                albumhtml = generateAlbumHTMLHead(album.Status, album.AlbumID, album.ArtistID, album.AlbumTitle, album.ArtistName,album.AlbumASIN,album.Type);
+                albumhtml = generateAlbumHTMLHead(album.Status, album.AlbumID, album.ArtistID, album.AlbumTitle, album.ArtistName,album.AlbumASIN,album.Type,album.ReleaseDate);
                 $('#AlbumRowsHead').append(albumhtml);
             });
             
@@ -289,7 +289,7 @@ function getWanted(){
                 } else {
                     rowcolor = 'odd';
                 }
-                albumhtml = generateWantUpHTMLHead(rowcolor,album.AlbumTitle, album.ArtistName,album.DateAdded,album.ReleaseDate,album.Type,album.Status)
+                albumhtml = generateWantUpHTMLHead(rowcolor,album.AlbumID,album.AlbumTitle, album.ArtistName,album.DateAdded,album.ReleaseDate,album.Type,album.Status)
                 $('#WantUpRowsHead').append(albumhtml);
             });
             updateCssContainerHead();
@@ -322,11 +322,41 @@ function getUpcoming(){
                 } else {
                     rowcolor = 'odd';
                 }
-                albumhtml = generateWantUpHTMLHead(rowcolor,album.AlbumTitle, album.ArtistName,album.DateAdded,album.ReleaseDate,album.Type,album.Status)
+                albumhtml = generateWantUpHTMLHead(rowcolor,'',album.AlbumTitle, album.ArtistName,album.DateAdded,album.ReleaseDate,album.Type,album.Status)
                 $('#WantUpRowsHead').append(albumhtml);
             });
             updateCssContainerHead();
             
         }
     });
+}
+
+
+function removeWant(id){
+    showLoad();
+    $.ajax({
+        url: '/apps/minisub/templates/req.php',
+        type: 'POST',
+        dataType: 'text',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=unqueueAlbum&id='+id
+        },
+        success: function (data) {
+            hideLoad();
+            if(data == 'OK'){
+                if($('#headphonesSystem li.selected').html() != null){
+                    $('#headphonesSystem li.selected').click();
+                }
+                if($('#HeadphonesArtistContainer li.selected').html() != null){
+                    $('#HeadphonesArtistContainer li.selected').click();
+                }
+            }else{
+                alert(data);
+            }
+        }
+    });
+    
+    
 }

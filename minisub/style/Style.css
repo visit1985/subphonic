@@ -1197,23 +1197,37 @@ table.songlist tr.albumHead a.want
     width: 20px;
     height: 50px;
     display: block;
-    background: url('../images/download_gl_9x12.png') no-repeat 5px center;
+    background: url('../images/plus_8x8.png') no-repeat 6px center;
 }
 table.songlist tr.albumHead a.want:hover
 {
-    background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
+    background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
 }
+table.songlist tr.albumHead a.remove
+{
+    float: left;
+    width: 20px;
+    height: 50px;
+    display: block;
+    background: url('../images/minus_gl_8x2.png') no-repeat 6px center;
+}
+table.songlist tr.albumHead a.remove:hover
+{
+    background: url('../images/minus_8x2.png') no-repeat 6px center #DEECFB;
+}
+
+
 table.songlist tr.albumHead a.wantSearchAlbum
 {
     float: left;
     width: 20px;
     height: 50px;
     display: block;
-    background: url('../images/download_gl_9x12.png') no-repeat 5px center;
+    background: url('../images/plus_8x8.png') no-repeat 6px center;
 }
 table.songlist tr.albumHead a.wantSearchAlbum:hover
 {
-    background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
+    background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
 }
 
 table.songlist tr.albumHead td.title
@@ -1312,4 +1326,17 @@ table.songlist tr.historyHead
 table.songlist tr.historyHead td
 {
     padding: 4px 0 0 2px;
+}
+table.songlist tr a.remove
+{
+    width: 20px;
+    height: 20px;
+    display: block;
+    float: left;
+    margin: 0;
+    background: url('../images/minus_gl_8x2.png') no-repeat 6px center;
+}
+table.songlist tr a.remove:hover
+{
+    background: url('../images/minus_8x2.png') no-repeat 6px center #DEECFB;
 }

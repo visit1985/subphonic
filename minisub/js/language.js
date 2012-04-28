@@ -138,6 +138,9 @@ $(document).ready(function () {
     $('#getLogs').html(language['getLogs']);
     $('#getWanted').html(language['getWanted']);
     $('#getUpcoming').html(language['getUpcoming']);
+    
+    $('#liArtist').html(language['artist']);
+    
 
 });
 

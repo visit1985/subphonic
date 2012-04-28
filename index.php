@@ -31,6 +31,10 @@ OC_App::setActiveNavigationEntry('minisub_index');
 
 $tmpl = new OC_Template('minisub', 'frame', 'user');
 $url = OC_Appconfig::getValue("minisub", "addr_subsonic", '');
+
+
+$url = str_replace('localhost', $_SERVER['REMOTE_ADDR'], $url);
+$url = str_replace('127.0.0.1', $_SERVER['REMOTE_ADDR'], $url);
 $tmpl->assign('url', $url);
 $user = OC_Appconfig::getValue("minisub", "user_subsonic", '');
 $tmpl->assign('user', $user);
