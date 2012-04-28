@@ -129,7 +129,9 @@ en['labellanguage'] = 'language';
 en['changeLog'] = 'Change Log';
 
 en['thanks'] = 'Thanks';
-en['SubphonicBase'] = 'Subphonic (base) to Tsquillario';
+en['SubphonicBase'] = 'tsquillario for MiniSub (https://github.com/tsquillario/MiniSub)';
+en['Heaphones'] = 'rembo10 for Headphones (https://github.com/rembo10/headphones)';
+en['Subsonic'] = 'Sindre for Subsonic (http://www.subsonic.org)';
 en['icons'] = 'Icons - <a href="http://somerandomdude.com/work/iconic" target="_blank">http://somerandomdude.com/work/iconic</a>';
 en['audioLibrary'] = 'Audio Library - <a href="http://www.schillmania.com/projects/soundmanager2" target="_blank">http://www.schillmania.com/projects/soundmanager2</a>';
 

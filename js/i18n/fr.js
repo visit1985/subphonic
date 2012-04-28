@@ -131,9 +131,17 @@ fr['labellanguage'] = 'Langue : ';
 fr['changeLog'] = 'Mise à jour';
 
 fr['thanks'] = 'Remerciements';
-fr['SubphonicBase'] = 'Base de Subphonic à Tsquillario';
+fr['SubphonicBase'] = 'tsquillario pour MiniSub (https://github.com/tsquillario/MiniSub)';
+fr['Heaphones'] = 'rembo10 pour Headphones (https://github.com/rembo10/headphones)';
+fr['Subsonic'] = 'Sindre pour Subsonic (http://www.subsonic.org)';
 fr['icons'] = 'Icones - <a href="http://somerandomdude.com/work/iconic" target="_blank">http://somerandomdude.com/work/iconic</a>';
 fr['audioLibrary'] = 'Librairie Audio - <a href="http://www.schillmania.com/projects/soundmanager2" target="_blank">http://www.schillmania.com/projects/soundmanager2</a>';
+
+
+
+
+
+
 
 fr['tChatMsg'] = 'Presser [Entrée] pour envoyer votre message';
 

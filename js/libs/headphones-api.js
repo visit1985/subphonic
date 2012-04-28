@@ -13,7 +13,7 @@ function getIndexHead(refresh) {
     var content = $('#HeadphonesArtistContainer').html();
     if (content === "") {
         $.ajax({
-            url: '/apps/Subphonic/templates/req.php',
+            url: '/apps/subphonic/templates/req.php',
             type: 'POST',
             dataType: 'json',
             data: { 
@@ -46,7 +46,7 @@ function getIndexHead(refresh) {
 function getArtistHead(id) {
     showLoad();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'json',
         data: { 
@@ -74,7 +74,7 @@ function getArtistHead(id) {
 function getAlbumHead(id) {
     showLoad();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'json',
         data: { 
@@ -107,7 +107,7 @@ function getAlbumHead(id) {
 function wantAlbum(id){
     showLoad();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'text',
         data: { 
@@ -135,7 +135,7 @@ function searchHead(name) {
     showLoad();
     emptyAllHead();
     /*$.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'json',
         data: { 
@@ -166,7 +166,7 @@ function searchHead(name) {
     
     showLoad();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'json',
         data: { 
@@ -204,7 +204,7 @@ function searchHead(name) {
 function addArtist(id,albumid){
     showLoad();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'text',
         data: { 
@@ -228,7 +228,7 @@ function getHistory(){
     showLoad();
     emptyAllHead();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'json',
         data: { 
@@ -260,7 +260,7 @@ function getLogs(){
     showLoad();
     emptyAllHead();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'text',
         data: { 
@@ -279,7 +279,7 @@ function getWanted(){
     showLoad();
     emptyAllHead();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'json',
         data: { 
@@ -312,7 +312,7 @@ function getUpcoming(){
     showLoad();
     emptyAllHead();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'json',
         data: { 
@@ -345,7 +345,7 @@ function getUpcoming(){
 function removeWant(id){
     showLoad();
     $.ajax({
-        url: '/apps/Subphonic/templates/req.php',
+        url: '/apps/subphonic/templates/req.php',
         type: 'POST',
         dataType: 'text',
         data: { 

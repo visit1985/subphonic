@@ -117,6 +117,8 @@ $(document).ready(function () {
     
     $('#thanks').html(language['thanks']);
     $('#SubphonicBase').html(language['SubphonicBase']);
+    $('#Heaphones').html(language['Heaphones']);
+    $('#Subsonic').html(language['Subsonic']);
     $('#icons').html(language['icons']);
     $('#audioLibrary').html(language['audioLibrary']);
     
