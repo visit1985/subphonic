@@ -6,6 +6,11 @@ fr['artist'] = 'Artiste';
 fr['album'] = 'Album';
 fr['time'] = 'Durée';
 fr['typeAlbum'] = 'Type';
+fr['status'] = 'Status';
+fr['score'] = 'Score';
+fr['link'] = 'Lien';
+fr['addDate'] = 'Ajouté le';
+fr['folder'] = 'Dossier';
 
 fr['scrollTop'] = 'Remonter';
 
@@ -83,11 +88,16 @@ fr['SavePreferences'] = 'Enregistrer';
 fr['tResetPreferences'] = 'Enregistrer les préférences';
 fr['tSavePreferences'] = 'Remettre à zéro les préférences';
 
-fr['h3Login'] = 'Connexion';
+fr['h3Login'] = 'Connexion à Subsonic';
 fr['labelUsername'] = 'Nom d\'utilisateur';
 fr['labelPassword'] = 'Mot de passe';
 fr['labelServer'] = 'Adresse du serveur';
 fr['tlabelServer'] = 'Adresse du serveur Subsonic Ex: http://host:port/subsonic';
+
+
+fr['h3LoginHeadphones'] = 'Connexion à Headphones';
+fr['apikey'] = 'Clefs API';
+
 
 fr['keyboardShortcuts'] = 'Raccourcis clavier';
 fr['shortcutsAz'] = '<em>[a-z]</em> Utiliser pour naviguer rapidement dans les artistes';
@@ -114,7 +124,7 @@ fr['tHideAZ'] = 'Masquer A-Z en dessous de la liste d\'artistes';
 fr['tEnableNotifications'] = 'Activer les notifications lors du changement de musique';
 fr['tScrollTitle'] = 'Faire défiler le titre de la musique';
 
-fr['labellanguage'] = 'language';
+fr['labellanguage'] = 'Langue : ';
 
 fr['changeLog'] = 'Mise à jour';
 
@@ -134,3 +144,9 @@ fr['tPlayTrack'] = 'Jouer/Pause';
 fr['tNextTrack'] = 'Musique suivante';
 
 fr['taction_ToggleSideBar'] = 'Montrer le menu latéral';
+
+fr['paramHead'] = 'Options';
+fr['getHistory'] = 'Historique';
+fr['getLogs'] = 'Logs';
+fr['getWanted'] = 'Wanted';
+fr['getUpcoming'] = 'Prochainement';

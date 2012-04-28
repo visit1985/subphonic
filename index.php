@@ -48,8 +48,16 @@ if ($row) {
 } else {
     return false;
 }
-
 $tmpl->assign('lang', $lang);
+
+$urlH = OC_Appconfig::getValue("minisub", "addr_headphones", '');
+$tmpl->assign('urlH', $urlH);
+$userH = OC_Appconfig::getValue("minisub", "user_headphones", '');
+$tmpl->assign('userH', $userH);
+$passH = OC_Appconfig::getValue("minisub", "pass_headphones", '');
+$tmpl->assign('passH', $passH);
+$apikeyH = OC_Appconfig::getValue("minisub", "apikey_headphones", '');
+$tmpl->assign('apikeyH', $apikeyH);
 
 $tmpl->printPage();
 ?>

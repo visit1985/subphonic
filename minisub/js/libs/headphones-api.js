@@ -1,13 +1,15 @@
-var usernameHead = 'admin';
-var passwordHead = 'insa!head++';
-var urlHead = 'https://headphones.darkserver.fr';
-var apikeyHead = '701d533cd6f494f63a25fd8b473b7706';
+var usernameHead = $.cookie('username_headphones');
+var passwordHead = $.cookie('password_headphones');
+var urlHead = $.cookie('server_headphones');
+var apikeyHead = $.cookie('apikey_headphones');
 var baseURLHead = urlHead+'/api?apikey='+apikeyHead;
-;
+
+
 function getIndexHead(refresh) {
     if (refresh) {
         $('#HeadphonesArtistContainer').empty();
     }
+    
     var content = $('#HeadphonesArtistContainer').html();
     if (content === "") {
         $.ajax({
@@ -22,6 +24,11 @@ function getIndexHead(refresh) {
             success: function (data) {     
                 var artists = [];
                 artists = data;
+                html = '<li class=\"index\">';
+                html += '<span>' + language['artist'] + '</span>';
+                html += '</li>';
+                $(html).appendTo("#HeadphonesArtistContainer");
+                
                 $.each(artists, function (i, artist) {
                     if (artist.ArtistName !== undefined) {
                         var html = "";
@@ -115,6 +122,211 @@ function wantAlbum(id,id_parent){
             }else{
                 alert(data);
             }
+        }
+    });
+}
+
+function searchHead(name) {
+    showLoad();
+    emptyAllHead();
+    /*$.ajax({
+        url: '/apps/minisub/templates/req.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=findAlbum&name='+name
+        },
+        success: function (data) {
+            hideLoad();
+ 
+            var albumhtml;
+            var header = generateSearchHeaderHTMLHead();
+            $('#AlbumHeaderHead').html(header);
+            
+            $.each(data, function (i, album) {
+                if (i % 2 === 0) {
+                    rowcolor = 'even';
+                } else {
+                    rowcolor = 'odd';
+                }
+                albumhtml = generateSearchHTMLHead(rowcolor, album.albumid,album.id,album.title, album.uniquename,album.score,album.albumurl)
+                $('#AlbumRowsHead').append(albumhtml);
+            });
+            
+            updateCssContainerHead();
+        }
+    });*/
+    
+    showLoad();
+    $.ajax({
+        url: '/apps/minisub/templates/req.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=findArtist&name='+name
+        },
+        success: function (data) {
+            hideLoad();
+            var artisthtml;
+            var header = generateArtistHeaderHTMLHead();
+            $('#ArtistHeaderHead').html(header);
+            
+            $.each(data, function (i, artist) {
+                if (i % 2 === 0) {
+                    rowcolor = 'even';
+                } else {
+                    rowcolor = 'odd';
+                }
+                artisthtml = generateArtistHTMLHead(rowcolor, artist.id, artist.uniquename,artist.score,artist.url)
+                $('#ArtistRowsHead').append(artisthtml);
+            });
+            
+            updateCssContainerHead();
+        }
+    });
+}
+
+
+function addArtist(id,albumid){
+    showLoad();
+    $.ajax({
+        url: '/apps/minisub/templates/req.php',
+        type: 'POST',
+        dataType: 'text',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=addArtist&id='+id
+        },
+        success: function (data) {
+            hideLoad();
+            if(albumid){
+            //wantAlbum(albumid,id);  
+            }else{
+                getArtistHead(id);
+            }
+        }
+    });
+}
+
+
+function getHistory(){
+    showLoad();
+    emptyAllHead();
+    $.ajax({
+        url: '/apps/minisub/templates/req.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=getHistory'
+        },
+        success: function (data) {
+            hideLoad();
+            var albumhtml;
+            var header = generateHistoryHeaderHTMLHead();
+            $('#HistoryHeaderHead').html(header);
+            
+            $.each(data, function (i, album) {
+                if (i % 2 === 0) {
+                    rowcolor = 'even';
+                } else {
+                    rowcolor = 'odd';
+                }
+                albumhtml = generateHistoryHTMLHead(rowcolor,album.Title, album.FolderName,album.DateAdded,album.Status);
+                $('#HistoryRowsHead').append(albumhtml);
+            });
+            updateCssContainerHead();
+        }
+    });
+}
+
+function getLogs(){
+    showLoad();
+    emptyAllHead();
+    $.ajax({
+        url: '/apps/minisub/templates/req.php',
+        type: 'POST',
+        dataType: 'text',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=getLogs'
+        },
+        success: function (data) {
+            hideLoad();
+            $('#ArtistRowsHead').append('Not implemented in the API headphones');
+        }
+    });
+}
+
+function getWanted(){
+    showLoad();
+    emptyAllHead();
+    $.ajax({
+        url: '/apps/minisub/templates/req.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=getWanted'
+        },
+        success: function (data) {
+            hideLoad();
+            var albumhtml;
+            var header = generateWantUpHeaderHTMLHead();
+            $('#WantUpHeaderHead').html(header);
+            
+            $.each(data, function (i, album) {
+                if (i % 2 === 0) {
+                    rowcolor = 'even';
+                } else {
+                    rowcolor = 'odd';
+                }
+                albumhtml = generateWantUpHTMLHead(rowcolor,album.AlbumTitle, album.ArtistName,album.DateAdded,album.ReleaseDate,album.Type,album.Status)
+                $('#WantUpRowsHead').append(albumhtml);
+            });
+            updateCssContainerHead();
+            
+        }
+    });
+}
+
+function getUpcoming(){
+    showLoad();
+    emptyAllHead();
+    $.ajax({
+        url: '/apps/minisub/templates/req.php',
+        type: 'POST',
+        dataType: 'json',
+        data: { 
+            u: usernameHead, 
+            p: passwordHead,
+            r : baseURLHead+'&cmd=getUpcoming'
+        },
+        success: function (data) {
+            hideLoad();
+            var albumhtml;
+            var header = generateWantUpHeaderHTMLHead();
+            $('#WantUpHeaderHead').html(header);
+            
+            $.each(data, function (i, album) {
+                if (i % 2 === 0) {
+                    rowcolor = 'even';
+                } else {
+                    rowcolor = 'odd';
+                }
+                albumhtml = generateWantUpHTMLHead(rowcolor,album.AlbumTitle, album.ArtistName,album.DateAdded,album.ReleaseDate,album.Type,album.Status)
+                $('#WantUpRowsHead').append(albumhtml);
+            });
+            updateCssContainerHead();
+            
         }
     });
 }

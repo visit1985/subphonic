@@ -160,12 +160,19 @@
                     </div>
                     <div class="subactions floatleft">
 
-                        <input type="text" id="HeadphonesSearch" class="medium" /><a href="#" class="button" id="HeadphonesAction_Search"><img src="images/magnifying_glass_alt_12x12.png" /></a>
+                        <input type="text" id="SearchHead" class="medium" /><a href="#" class="button" id="Action_SearchHead"><img src="images/magnifying_glass_alt_12x12.png" /></a>
                     </div>
                     <div id="HeadphonesAlbums" class="lgsection floatleft">
                         <div class="loading"></div>
                         <div id="HeadphonesArtists" class="smsection floatleft" tabindex="0">
                             <div class="padder">
+                                <ul id="headphonesSystem" class="simplelist mainlist noselect">
+                                    <li class="index" id="paramHead"></li>
+                                    <li class="item" id="getHistory"></li>
+                                    <li class="item" id="getLogs"></li>
+                                    <li class="item" id="getWanted"></li>
+                                    <li class="item" id="getUpcoming"></li>
+                                </ul>
                                 <ul id="HeadphonesArtistContainer" class="simplelist mainlist noselect"></ul>
                             </div>
                         </div>
@@ -181,6 +188,14 @@
                         <table id="SongContainerHead" class="simplelist songlist noselect" cellspacing="1">
                             <thead id="SongHeaderHead"></thead>
                             <tbody id="SongRowsHead"></tbody>
+                        </table>
+                         <table id="HistoryContainerHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="HistoryHeaderHead"></thead>
+                            <tbody id="HistoryRowsHead"></tbody>
+                        </table>
+                        <table id="WantUpContainerHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="WantUpHeaderHead"></thead>
+                            <tbody id="WantUpRowsHead"></tbody>
                         </table>
                     </div>
                 </div>
@@ -201,6 +216,17 @@
                             <input type="password" id="Password" name="Password" class="large"/><br />
                             <label for="Server" id="labelServer"><span class="red">*</span></label><br />
                             <input type="text" id="Server" name="Server" class="xlarge"/><br />
+                        </div>
+                        <div class="subsection floatleft">
+                            <h3 class="title" id="h3LoginHeadphones"></h3>
+                            <label for="UsernameHeadphones" id="labelUsernameHeadphones"><span class="red">*</span></label><br />
+                            <input type="text" id="UsernameHeadphones" name="UsernameHeadphones" class="large"/><br />
+                            <label for="PasswordHeadphones" id="labelPasswordHeadphones"><span class="red">*</span></label><br />
+                            <input type="password" id="PasswordHeadphones" name="PasswordHeadphones" class="large"/><br />
+                            <label for="ServerHeadphones" id="labelServerHeadphones"><span class="red">*</span></label><br />
+                            <input type="text" id="ServerHeadphones" name="ServerHeadphones" class="xlarge"/><br />
+                            <label for="ApikeyHeadphones" id="labelApikeyHeadphones"><span class="red">*</span></label><br />
+                            <input type="text" id="ApikeyHeadphones" name="ApikeyHeadphones" class="xlarge"/><br />
                         </div>
                         <div class="subsection floatleft">
                             <h3 class="title" id="keyboardShortcuts"></h3>

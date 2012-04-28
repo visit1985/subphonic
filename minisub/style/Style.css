@@ -330,6 +330,15 @@ ul.mainlist li.item a.add:hover
 {
     margin: 5px 5px 20px 206px;
 }
+#HistoryContainerHead
+{
+    margin: 5px 5px 20px 206px;
+}
+#WantUpContainerHead
+{
+    margin: 5px 5px 20px 206px;
+}
+
 #TrackContainer 
 {
     margin: 5px 5px 5px 206px;
@@ -1194,6 +1203,18 @@ table.songlist tr.albumHead a.want:hover
 {
     background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
 }
+table.songlist tr.albumHead a.wantSearchAlbum
+{
+    float: left;
+    width: 20px;
+    height: 50px;
+    display: block;
+    background: url('../images/download_gl_9x12.png') no-repeat 5px center;
+}
+table.songlist tr.albumHead a.wantSearchAlbum:hover
+{
+    background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
+}
 
 table.songlist tr.albumHead td.title
 {
@@ -1245,4 +1266,50 @@ table.songlist tr.songHead td.artist
 table.songlist tr.songHead td.time
 {
     text-align: right;
+}
+
+
+
+table.songlist tr.artistHead
+{
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    height: 50px;
+}
+table.songlist tr.artistHead td
+{
+    padding: 4px 0 0 2px;
+}
+table.songlist tr.artistHead td.itemactions
+{
+    width: 80px;
+    padding-left: 27px;
+}
+table.songlist tr.artistHead a.add
+{
+    float: left;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: 0;
+    background: url('../images/plus_gl_8x8.png') no-repeat 6px center;
+}
+table.songlist tr.artistHead a.add:hover
+{
+    background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
+}
+
+
+
+table.songlist tr.historyHead
+{
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    height: 50px;
+}
+table.songlist tr.historyHead td
+{
+    padding: 4px 0 0 2px;
 }

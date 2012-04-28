@@ -1,6 +1,11 @@
+var username = $.cookie('username');
+var password = $.cookie('password');
+var auth = makeBaseAuth(username, password);
+var passwordenc = 'enc:' + HexEncode($.cookie('password'));
+var version = '1.6.0';
+
 var updaterNowPlaying;
 var updaterNowPlayingData;
-
 
 function loadArtists(id, refresh) {
     if (refresh) {

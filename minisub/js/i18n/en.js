@@ -6,6 +6,11 @@ en['artist'] = 'Artist';
 en['album'] = 'Album';
 en['time'] = 'Time';
 en['typeAlbum'] = 'Type';
+en['status'] = 'Status';
+en['score'] = 'Score';
+en['link'] = 'Link';
+en['addDate'] = 'Date added';
+en['folder'] = 'Folder';
 
 en['scrollTop'] = 'Scroll to top';
 en['areYouSure'] = 'Are you sure you want to delete the selected item(s)?';
@@ -83,11 +88,14 @@ en['SavePreferences'] = 'Save';
 en['tResetPreferences'] = 'Reset Preferences';
 en['tSavePreferences'] = 'Save Preferences';
 
-en['h3Login'] = 'Login';
+en['h3Login'] = 'Login to Subsonic';
 en['labelUsername'] = 'Username';
 en['labelPassword'] = 'Password';
 en['labelServer'] = 'Server';
 en['tlabelServer'] = 'Subsonic Server URL Ex: http://host:port/subsonic';
+
+en['h3LoginHeadphones'] = 'Login to Headphones';
+en['apikey'] = 'API key';
 
 en['keyboardShortcuts'] = 'Keyboard Shortcuts';
 en['shortcutsAz'] = '<em>[a-z]</em> Use to Quickly Browse to an Artist';
@@ -134,3 +142,9 @@ en['tPlayTrack'] = 'Play/Pause';
 en['tNextTrack'] = 'Next Track';
 
 en['taction_ToggleSideBar'] = 'Toggle Side Bar';
+
+en['paramHead'] = 'Options';
+en['getHistory'] = 'Historique';
+en['getLogs'] = 'Logs';
+en['getWanted'] = 'Wanted';
+en['getUpcoming'] = 'Upcoming';

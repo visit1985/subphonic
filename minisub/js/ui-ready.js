@@ -76,8 +76,32 @@ $(document).ready(function () {
     });
 
     //headphones clic
-    $('#HeadphonesArtistContainer li.item').live('click', function () {
+    $('#getHistory').live('click', function () {
+        $('#headphonesSystem li').removeClass('selected');
         $('#HeadphonesArtistContainer li').removeClass('selected');
+        $(this).addClass('selected');
+        getHistory();
+    });
+    $('#getLogs').live('click', function () {
+        $('#headphonesSystem li').removeClass('selected');
+        $('#HeadphonesArtistContainer li').removeClass('selected');
+        $(this).addClass('selected');
+        getLogs();
+    });
+    $('#getWanted').live('click', function () {
+        $('#headphonesSystem li').removeClass('selected');
+        $('#HeadphonesArtistContainer li').removeClass('selected');
+        $(this).addClass('selected');
+        getWanted();
+    });
+    $('#getUpcoming').live('click', function () {
+        $('#headphonesSystem li').removeClass('selected');
+        $('#HeadphonesArtistContainer li').removeClass('selected');
+        $(this).addClass('selected');
+        getUpcoming();
+    });
+    $('#HeadphonesArtistContainer li.item').live('click', function () {
+        $('#headphonesSystem li').removeClass('selected');
         $('#HeadphonesArtistContainer li').removeClass('selected');
         $(this).addClass('selected');
         getArtistHead($(this).attr("id"));
@@ -89,12 +113,38 @@ $(document).ready(function () {
         wantAlbum(itemid,parentid);
         return false;
     });
+    $('table.songlist tr.albumHead a.wantSearchAlbum').live('click', function (event) {
+        var itemid = $(this).parent().parent().attr('childid');
+        var parentid = $(this).parent().parent().attr('parentid');
+        addArtist(parentid,itemid);
+        return false;
+    });
     
     $('tr.albumHead').live('click', function (e) {
         var albumid = $(this).attr('childid');
         getAlbumHead(albumid);
         return false;
     });
+    
+    $('input#SearchHead').keydown(function (e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 13) {
+            $('#Action_SearchHead').click();
+        }
+    });
+    $('#Action_SearchHead').click(function () {
+        var name = $('#SearchHead').val();
+        searchHead(name);
+        $('#SearchHead').val("");
+        return false;
+    });
+    
+    $('table.songlist tr.artistHead a.add').live('click', function (event) {
+        var itemid = $(this).parent().parent().attr('childid');
+        addArtist(itemid,'');
+        return false;
+    });
+    
 
 
 
@@ -567,7 +617,9 @@ $(document).ready(function () {
         }
         var applicationname = $('#ApplicationName').val();
         if (applicationname != "") {
-            $.cookie('ApplicationName', applicationname, { expires: 365 });
+            $.cookie('ApplicationName', applicationname, {
+                expires: 365
+            });
         }
         location.reload(true);
     });
@@ -618,6 +670,10 @@ $(document).ready(function () {
         $.cookie('CacheSize', null);
         $.cookie('Maxbit', null);
         $.cookie('language', null);
+        $.cookie('username_headphones', null);
+        $.cookie('password_headphones', null);
+        $.cookie('server_headphones', null);
+        $.cookie('apikey_headphones', null);
         location.reload(true);
     });
     $('#ChangeLogShowMore').live('click', function () {

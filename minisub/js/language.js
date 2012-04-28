@@ -78,6 +78,14 @@ $(document).ready(function () {
     $('#labelServer').html(language['labelServer']);
     $('#labelServer').attr('title',language['tlabelServer']);
     
+    $('#h3LoginHeadphones').html(language['h3LoginHeadphones']);
+    $('#labelUsernameHeadphones').html(language['labelUsername']);
+    $('#labelPasswordHeadphones').html(language['labelPassword']);
+    $('#labelServerHeadphones').html(language['labelServer']);
+    $('#labelServerHeadphones').attr('title',language['tlabelServer']);
+    $('#labelApikeyHeadphones').html(language['apikey']);
+    
+    
     $('#keyboardShortcuts').html(language['keyboardShortcuts']);
     $('#shortcutsAz').html(language['shortcutsAz']);
     $('#shortcutsHome').html(language['shortcutsHome']);
@@ -123,6 +131,13 @@ $(document).ready(function () {
     $('#NextTrack').attr('title',language['tNextTrack']);
     
     $('#action_ToggleSideBar').attr('title',language['taction_ToggleSideBar']);
+    
+    
+    $('#paramHead').html(language['paramHead']);
+    $('#getHistory').html(language['getHistory']);
+    $('#getLogs').html(language['getLogs']);
+    $('#getWanted').html(language['getWanted']);
+    $('#getUpcoming').html(language['getUpcoming']);
 
 });
 

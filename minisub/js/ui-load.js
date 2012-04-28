@@ -79,7 +79,7 @@ function resizeContent() {
         }
     }
     tabwidth = $('.tabcontent').width();
-    $('#AlbumContainer, #TrackContainer, #CurrentPlaylistContainer, #ArtistSearchContainer, #SongContainer, #ArtistSearchHead, #AlbumContainerHead, #SongContainerHead').css({
+    $('#AlbumContainer, #TrackContainer, #CurrentPlaylistContainer, #ArtistSearchContainer, #SongContainer, #ArtistSearchHead, #AlbumContainerHead, #SongContainerHead, #HistoryContainerHead, #WantUpContainerHead').css({
         'width': (tabwidth - smwidth - 30) + 'px'
     });
     $('#CurrentPlaylistContainer').css({
@@ -130,8 +130,15 @@ function resizeSMSection(x) {
         $('#SongContainerHead').css({
             'margin-left': ulwidth + 'px'
         });
-        
-        
+        $('#SongContainerHead').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#HistoryContainerHead').css({
+            'margin-left': ulwidth + 'px'
+        });
+        $('#WantUpContainerHead').css({
+            'margin-left': ulwidth + 'px'
+        });
     }
 }
 

@@ -25,7 +25,7 @@ function generateAlbumHTML(rowcolor, childid, parentid, coverart, title, artist,
 
 function generateAlbumHeaderHTMLHead() {
     var html;
-    html = '<tr><th></th><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th><th>'+language['typeAlbum']+'</th></tr>';
+    html = '<tr><th></th><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th><th>'+language['typeAlbum']+'</th><th>'+language['status']+'</th></tr>';
     return html;
 }
 function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart,type) {
@@ -45,7 +45,7 @@ function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart
     }
     html = '<tr class=\"albumHead ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\">';
     html += '<td class=\"itemactions\">';
-    if(status != 'Downloaded'){
+    if(status != 'Downloaded' || status != 'Snatched'){
         html += '<a class=\"want\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
     }
     html += '</td>';
@@ -53,6 +53,45 @@ function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart
     html += '<td class=\"album\">' + title + '</td>';
     html += '<td class=\"artist\">' + artist + '</td>';
     html += '<td class=\"type\">' + type + '</td>';
+    html += '<td class=\"type\">' + status + '</td>';
+    html += '</tr>';
+    return html;
+}
+
+
+function generateSearchHeaderHTMLHead() {
+    var html;
+    html = '<tr><th></th><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th><th>'+language['score']+'</th><th>'+language['link']+'</th></tr>';
+    return html;
+}
+function generateSearchHTMLHead(rowcolor, childid,parentid,title, artist,score,link) {
+    var html;
+    html = '<tr class=\"albumHead ' + rowcolor + '\" childid=\"' + childid + '\" parentid=\"' + parentid + '\">';
+    html += '<td class=\"itemactions\">';
+    html += '<a class=\"wantSearchAlbum\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
+    html += '</td>';
+    html += '<td class=\"albumart\"></td>';
+    html += '<td class=\"album\">' + title + '</td>';
+    html += '<td class=\"artist\">' + artist + '</td>';
+    html += '<td class=\"type\">' + score + '</td>';
+    html += '<td class=\"type\">' + link + '</td>';
+    html += '</tr>';
+    return html;
+}
+
+
+function generateArtistHeaderHTMLHead() {
+    var html;
+    html = '<tr><th></th><th>'+language['artist']+'</th><th>'+language['score']+'</th><th>'+language['link']+'</th></tr>';
+    return html;
+}
+function generateArtistHTMLHead(rowcolor, childid, artist,score,link) {
+    var html;
+    html = '<tr class=\"artistHead ' + rowcolor + '\" childid=\"' + childid +'\">';
+    html += '<td class=\"itemactions\"><a class=\"add\" href=\"\" "></a></td>';
+    html += '<td class=\"artist\">' + artist + '</td>';
+    html += '<td class=\"artist\">' + score + '</td>';
+    html += '<td class=\"artist\">' + link + '</td>';
     html += '</tr>';
     return html;
 }
@@ -144,6 +183,54 @@ function generateSongHTMLHead(rowcolor, parentid, track, title, artist, album, c
     return html;
 }
 
+function generateHistoryHeaderHTMLHead() {
+    var html;
+    html = '<tr><th></th><th>'+language['album']+'</th><th>'+language['folder']+'</th><th>'+language['addDate']+'</th><th>'+language['status']+'</th></tr>';
+    return html;
+}
+function generateHistoryHTMLHead(rowcolor,title, folder,date,status) {
+    var html;
+    html = '<tr class=\"historyHead ' + rowcolor + '\" >';
+    html += '<td></td>';
+    html += '<td >' + title + '</td>';
+    html += '<td >' + folder + '</td>';
+    html += '<td >' + date + '</td>';
+    html += '<td >' + status + '</td>';
+    html += '</tr>';
+    return html;
+}
+
+function generateWantUpHeaderHTMLHead() {
+    var html;
+    html = '<tr><th></th><th>'+language['album']+'</th><th>'+language['artist']+'</th><th>'+language['addDate']+'</th><th>'+language['releaseDate']+'</th><th>'+language['typeAlbum']+'</th><th>'+language['status']+'</th></tr>';
+    return html;
+}
+function generateWantUpHTMLHead(rowcolor,title, artist,addDate,releaseDate,type,status) {
+    var html;
+    html = '<tr class=\"historyHead ' + rowcolor + '\" >';
+    html += '<td></td>';
+    html += '<td class=\"album\">' + title + '</td>';
+    html += '<td class=\"artist\">' + artist + '</td>';
+    html += '<td class=\"type\">' + addDate + '</td>';
+    html += '<td class=\"type\">' + releaseDate + '</td>';
+    html += '<td class=\"type\">' + type + '</td>';
+    html += '<td class=\"type\">' + status + '</td>';
+    html += '</tr>';
+    return html;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 function emptyAll(){
     $("#ArtistHeader").empty();
     $("#ArtistRows").empty();
@@ -174,6 +261,10 @@ function emptyAllHead(){
     $("#AlbumHeaderHead").empty();
     $("#SongHeaderHead").empty();
     $("#SongRowsHead").empty();
+    $("#HistoryHeaderHead").empty();
+    $("#HistoryRowsHead").empty();
+    $("#WantUpHeaderHead").empty();
+    $("#WantUpRowsHead").empty();
 }
 
 function updateCssContainerHead(){
@@ -188,6 +279,31 @@ function updateCssContainerHead(){
     }else{
         $('#AlbumContainerHead').hide();
     }
+    
+    if ($('#HistoryRowsHead').html()){
+        $('#HistoryContainerHead').show();
+    }else{
+        $('#HistoryContainerHead').hide();
+    }
+    
+    if ($('#SongRowsHead').html()){
+        $('#SongContainerHead').show();
+    }else{
+        $('#SongContainerHead').hide();
+    }
+    
+    if ($('#HistoryRowsHead').html()){
+        $('#HistoryContainerHead').show();
+    }else{
+        $('#HistoryContainerHead').hide();
+    }
+    
+    if ($('#WantUpRowsHead').html()){
+        $('#WantUpContainerHead').show();
+    }else{
+        $('#WantUpContainerHead').hide();
+    }
+    
 }
 
 
