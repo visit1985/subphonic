@@ -4,7 +4,7 @@
 	<name>Subphonic</name>
 	<description>
             Subphonic lets you play music from subsonic in owncloud and also to use headphones.
-            Tanks to : tsquillario for MiniSub (https://github.com/tsquillario/MiniSub), 
+            Thanks to : tsquillario for MiniSub (https://github.com/tsquillario/MiniSub), 
             rembo10 for Headphones (https://github.com/rembo10/headphones) and 
             Sindre for Subsonic (http://www.subsonic.org)
         </description>
