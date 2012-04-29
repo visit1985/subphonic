@@ -76,6 +76,12 @@ $(document).ready(function () {
     });
 
     //headphones clic
+    
+    
+    $('#action_test').live('click', function () {
+        test();
+    });
+    
     $('#getHistory').live('click', function () {
         $('#headphonesSystem li').removeClass('selected');
         $('#HeadphonesArtistContainer li').removeClass('selected');

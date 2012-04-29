@@ -15,19 +15,17 @@ function getIndexHead(refresh,artistid) {
     if (content === "") {
         showLoad();
         $.ajax({
-            url: '/apps/subphonic/templates/req.php',
-            type: 'POST',
-            dataType: 'json',
-            data: { 
-                u: usernameHead, 
-                p: passwordHead,
-                r : baseURLHead+'&cmd=getIndex'
-            },
+            url: baseURLHead,
+            type: 'GET',
+            dataType: 'jsonp',
+            username : usernameHead,
+            password : passwordHead,
+            data : {
+                cmd : 'getIndex'
+            },                
             success: function (data) {  
                 hideLoad();
-                var artists = [];
-                artists = data;
-                $.each(artists, function (i, artist) {
+                $.each(data, function (i, artist) {
                     if (artist.ArtistName !== undefined) {
                         var html = "";
                         html += '<li id=\"' + artist.ArtistID + '\" class=\"item\">';
@@ -49,13 +47,14 @@ function getArtistHead(id) {
     showLoad();
     $('#action_removeAllWantedHeadphone').hide();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'json',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=getArtist&id='+id
+            cmd : 'getArtist',
+            id : id
         },
         success: function (data) {
             hideLoad();
@@ -97,13 +96,14 @@ function getArtistHead(id) {
 function getAlbumHead(id) {
     showLoad();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'json',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=getAlbum&id='+id
+            cmd : 'getAlbum',
+            id : id
         },
         success: function (data) {
             hideLoad();
@@ -130,13 +130,14 @@ function getAlbumHead(id) {
 function wantAlbum(id,parentid){
     showLoad();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'text',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=queueAlbum&id='+id
+            cmd : 'queueAlbum',
+            id : id
         },
         success: function (data) {
             hideLoad();
@@ -192,13 +193,14 @@ function searchHead(name) {
     
     showLoad();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'json',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=findArtist&name='+name
+            cmd : 'findArtist',
+            name : name
         },
         success: function (data) {
             hideLoad();
@@ -233,13 +235,14 @@ function addArtist(id,albumid){
         showLoad();
         hideButtonArtistHead();
         $.ajax({
-            url: '/apps/subphonic/templates/req.php',
-            type: 'POST',
-            dataType: 'text',
+            url: baseURLHead,
+            type: 'GET',
+            dataType: 'jsonp',
+            username : usernameHead,
+            password : passwordHead,
             data: { 
-                u: usernameHead, 
-                p: passwordHead,
-                r : baseURLHead+'&cmd=addArtist&id='+id
+                cmd : 'addArtist',
+                id : id
             },
             success: function (data) {
                 hideLoad();
@@ -259,13 +262,13 @@ function getHistory(){
     hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'json',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=getHistory'
+            cmd : 'getHistory'
         },
         success: function (data) {
             hideLoad();
@@ -292,13 +295,13 @@ function getLogs(){
     hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'text',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=getLogs'
+            cmd : 'getLogs'
         },
         success: function (data) {
             hideLoad();
@@ -313,13 +316,13 @@ function getWanted(){
     hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'json',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=getWanted'
+            cmd : 'getWanted'
         },
         success: function (data) {
             hideLoad();
@@ -347,13 +350,13 @@ function getUpcoming(){
     hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'json',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=getUpcoming'
+            cmd : 'getUpcoming'
         },
         success: function (data) {
             hideLoad();
@@ -379,13 +382,14 @@ function getUpcoming(){
 function removeWant(id){
     showLoad();
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'text',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=unqueueAlbum&id='+id
+            cmd : 'unqueueAlbum',
+            id : id
         },
         success: function (data) {
             hideLoad();
@@ -405,13 +409,13 @@ function getHeadVersion(appendto){
         appendto.append(versionHead);
     }else{
         $.ajax({
-            url: '/apps/subphonic/templates/req.php',
-            type: 'POST',
-            dataType: 'json',
+            url: baseURLHead,
+            type: 'GET',
+            dataType: 'jsonp',
+            username : usernameHead,
+            password : passwordHead,
             data: { 
-                u: usernameHead, 
-                p: passwordHead,
-                r : baseURLHead+'&cmd=getVersion'
+                cmd : 'getVersion'
             },
             success: function (data) {
                 versionHead = '<div style=\"font-size : 0.7em;\"><br/>Version :<br/>'+data.current_version;
@@ -424,13 +428,13 @@ function getHeadVersion(appendto){
 
 function forceProcess(){
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'text',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=forceProcess'
+            cmd : 'forceProcess'
         },
         success: function (data) {
             
@@ -440,13 +444,13 @@ function forceProcess(){
 
 function forceSearch(){
     $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'text',
+        url: baseURLHead,
+        type: 'GET',
+        dataType: 'jsonp',
+        username : usernameHead,
+        password : passwordHead,
         data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=forceSearch'
+            cmd : 'forceSearch'
         },
         success: function (data) {
             
@@ -459,13 +463,14 @@ function refreshArtist(id){
     if(id){
         showLoad();
         $.ajax({
-            url: '/apps/subphonic/templates/req.php',
-            type: 'POST',
-            dataType: 'text',
+            url: baseURLHead,
+            type: 'GET',
+            dataType: 'jsonp',
+            username : usernameHead,
+            password : passwordHead,
             data: { 
-                u: usernameHead, 
-                p: passwordHead,
-                r : baseURLHead+'&cmd=refreshArtist&id='+id
+                cmd : 'refreshArtist',
+                id : id
             },
             success: function (data) {
                 hideLoad();
@@ -479,13 +484,14 @@ function pauseArtist(id){
     if(id){
         showLoad();
         $.ajax({
-            url: '/apps/subphonic/templates/req.php',
-            type: 'POST',
-            dataType: 'text',
+            url: baseURLHead,
+            type: 'GET',
+            dataType: 'jsonp',
+            username : usernameHead,
+            password : passwordHead,
             data: { 
-                u: usernameHead, 
-                p: passwordHead,
-                r : baseURLHead+'&cmd=pauseArtist&id='+id
+                cmd : 'pauseArtist',
+                id : id
             },
             success: function (data) {
                 hideLoad();
@@ -499,13 +505,14 @@ function resumeArtist(id){
     if(id){
         showLoad();
         $.ajax({
-            url: '/apps/subphonic/templates/req.php',
-            type: 'POST',
-            dataType: 'text',
+            url: baseURLHead,
+            type: 'GET',
+            dataType: 'jsonp',
+            username : usernameHead,
+            password : passwordHead,
             data: { 
-                u: usernameHead, 
-                p: passwordHead,
-                r : baseURLHead+'&cmd=resumeArtist&id='+id
+                cmd : 'resumeArtist',
+                id : id
             },
             success: function (data) {
                 hideLoad();
@@ -521,13 +528,14 @@ function deleteArtist(id){
         if(question){
             showLoad();
             $.ajax({
-                url: '/apps/subphonic/templates/req.php',
-                type: 'POST',
-                dataType: 'text',
+                url: baseURLHead,
+                type: 'GET',
+                dataType: 'jsonp',
+                username : usernameHead,
+                password : passwordHead,
                 data: { 
-                    u: usernameHead, 
-                    p: passwordHead,
-                    r : baseURLHead+'&cmd=delArtist&id='+id
+                    cmd : 'delArtist',
+                    id : id
                 },
                 success: function (data) {
                     hideLoad();
