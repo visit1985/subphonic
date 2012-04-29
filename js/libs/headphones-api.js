@@ -2,9 +2,19 @@ var usernameHead = $.cookie('username_headphones');
 var passwordHead = $.cookie('password_headphones');
 var urlHead = $.cookie('server_headphones');
 var apikeyHead = $.cookie('apikey_headphones');
-var baseURLHead = urlHead+'/api?apikey='+apikeyHead;
+var baseURLHead;
+
+if(urlHead.indexOf('http:\/\/',0)>=0){
+    baseURLHead = urlHead.substring(0,7)+usernameHead+':'+passwordHead+'@'+urlHead.substring(7,urlHead.length)+'/api?apikey='+apikeyHead;
+}else if (urlHead.indexOf('https:\/\/',0)>=0){
+    baseURLHead = urlHead.substring(0,8)+usernameHead+':'+passwordHead+'@'+urlHead.substring(8,urlHead.length)+'/api?apikey='+apikeyHead;
+}else{
+    baseURLHead = usernameHead+':'+passwordHead+'@'+urlHead+'/api?apikey='+apikeyHead;
+}
+
 var versionHead;
 var missingAlbums = [];
+
 
 function getIndexHead(refresh,artistid) {
     hideButtonArtistHead();
@@ -18,11 +28,9 @@ function getIndexHead(refresh,artistid) {
             url: baseURLHead,
             type: 'GET',
             dataType: 'jsonp',
-            username : usernameHead,
-            password : passwordHead,
             data : {
                 cmd : 'getIndex'
-            },                
+            },       
             success: function (data) {  
                 hideLoad();
                 $.each(data, function (i, artist) {
@@ -50,8 +58,6 @@ function getArtistHead(id) {
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'getArtist',
             id : id
@@ -99,8 +105,6 @@ function getAlbumHead(id) {
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'getAlbum',
             id : id
@@ -133,8 +137,6 @@ function wantAlbum(id,parentid){
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'queueAlbum',
             id : id
@@ -196,8 +198,6 @@ function searchHead(name) {
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'findArtist',
             name : name
@@ -238,8 +238,6 @@ function addArtist(id,albumid){
             url: baseURLHead,
             type: 'GET',
             dataType: 'jsonp',
-            username : usernameHead,
-            password : passwordHead,
             data: { 
                 cmd : 'addArtist',
                 id : id
@@ -265,8 +263,6 @@ function getHistory(){
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'getHistory'
         },
@@ -298,8 +294,6 @@ function getLogs(){
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'getLogs'
         },
@@ -319,8 +313,6 @@ function getWanted(){
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'getWanted'
         },
@@ -353,8 +345,6 @@ function getUpcoming(){
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'getUpcoming'
         },
@@ -385,8 +375,6 @@ function removeWant(id){
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'unqueueAlbum',
             id : id
@@ -412,8 +400,6 @@ function getHeadVersion(appendto){
             url: baseURLHead,
             type: 'GET',
             dataType: 'jsonp',
-            username : usernameHead,
-            password : passwordHead,
             data: { 
                 cmd : 'getVersion'
             },
@@ -431,8 +417,6 @@ function forceProcess(){
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'forceProcess'
         },
@@ -447,8 +431,6 @@ function forceSearch(){
         url: baseURLHead,
         type: 'GET',
         dataType: 'jsonp',
-        username : usernameHead,
-        password : passwordHead,
         data: { 
             cmd : 'forceSearch'
         },
@@ -466,8 +448,6 @@ function refreshArtist(id){
             url: baseURLHead,
             type: 'GET',
             dataType: 'jsonp',
-            username : usernameHead,
-            password : passwordHead,
             data: { 
                 cmd : 'refreshArtist',
                 id : id
@@ -487,8 +467,6 @@ function pauseArtist(id){
             url: baseURLHead,
             type: 'GET',
             dataType: 'jsonp',
-            username : usernameHead,
-            password : passwordHead,
             data: { 
                 cmd : 'pauseArtist',
                 id : id
@@ -508,8 +486,6 @@ function resumeArtist(id){
             url: baseURLHead,
             type: 'GET',
             dataType: 'jsonp',
-            username : usernameHead,
-            password : passwordHead,
             data: { 
                 cmd : 'resumeArtist',
                 id : id
@@ -531,8 +507,6 @@ function deleteArtist(id){
                 url: baseURLHead,
                 type: 'GET',
                 dataType: 'jsonp',
-                username : usernameHead,
-                password : passwordHead,
                 data: { 
                     cmd : 'delArtist',
                     id : id
