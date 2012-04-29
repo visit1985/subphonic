@@ -265,3 +265,13 @@ function closeAllNotifications() {
         notifications[notification].cancel();
     }
 }
+
+function hideButtonArtistHead(){
+    $('#haveTrackHead').hide();
+    $('#action_refreshArtistsHeadphone').hide();
+    $('#action_pauseArtistHeadphone').hide();
+    $('#action_resumeArtistHeadphone').hide();
+    $('#action_delArtistHeadphone').hide();
+    $('#action_wantMissingHeadphone').hide();
+    $('#action_removeAllWantedHeadphone').hide();
+}

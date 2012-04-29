@@ -16,6 +16,7 @@ en['search'] = 'Search...';
 
 en['scrollTop'] = 'Scroll to top';
 en['areYouSure'] = 'Are you sure you want to delete the selected item(s)?';
+en['areYouSureArtist'] = 'Are you sure you want to delete this artist?';
 
 en['tliTabLibrary'] = 'Library';
 en['tliTabCurrent'] = 'Current Playlist';
@@ -157,3 +158,11 @@ en['maintenanceHeadphones'] = 'Maintenance';
 
 en['forceSearchHead'] = 'Force search';
 en['forceProcessHead'] = 'Force process';
+
+en['haveTrack'] = 'Track(s) : ';
+en['action_refreshArtistsHeadphone'] = 'Refresh artist';
+en['action_pauseArtistHeadphone'] = 'Pause artist';
+en['action_resumeArtistHeadphone'] = 'Resume artist';
+en['action_delArtistHeadphone'] = 'Delete artist';
+en['action_wantMissingHeadphone'] = 'Get all';
+en['action_removeAllWantedHeadphone'] = 'Remove all';

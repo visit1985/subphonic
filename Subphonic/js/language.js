@@ -144,6 +144,15 @@ $(document).ready(function () {
     $('#liArtist').html(language['artist']);
     
     $('#action_maintenanceHeadphones').html(language['maintenanceHeadphones']);
+    
+    $('#action_refreshArtistsHeadphone').html(language['action_refreshArtistsHeadphone']);
+    $('#action_pauseArtistHeadphone').html(language['action_pauseArtistHeadphone']);
+    $('#action_resumeArtistHeadphone').html(language['action_resumeArtistHeadphone']);
+    $('#action_delArtistHeadphone').html(language['action_delArtistHeadphone']);
+    $('#action_wantMissingHeadphone').html(language['action_wantMissingHeadphone']);
+    $('#action_removeAllWantedHeadphone').html(language['action_removeAllWantedHeadphone']);
+    
+    
 });
 
 

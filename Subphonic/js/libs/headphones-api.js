@@ -4,12 +4,14 @@ var urlHead = $.cookie('server_headphones');
 var apikeyHead = $.cookie('apikey_headphones');
 var baseURLHead = urlHead+'/api?apikey='+apikeyHead;
 var versionHead;
+var missingAlbums = [];
 
 function getIndexHead(refresh) {
+    showLoad();
+    hideButtonArtistHead();
     if (refresh) {
         $('#HeadphonesArtistContainer').empty();
     }
-    
     var content = $('#HeadphonesArtistContainer').html();
     if (content === "") {
         $.ajax({
@@ -21,10 +23,10 @@ function getIndexHead(refresh) {
                 p: passwordHead,
                 r : baseURLHead+'&cmd=getIndex'
             },
-            success: function (data) {     
+            success: function (data) {  
+                hideLoad();
                 var artists = [];
                 artists = data;
-                
                 $.each(artists, function (i, artist) {
                     if (artist.ArtistName !== undefined) {
                         var html = "";
@@ -34,7 +36,6 @@ function getIndexHead(refresh) {
                         $(html).appendTo("#HeadphonesArtistContainer");
                     }
                 });
-                
                 $('#artist_filter_head').liveFilter({
                     defaultText: language['search']
                 });
@@ -45,6 +46,7 @@ function getIndexHead(refresh) {
 
 function getArtistHead(id) {
     showLoad();
+    $('#action_removeAllWantedHeadphone').hide();
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
         type: 'POST',
@@ -57,16 +59,36 @@ function getArtistHead(id) {
         success: function (data) {
             hideLoad();
             emptyAllHead();
+            missingAlbums = [];
             var albumhtml;
             var header = generateAlbumHeaderHTMLHead();
             $('#AlbumHeaderHead').html(header);
             
             $.each(data.albums, function (i, album) {
+                if(album.Status == 'Skipped'){
+                    missingAlbums.push(album.AlbumID);
+                }
                 albumhtml = generateAlbumHTMLHead(album.Status, album.AlbumID, album.ArtistID, album.AlbumTitle, album.ArtistName,album.AlbumASIN,album.Type,album.ReleaseDate);
                 $('#AlbumRowsHead').append(albumhtml);
             });
-            
             updateCssContainerHead();
+            $('#haveTrackHead').empty();
+            $('#haveTrackHead').append(language['haveTrack']+data.artist[0].HaveTracks+'/'+data.artist[0].TotalTracks);
+            $('#haveTrackHead').show();
+            $('#action_refreshArtistsHeadphone').show();
+            
+            if(data.artist[0].Status == 'Active'){
+                $('#action_pauseArtistHeadphone').show();
+                $('#action_resumeArtistHeadphone').hide();
+            }else{
+                $('#action_resumeArtistHeadphone').show();
+                $('#action_pauseArtistHeadphone').hide();
+            }
+            $('#action_delArtistHeadphone').show();
+            
+            if(missingAlbums.length>0){
+                $('#action_wantMissingHeadphone').show();
+            }
         }
     });
 }
@@ -117,21 +139,16 @@ function wantAlbum(id,parentid){
         },
         success: function (data) {
             hideLoad();
-            if(data == 'OK'){
-                if($('#headphonesSystem li.selected').html() != null){
-                    $('#headphonesSystem li.selected').click();
+            if($('#headphonesSystem li.selected').html() != null){
+                $('#headphonesSystem li.selected').click();
+            }else{
+                if($('#HeadphonesArtistContainer li.selected').html() != null){
+                    $('#HeadphonesArtistContainer li.selected').click();
                 }else{
-                    if($('#HeadphonesArtistContainer li.selected').html() != null){
-                        $('#HeadphonesArtistContainer li.selected').click();
-                    }else{
-                        if(parentid){
-                            getArtistHead(parentid)
-                        }
+                    if(parentid){
+                        getArtistHead(parentid)
                     }
                 }
-                
-            }else{
-                alert(data);
             }
         }
     });
@@ -139,6 +156,7 @@ function wantAlbum(id,parentid){
 
 function searchHead(name) {
     showLoad();
+    hideButtonArtistHead();
     emptyAllHead();
     name=name.replace(/ /g,'%20');
     /*$.ajax({
@@ -201,7 +219,6 @@ function searchHead(name) {
                 window.open($(this).attr('href'));
                 return false;
             });
-            
             updateCssContainerHead();
         }
     });
@@ -210,6 +227,7 @@ function searchHead(name) {
 
 function addArtist(id,albumid){
     showLoad();
+    hideButtonArtistHead();
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
         type: 'POST',
@@ -233,6 +251,7 @@ function addArtist(id,albumid){
 
 function getHistory(){
     showLoad();
+    hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
@@ -265,6 +284,7 @@ function getHistory(){
 
 function getLogs(){
     showLoad();
+    hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
@@ -285,6 +305,7 @@ function getLogs(){
 
 function getWanted(){
     showLoad();
+    hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
@@ -311,13 +332,14 @@ function getWanted(){
                 $('#WantUpRowsHead').append(albumhtml);
             });
             updateCssContainerHead();
-            
+            $('#action_removeAllWantedHeadphone').show();
         }
     });
 }
 
 function getUpcoming(){
     showLoad();
+    hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
@@ -362,16 +384,13 @@ function removeWant(id){
         },
         success: function (data) {
             hideLoad();
-            if(data == 'OK'){
-                if($('#headphonesSystem li.selected').html() != null){
-                    $('#headphonesSystem li.selected').click();
-                }
-                if($('#HeadphonesArtistContainer li.selected').html() != null){
-                    $('#HeadphonesArtistContainer li.selected').click();
-                }
-            }else{
-                alert(data);
+            if($('#headphonesSystem li.selected').html() != null){
+                $('#headphonesSystem li.selected').click();
             }
+            if($('#HeadphonesArtistContainer li.selected').html() != null){
+                $('#HeadphonesArtistContainer li.selected').click();
+            }
+          
         }
     });
 }
@@ -402,7 +421,7 @@ function forceProcess(){
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
         type: 'POST',
-        dataType: 'json',
+        dataType: 'text',
         data: { 
             u: usernameHead, 
             p: passwordHead,
@@ -418,7 +437,7 @@ function forceSearch(){
     $.ajax({
         url: '/apps/subphonic/templates/req.php',
         type: 'POST',
-        dataType: 'json',
+        dataType: 'text',
         data: { 
             u: usernameHead, 
             p: passwordHead,
@@ -428,4 +447,105 @@ function forceSearch(){
             
         }
     });
+}
+
+
+function refreshArtist(id){
+    if(id){
+        showLoad();
+        $.ajax({
+            url: '/apps/subphonic/templates/req.php',
+            type: 'POST',
+            dataType: 'text',
+            data: { 
+                u: usernameHead, 
+                p: passwordHead,
+                r : baseURLHead+'&cmd=refreshArtist&id='+id
+            },
+            success: function (data) {
+                hideLoad();
+                getArtistHead(id);
+            }
+        });
+    }
+}
+
+function pauseArtist(id){
+    if(id){
+        showLoad();
+        $.ajax({
+            url: '/apps/subphonic/templates/req.php',
+            type: 'POST',
+            dataType: 'text',
+            data: { 
+                u: usernameHead, 
+                p: passwordHead,
+                r : baseURLHead+'&cmd=pauseArtist&id='+id
+            },
+            success: function (data) {
+                hideLoad();
+                getArtistHead(id);
+            }
+        });
+    }
+}
+
+function resumeArtist(id){
+    if(id){
+        showLoad();
+        $.ajax({
+            url: '/apps/subphonic/templates/req.php',
+            type: 'POST',
+            dataType: 'text',
+            data: { 
+                u: usernameHead, 
+                p: passwordHead,
+                r : baseURLHead+'&cmd=resumeArtist&id='+id
+            },
+            success: function (data) {
+                hideLoad();
+                getArtistHead(id);
+            }
+        });
+    }
+}
+
+function deleteArtist(id){
+    if(id){
+        var question = confirm(language['areYouSureArtist']);
+        if(question){
+            showLoad();
+            $.ajax({
+                url: '/apps/subphonic/templates/req.php',
+                type: 'POST',
+                dataType: 'text',
+                data: { 
+                    u: usernameHead, 
+                    p: passwordHead,
+                    r : baseURLHead+'&cmd=delArtist&id='+id
+                },
+                success: function (data) {
+                    hideLoad();
+                    emptyAllHead();
+                    getIndexHead(true);
+                }
+            });
+        }
+    }
+}
+
+function getMissingAlbum(parentid){
+    $.each(missingAlbums, function (i, missingAlbum) {
+        wantAlbum(missingAlbum,parentid);
+    });
+}
+
+function removeAllWanted(){
+    if($('#headphonesSystem li.selected').attr("id")=='getWanted'){
+        unwantedAlbum = $('#WantUpRowsHead tr:first')
+        while(unwantedAlbum.attr("childid")){
+            removeWant(unwantedAlbum.attr("childid"));
+            unwantedAlbum = unwantedAlbum.next();
+        }
+    }
 }

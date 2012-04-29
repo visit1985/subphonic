@@ -35,6 +35,8 @@ $(window).load(function () {
     }
 
     $(document).bind('contextmenu',function(e){ return false; });
+    
+    hideButtonArtistHead();
 
 });
 

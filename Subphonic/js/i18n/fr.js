@@ -17,6 +17,7 @@ fr['search'] = 'Rechercher...';
 fr['scrollTop'] = 'Remonter';
 
 fr['areYouSure'] = 'Etes-vous sûr de vouloir supprimer les éléments sélectionnés?';
+fr['areYouSureArtist'] = 'Etes-vous sûr de vouloir supprimer cet artiste?';
 
 fr['tliTabLibrary'] = 'Bibliothèque';
 fr['tliTabCurrent'] = 'Liste de lecture';
@@ -165,3 +166,12 @@ fr['maintenanceHeadphones'] = 'Maintenance';
 
 fr['forceSearchHead'] = 'Forcer la recherche';
 fr['forceProcessHead'] = 'Forcer le traitement';
+
+fr['haveTrack'] = 'Musique(s) : ';
+fr['action_refreshArtistsHeadphone'] = 'Rafraichir l\'artiste';
+fr['action_pauseArtistHeadphone'] = 'Suspendre l\'artiste';
+fr['action_resumeArtistHeadphone'] = 'Activer l\'artiste';
+fr['action_delArtistHeadphone'] = 'Supprimer l\'artiste';
+fr['action_wantMissingHeadphone'] = 'Tout télécharger';
+fr['action_removeAllWantedHeadphone'] = 'Tout enlever';
+
