@@ -175,3 +175,6 @@ fr['action_delArtistHeadphone'] = 'Supprimer l\'artiste';
 fr['action_wantMissingHeadphone'] = 'Tout télécharger';
 fr['action_removeAllWantedHeadphone'] = 'Tout enlever';
 
+
+fr['dontFindArtist'] = 'Vous ne trouvez pas l\'artiste recherché, ajouter le : ';
+

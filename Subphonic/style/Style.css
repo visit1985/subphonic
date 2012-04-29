@@ -306,6 +306,10 @@ ul.mainlist li.item a.add:hover
 {
     background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
 }
+#addArtistForHead{
+    margin: 5px 5px 20px 206px;
+    padding-left: 10px;
+}
 #ArtistSearchContainer
 {
     margin: 5px 5px 20px 206px;

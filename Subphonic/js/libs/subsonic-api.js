@@ -337,6 +337,9 @@ function getRandomSongList(action, appendto) {
 
 function search(type, query) {
     showLoad()
+    $('#addArtistForHead').append(language['dontFindArtist']);
+    $('#addArtistForHead').append(' <a href=javascript:addSearchArtist("'+query+'")>'+query+'</a>');
+    $('#addArtistForHead').show();
     $.ajax({
         url: baseURL + '/search2.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&query=' + query,
         method: 'GET',

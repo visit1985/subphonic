@@ -6,14 +6,14 @@ var baseURLHead = urlHead+'/api?apikey='+apikeyHead;
 var versionHead;
 var missingAlbums = [];
 
-function getIndexHead(refresh) {
-    showLoad();
+function getIndexHead(refresh,artistid) {
     hideButtonArtistHead();
     if (refresh) {
         $('#HeadphonesArtistContainer').empty();
     }
     var content = $('#HeadphonesArtistContainer').html();
     if (content === "") {
+        showLoad();
         $.ajax({
             url: '/apps/subphonic/templates/req.php',
             type: 'POST',
@@ -39,6 +39,7 @@ function getIndexHead(refresh) {
                 $('#artist_filter_head').liveFilter({
                     defaultText: language['search']
                 });
+                $('#'+artistid).click();
             }
         });
     }
@@ -226,26 +227,30 @@ function searchHead(name) {
 
 
 function addArtist(id,albumid){
-    showLoad();
-    hideButtonArtistHead();
-    $.ajax({
-        url: '/apps/subphonic/templates/req.php',
-        type: 'POST',
-        dataType: 'text',
-        data: { 
-            u: usernameHead, 
-            p: passwordHead,
-            r : baseURLHead+'&cmd=addArtist&id='+id
-        },
-        success: function (data) {
-            hideLoad();
-            if(albumid){
-            //wantAlbum(albumid,id);  
-            }else{
-                getArtistHead(id);
+    if($('#'+id).length > 0){
+        $('#'+id).click();
+    }else{
+        showLoad();
+        hideButtonArtistHead();
+        $.ajax({
+            url: '/apps/subphonic/templates/req.php',
+            type: 'POST',
+            dataType: 'text',
+            data: { 
+                u: usernameHead, 
+                p: passwordHead,
+                r : baseURLHead+'&cmd=addArtist&id='+id
+            },
+            success: function (data) {
+                hideLoad();
+                if(albumid){
+                //wantAlbum(albumid,id);  
+                }else{
+                    getIndexHead(true,id);
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 
@@ -548,4 +553,10 @@ function removeAllWanted(){
             unwantedAlbum = unwantedAlbum.next();
         }
     }
+}
+
+
+function addSearchArtist(name){
+    searchHead(name);
+    $('#liTabHeadphones').click();
 }

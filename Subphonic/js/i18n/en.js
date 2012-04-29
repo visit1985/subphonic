@@ -166,3 +166,5 @@ en['action_resumeArtistHeadphone'] = 'Resume artist';
 en['action_delArtistHeadphone'] = 'Delete artist';
 en['action_wantMissingHeadphone'] = 'Get all';
 en['action_removeAllWantedHeadphone'] = 'Remove all';
+
+en['dontFindArtist'] = 'Can not find the artist looking, add it : ';

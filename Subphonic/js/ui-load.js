@@ -143,6 +143,10 @@ function resizeSMSection(x) {
         $('#WantUpContainerHead').css({
             'margin-left': ulwidth + 'px'
         });
+        
+         $('#addArtistForHead').css({
+            'margin-left': ulwidth + 'px'
+        });
     }
 }
 
