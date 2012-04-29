@@ -39,10 +39,10 @@ $(document).ready(function () {
     });
 
     // Ajax Loading Screen
-    $(".toploading").ajaxStart(function () {
+    $('#loading').ajaxStart(function () {
         $(this).show();
     });
-    $(".toploading").ajaxStop(function () {
+    $('#loading').ajaxStop(function () {
         $(this).hide();
     });
 
@@ -78,6 +78,9 @@ $(document).ready(function () {
     //headphones clic
     
     
+    $('#action_test').live('click', function () {
+        test();
+    });
     
     $('#getHistory').live('click', function () {
         $('#headphonesSystem li').removeClass('selected');
@@ -112,13 +115,11 @@ $(document).ready(function () {
     
     $('table.songlist a.want').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
-        wantAlbum(itemid);
+        var parentid = $(this).parent().parent().attr('parentid');
+        wantAlbum(itemid,parentid);
         return false;
     });
 
-    
-    
-    
     $('table.songlist tr.albumHead a.wantSearchAlbum').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
         var parentid = $(this).parent().parent().attr('parentid');
@@ -157,7 +158,82 @@ $(document).ready(function () {
         return false;
     });
 
+    $('a#action_maintenanceHeadphones').live('click', function () {
+        $('div#submenu_maintenanceHeadphones').empty();
+        var submenu = $('div#submenu_maintenanceHeadphones');
+        if (submenu.is(":visible")) {
+            submenu.fadeOut();
+        } else {
+            $('#submenu_maintenanceHeadphones').append('<a id="forceSearch">'+language['forceSearchHead']+'<a/><br/>')
+            $('#submenu_maintenanceHeadphones').append('<a id="forceProcess">'+language['forceProcessHead']+'<a/><br/>')
+            getHeadVersion($('#submenu_maintenanceHeadphones'));
+            //get the position of the placeholder element
+            pos = $(this).offset();
+            width = $(this).width();
+            height = $(this).height();
+            //show the menu directly over the placeholder
+            submenu.css({
+                "left": (pos.left) + "px", 
+                "top": (pos.top + height + 14) + "px"
+            }).fadeIn(400);
+        }
+        return false;
+    });
 
+    $('#forceSearch').live('click', function (event) {
+        forceSearch();
+        return false;
+    });
+    $('#forceProcess').live('click', function (event) {
+        forceProcess();
+        return false;
+    });
+    
+    $('#action_refreshArtistsListHeadphone').live('click', function (event) {
+        getIndexHead(true);
+        return false;
+    });
+    $('#action_refreshArtistsHeadphone').live('click', function (event) {
+        if($('#HeadphonesArtistContainer li.selected').html() != null){
+            id = $('#HeadphonesArtistContainer li.selected').attr("id")
+            refreshArtist(id);
+        }
+        return false;
+    });
+    $('#action_pauseArtistHeadphone').live('click', function (event) {
+        if($('#HeadphonesArtistContainer li.selected').html() != null){
+            id = $('#HeadphonesArtistContainer li.selected').attr("id")
+            pauseArtist(id);
+        }
+        return false;
+    });
+    $('#action_resumeArtistHeadphone').live('click', function (event) {
+        if($('#HeadphonesArtistContainer li.selected').html() != null){
+            id = $('#HeadphonesArtistContainer li.selected').attr("id")
+            resumeArtist(id);
+        }
+        return false;
+    });
+    $('#action_delArtistHeadphone').live('click', function (event) {
+        if($('#HeadphonesArtistContainer li.selected').html() != null){
+            id = $('#HeadphonesArtistContainer li.selected').attr("id")
+            deleteArtist(id);
+        }
+        return false;
+    });
+    $('#action_wantMissingHeadphone').live('click', function (event) {
+        if($('#HeadphonesArtistContainer li.selected').html() != null){
+            id = $('#HeadphonesArtistContainer li.selected').attr("id")
+            getMissingAlbum(id);
+        }
+        return false;
+    });
+    $('#action_removeAllWantedHeadphone').live('click', function (event) {
+        removeAllWanted();
+        return false;
+    });
+    
+    
 
     // Main Click Events
     // Albums Click Event
