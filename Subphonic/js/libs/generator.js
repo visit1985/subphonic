@@ -164,9 +164,9 @@ function generateSongHTML(rowcolor, childid, parentid, track, title, artist, alb
     html += '</tr>';
     return html;
 }
-function generateSongHTMLHead(rowcolor, parentid, track, title, artist, album, coverart, m, s) {
+function generateSongHTMLHead(location, parentid, track, title, artist, album, coverart, m, s) {
     var html;
-    if(track.Location != 'null'){
+    if(location != null){
         rowcolor = 'green';
     }else{
         rowcolor = 'red';
