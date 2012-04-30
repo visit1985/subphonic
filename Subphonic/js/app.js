@@ -80,13 +80,8 @@ if(uh && ph && sh && ah){
     reload = true;
 }
     
-    
-    
-    
-    
-    
 if(reload){
-    window.location.href = getPathFromUrl(window.location);
+    //window.location.href = getPathFromUrl(window.location);
 }
 
 

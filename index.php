@@ -50,7 +50,7 @@ $row = $result->fetchRow();
 if ($row) {
     $lang = $row['configvalue'];
 } else {
-    return false;
+    $lang = '';
 }
 $tmpl->assign('lang', $lang);
 
