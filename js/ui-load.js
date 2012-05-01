@@ -102,9 +102,7 @@ function resizeSMSection(x) {
         $('.smsection').css({
             'width': (newsmwidth) + 'px'
         });
-        $('.actions').css({
-            'width': (newsmwidth - 5) + 'px'
-        });
+     
         $('#BottomContainer').css({
             'width': (newsmwidth - 16) + 'px'
         });

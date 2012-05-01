@@ -1,0 +1,15 @@
+{
+   "app": {
+      "launch": {
+         "local_path": "index.html"
+      }
+   },
+   "description": "Subphonic - Player for Subsonic and control for Headphones",
+   "icons": {
+      "128": "icon_128.png",
+      "16": "icon_16.png"
+   },
+   "name": "Subphonic",
+   "permissions": [ "unlimitedStorage", "notifications" ],
+   "version": "1.0"
+}

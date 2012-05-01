@@ -152,7 +152,7 @@ $(document).ready(function () {
         return false;
     });
     
-    $('table.songlist tr a.remove').live('click', function (event) {
+    $('table.songlist tr a.removewant').live('click', function (event) {
         var itemid = $(this).parent().parent().attr('childid');
         removeWant(itemid);
         return false;
@@ -662,11 +662,32 @@ $(document).ready(function () {
 
     // Preferences Click Events
     $('#SavePreferences').live('click', function () {
+         var usernameHead = $('#UsernameHeadphones').val();
+        $.cookie('username_headphones', usernameHead, {
+            expires: 365
+        });
+        
+         var passwordHead = $('#PasswordHeadphones').val();
+        $.cookie('password_headphones', passwordHead, {
+            expires: 365
+        });
+        
+         var urlHead = $('#ServerHeadphones').val();
+        $.cookie('server_headphones', urlHead, {
+            expires: 365
+        });
+        
+         var apikeyHead = $('#ApikeyHeadphones').val();
+        $.cookie('apikey_headphones', apikeyHead, {
+            expires: 365
+        });
+        
         var username = $('#Username').val();
-        var password = $('#Password').val();
         $.cookie('username', username, {
             expires: 365
         });
+        
+        var password = $('#Password').val();
         $.cookie('password', password, {
             expires: 365
         });
