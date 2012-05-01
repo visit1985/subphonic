@@ -15,7 +15,6 @@ if(urlHead.indexOf('http:\/\/',0)>=0){
 var versionHead;
 var missingAlbums = [];
 
-
 function getIndexHead(refresh,artistid) {
     hideButtonArtistHead();
     if (refresh) {
@@ -141,6 +140,22 @@ function wantAlbum(id,parentid){
             cmd : 'queueAlbum',
             id : id
         },
+        timeout : 10000,
+        error  : function(a,error){
+            alert('Error : '+ error);
+            hideLoad();
+            if($('#headphonesSystem li.selected').html() != null){
+                $('#headphonesSystem li.selected').click();
+            }else{
+                if($('#HeadphonesArtistContainer li.selected').html() != null){
+                    $('#HeadphonesArtistContainer li.selected').click();
+                }else{
+                    if(parentid){
+                        getArtistHead(parentid)
+                    }
+                }
+            }
+        },
         success: function (data) {
             hideLoad();
             if($('#headphonesSystem li.selected').html() != null){
@@ -242,6 +257,16 @@ function addArtist(id,albumid){
                 cmd : 'addArtist',
                 id : id
             },
+            timeout : 10000,
+            error  : function(a,error){
+                alert('Error : '+ error);
+                hideLoad();
+                if(albumid){
+                //wantAlbum(albumid,id);  
+                }else{
+                    getIndexHead(true,id);
+                }
+            },
             success: function (data) {
                 hideLoad();
                 if(albumid){
@@ -287,7 +312,9 @@ function getHistory(){
 }
 
 function getLogs(){
-    showLoad();
+    $('#ArtistRowsHead').append('<center>Not implemented in the API headphones (maybe soon)</center>');
+    
+/*showLoad();
     hideButtonArtistHead();
     emptyAllHead();
     $.ajax({
@@ -299,10 +326,10 @@ function getLogs(){
         },
         success: function (data) {
             hideLoad();
-            $('#ArtistRowsHead').append('<center>Not implemented in the API headphones (maybe soon)</center>');
+            
             updateCssContainerHead();
         }
-    });
+    });*/
 }
 
 function getWanted(){
@@ -321,7 +348,6 @@ function getWanted(){
             var albumhtml;
             var header = generateWantUpHeaderHTMLHead();
             $('#WantUpHeaderHead').html(header);
-            
             $.each(data, function (i, album) {
                 if (i % 2 === 0) {
                     rowcolor = 'even';
@@ -379,6 +405,17 @@ function removeWant(id){
             cmd : 'unqueueAlbum',
             id : id
         },
+        timeout : 10000,
+        error  : function(a,error){
+            alert('Error : '+ error);
+            hideLoad();
+            if($('#headphonesSystem li.selected').html() != null){
+                $('#headphonesSystem li.selected').click();
+            }
+            if($('#HeadphonesArtistContainer li.selected').html() != null){
+                $('#HeadphonesArtistContainer li.selected').click();
+            }
+        },
         success: function (data) {
             hideLoad();
             if($('#headphonesSystem li.selected').html() != null){
@@ -387,7 +424,6 @@ function removeWant(id){
             if($('#HeadphonesArtistContainer li.selected').html() != null){
                 $('#HeadphonesArtistContainer li.selected').click();
             }
-          
         }
     });
 }
@@ -402,6 +438,11 @@ function getHeadVersion(appendto){
             dataType: 'jsonp',
             data: { 
                 cmd : 'getVersion'
+            },
+            timeout : 10000,
+            error  : function(a,error){
+                alert('Error : '+ error);
+                hideLoad();
             },
             success: function (data) {
                 versionHead = '<div style=\"font-size : 0.7em;\"><br/>Version :<br/>'+data.current_version;
@@ -420,6 +461,11 @@ function forceProcess(){
         data: { 
             cmd : 'forceProcess'
         },
+        timeout : 10000,
+        error  : function(a,error){
+            alert('Error : '+ error);
+            hideLoad(); 
+        },
         success: function (data) {
             
         }
@@ -433,6 +479,11 @@ function forceSearch(){
         dataType: 'jsonp',
         data: { 
             cmd : 'forceSearch'
+        },
+        timeout : 10000,
+        error  : function(a,error){
+            alert('Error : '+ error);
+            hideLoad(); 
         },
         success: function (data) {
             
@@ -451,6 +502,12 @@ function refreshArtist(id){
             data: { 
                 cmd : 'refreshArtist',
                 id : id
+            },
+            timeout : 10000,
+            error  : function(a,error){
+                alert('Error : '+ error);
+                hideLoad(); 
+                getArtistHead(id);
             },
             success: function (data) {
                 hideLoad();
@@ -471,6 +528,12 @@ function pauseArtist(id){
                 cmd : 'pauseArtist',
                 id : id
             },
+            timeout : 10000,
+            error  : function(a,error){
+                alert('Error : '+ error);
+                hideLoad(); 
+                getArtistHead(id);
+            },
             success: function (data) {
                 hideLoad();
                 getArtistHead(id);
@@ -489,6 +552,12 @@ function resumeArtist(id){
             data: { 
                 cmd : 'resumeArtist',
                 id : id
+            },
+            timeout : 10000,
+            error  : function(a,error){
+                alert('Error : '+ error);
+                hideLoad(); 
+                getArtistHead(id);
             },
             success: function (data) {
                 hideLoad();
@@ -510,6 +579,13 @@ function deleteArtist(id){
                 data: { 
                     cmd : 'delArtist',
                     id : id
+                },
+                timeout : 10000,
+                error  : function(a,error){
+                    alert('Error : '+ error);
+                    hideLoad();
+                    emptyAllHead();
+                    getIndexHead(true);
                 },
                 success: function (data) {
                     hideLoad();

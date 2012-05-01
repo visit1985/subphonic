@@ -49,7 +49,7 @@ function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart
         html += '<a class=\"want\" href=\"\" title=\"'+language['tDownload']+'\"></a>';
     }
     if(status == 'Wanted' || status == 'Snatched'){
-        html += '<a class=\"remove\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
+        html += '<a class=\"removewant\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
     }
     html += '</td>';
     html += '<td class=\"albumart\"><img src=\"http://ec1.images-amazon.com/images/P/'+coverart+'.01.jpg\" height=60 width=60 /></td>';
@@ -213,7 +213,7 @@ function generateWantUpHTMLHead(rowcolor,albumid,title, artist,addDate,releaseDa
     html = '<tr class=\"wantUpHead ' + rowcolor + '\" childid=\"' + albumid + '\">';
     html += '<td class=\"itemactions\">';
     if(status == 'Wanted'){
-        html += '<a class=\"remove\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
+        html += '<a class=\"removewant\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
     }
     if(status == 'Skipped'){
         html += '<a class=\"want\" href=\"\" title=\"'+language['tDownload']+'\"></a>';

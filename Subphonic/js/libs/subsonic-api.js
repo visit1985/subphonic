@@ -659,6 +659,34 @@ function addToPlaylist(playlistid, from) {
     }
 }
 
+function savePlaylist(playlistid) {
+    var songs = [];
+    $('#TrackContainer tr.song').each(function (index) {
+        songs.push($(this).attr('childid'));
+    });
+    if (songs.length > 0) {
+        $.ajax({
+            type: 'POST',
+            url: baseURL + '/createPlaylist.view',
+            dataType: 'json',
+            timeout: 10000,
+            data: {
+                u: username, 
+                p: passwordenc, 
+                v: version, 
+                c: applicationName, 
+                f: "jsonp", 
+                playlistId: playlistid, 
+                songId: songs
+            },
+            success: function () {
+                getPlaylist(playlistid);
+                updateMessage('Playlist Updated!');
+            },
+            traditional: true // Fixes POST with an array in JQuery 1.4
+        });
+    }
+}
 
 
 function addToCurrent(addAll) {
@@ -700,37 +728,7 @@ function downloadItem(id,type) {
         window.location = url;
     }
 }
-function savePlaylist(playlistid) {
-    var songs = [];
-    $('#TrackContainer tr.song').each(function (index) {
-        songs.push($(this).attr('childid'));
-    });
-    if (songs.length > 0) {
-        $.ajax({
-            type: 'GET',
-            url: baseURL + '/createPlaylist.view',
-            dataType: 'jsonp',
-            timeout: 10000,
-            data: {
-                u: username, 
-                p: passwordenc, 
-                v: version, 
-                c: applicationName, 
-                f: "jsonp", 
-                playlistId: playlistid, 
-                songId: songs
-            },
-            beforeSend: function (req) {
-                req.setRequestHeader('Authorization', auth);
-            },
-            success: function () {
-                getPlaylist(playlistid);
-                updateMessage('Playlist Updated!');
-            },
-            traditional: true // Fixes POST with an array in JQuery 1.4
-        });
-    }
-}
+
 
 function getPlaylist(id, action, appendto) {
     showLoad();
