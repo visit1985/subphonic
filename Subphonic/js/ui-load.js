@@ -18,25 +18,14 @@ $(window).load(function () {
     });
     resizeContent();
 
+  
 
-    function ffalse()
-    {
+
+    $(document).bind('contextmenu',function(e){
         return false;
-    }
-    function ftrue()
-    {
-        return true;
-    }
-    document.onselectstart = new Function ("return false");
-    if(window.sidebar)
-    {
-        document.onmousedown = ffalse;
-        document.onclick = ftrue;
-    }
-
-    $(document).bind('contextmenu',function(e){ return false; });
+    });
     
-    hideButtonArtistHead();
+// hideButtonArtistHead();
 
 });
 
@@ -142,7 +131,7 @@ function resizeSMSection(x) {
             'margin-left': ulwidth + 'px'
         });
         
-         $('#addArtistForHead').css({
+        $('#addArtistForHead').css({
             'margin-left': ulwidth + 'px'
         });
     }

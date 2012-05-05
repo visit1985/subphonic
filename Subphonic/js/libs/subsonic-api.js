@@ -571,7 +571,7 @@ function addToPlaylist(playlistid, from) {
             var currentsongs = [];
             $.ajax({
                 url: baseURL + '/getPlaylist.view',
-                type: 'POST',
+                type: 'GET',
                 data : {
                     u : username,
                     p : passwordenc,
@@ -612,7 +612,7 @@ function addToPlaylist(playlistid, from) {
                                 p: passwordenc, 
                                 v: version, 
                                 c: applicationName, 
-                                f: "xml", 
+                                f: "json", 
                                 playlistId: playlistid, 
                                 songId:  currentsongs
                             },
@@ -639,7 +639,7 @@ function addToPlaylist(playlistid, from) {
                     p: passwordenc, 
                     v: version, 
                     c: applicationName, 
-                    f: "jsonp", 
+                    f: "json", 
                     name: ""+reply+"", 
                     songId: selected
                 },
@@ -783,6 +783,7 @@ function getPlaylist(id, action, appendto) {
                 if (action === 'autoplay') {
                     autoPlay();
                 }
+                
             } else {
                 if (appendto === '#TrackContainer tbody') {
                     $(appendto).empty();

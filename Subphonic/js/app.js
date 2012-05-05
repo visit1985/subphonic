@@ -92,7 +92,7 @@ var cacheSize;
 if ($.cookie('CacheSize')) {
     cacheSize = $.cookie('CacheSize');
 } else {
-    cacheSize = 3;
+    cacheSize = 0;
 }
 var maxbit;
 if ($.cookie('Maxbit')) {
