@@ -803,6 +803,9 @@ $(document).ready(function () {
         helper: fixHelper
     }).disableSelection();
     
-    
+    $("#TrackContainer tbody").sortable({
+        helper: fixHelper
+    }).disableSelection();
+
     authentification();
 });// End document.ready

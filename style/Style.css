@@ -1201,7 +1201,7 @@ table.songlist tr.albumHead a.want:hover
 {
     background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
 }
-table.songlist tr.albumHead a.remove
+table.songlist tr.albumHead a.removewant
 {
     float: left;
     width: 20px;
@@ -1209,7 +1209,7 @@ table.songlist tr.albumHead a.remove
     display: block;
     background: url('../images/minus_gl_8x2.png') no-repeat 6px center;
 }
-table.songlist tr.albumHead a.remove:hover
+table.songlist tr.albumHead a.removewant:hover
 {
     background: url('../images/minus_8x2.png') no-repeat 6px center #DEECFB;
 }
@@ -1330,7 +1330,7 @@ table.songlist tr.historyHead td.itemactions
     width: 80px;
     padding-left: 27px;
 }
-table.songlist tr a.remove
+table.songlist tr a.removewant
 {
     width: 20px;
     height: 20px;
@@ -1339,7 +1339,7 @@ table.songlist tr a.remove
     margin: 0;
     background: url('../images/minus_gl_8x2.png') no-repeat 6px center;
 }
-table.songlist tr a.remove:hover
+table.songlist tr a.removewant:hover
 {
     background: url('../images/minus_8x2.png') no-repeat 6px center #DEECFB;
 }

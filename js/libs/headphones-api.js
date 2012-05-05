@@ -313,7 +313,7 @@ function getHistory(){
 
 function getLogs(){
     $('#ArtistRowsHead').append('<center>Not implemented in the API headphones (maybe soon)</center>');
-    
+    updateCssContainerHead();
 /*showLoad();
     hideButtonArtistHead();
     emptyAllHead();
