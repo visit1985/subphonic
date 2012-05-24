@@ -1,6 +1,5 @@
 
-<iframe src="<?php echo 'Subphonic/index.html?s='.$_['url'].'&u='.$_['user'].'&p='.$_['pass'].'&l='.$_['lang'].'&sh='.urlencode($_['urlH']).'&uh='.urlencode($_['userH']).'&ph='.urlencode($_['passH']).'&ah='.urlencode($_['apikeyH']); ?>" width="100%" id="ifm" ></iframe>
-
+<iframe src="<?php echo '/apps/subphonic/Subphonic/index.html?s='.$_['url'].'&u='.$_['user'].'&p='.$_['pass'].'&l='.$_['lang'].'&sh='.urlencode($_['urlH']).'&uh='.urlencode($_['userH']).'&ph='.urlencode($_['passH']).'&ah='.urlencode($_['apikeyH']); ?>" width="100%" id="ifm" ></iframe>
 
 <script language="JavaScript">
 <!--

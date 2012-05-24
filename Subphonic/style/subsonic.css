@@ -1,0 +1,371 @@
+ul.simplelist
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ul.simplelist li
+{
+    font-size: 13px;
+    cursor: pointer;
+    padding: 8px;
+    border-bottom: 1px solid #f2f2f2;
+}
+ul.simplelist li a
+{
+    text-decoration: none;
+    color: #545454;
+}
+ul.simplelist li:hover
+{
+    background: #EEF5FD;
+}
+ul.simplelist li.index
+{
+    background: #F0F0F0;
+    border-bottom: 1px solid #DDDDDD;
+    color: #A7A7A7;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 2px 0;
+    padding: 1px 4px;
+}
+ul.simplelist li.index a
+{
+    color: #A7A7A7;
+}
+ul.mainlist li.selected
+{
+    color: #f2f2f2;
+    background-color: #4B95E5;
+}
+ul.mainlist li.item a.play
+{
+    width: 20px;
+    height: 18px;
+    display: block;
+    margin: 0 5px 0 0;
+    background: url('../images/play_gl_6x8.png') no-repeat 6px center;
+}
+ul.mainlist li.item a.play:hover
+{
+    background: url('../images/play_6x8.png') no-repeat 6px center #DEECFB;
+}
+
+ul.mainlist li.item a.download
+{
+    float: left;
+    width: 20px;
+    height: 18px;
+    display: block;
+    background: url('../images/download_gl_9x12.png') no-repeat 5px center;
+}
+ul.mainlist li.item a.download:hover
+{
+    background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
+}
+
+
+ul.mainlist li.item a.add
+{
+    width: 20px;
+    height: 18px;
+    display: block;
+    margin: 0 5px 0 0;
+    background: url('../images/plus_gl_8x8.png') no-repeat 6px center;
+}
+ul.mainlist li.item a.add:hover
+{
+    background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
+}
+#addArtistForHead{
+    margin: 5px 5px 20px 206px;
+    padding-left: 10px;
+}
+#ArtistContainer
+{
+    margin: 5px 5px 20px 206px;
+}
+#AlbumContainer
+{
+    margin: 5px 5px 20px 206px;
+}
+#SongContainer
+{
+    margin: 5px 5px 5px 206px;
+}
+#ArtistSearchHead
+{
+    margin: 5px 5px 20px 206px;
+}
+#AlbumContainerHead
+{
+    margin: 5px 5px 20px 206px;
+}
+#SongContainerHead
+{
+    margin: 5px 5px 20px 206px;
+}
+
+
+#TrackContainer 
+{
+    margin: 5px 5px 5px 206px;
+}
+
+
+#CurrentPlaylistContainer tr.song a.add
+{
+    display: none;
+}
+#CurrentPlaylistContainer tr.song a.remove
+{
+    width: 20px;
+    height: 20px;
+    display: block;
+    float: left;
+    margin: 0;
+    background: url('../images/minus_gl_8x2.png') no-repeat 6px center;
+}
+#CurrentPlaylistContainer tr.song a.remove:hover
+{
+    background: url('../images/minus_8x2.png') no-repeat 6px center #DEECFB;
+}
+
+table.songlist
+{
+    margin: 5px;
+    border-collapse: collapse;
+}
+table.songlist th
+{
+    font-size: 14px;
+    font-variant: small-caps;
+    padding: 5px 4px;
+}
+table.songlist tr:hover
+{
+    background: #EEF5FD;
+}
+table.songlist tr.artist
+{
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    height: 40px;
+}
+table.songlist tr.artist td
+{
+    padding: 4px 0 0 2px;
+}
+table.songlist tr.album
+{
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+}
+table.songlist tr.album td
+{
+    padding: 4px 0 0 2px;
+}
+table.songlist tr.album td.title
+{
+}
+table.songlist tr.album td.artist
+{
+}
+table.songlist tr.album td.itemactions
+{
+    width: 85px;
+    padding-left: 10px;
+}
+table.songlist tr.album td.albumart
+{
+    padding: 0;
+    width: 50px;
+}
+table.songlist tr.album td.albumart img
+{
+    margin: 5px 10px 0 10px;
+    padding: 2px;
+    border: 1px solid #DEDEDE;
+}
+table.songlist tr.album a.play
+{
+    float: left;
+    width: 20px;
+    height: 50px;
+    display: block;
+    background: url('../images/play_gl_6x8.png') no-repeat 7px center;
+}
+table.songlist tr.album a.play:hover
+{
+    background: url('../images/play_6x8.png') no-repeat 7px center #DEECFB;
+}
+table.songlist tr.album a.add
+{
+    float: left;
+    width: 20px;
+    height: 50px;
+    display: block;
+    background: url('../images/plus_gl_8x8.png') no-repeat 6px center;
+}
+table.songlist tr.album a.add:hover
+{
+    background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
+}
+table.songlist tr.album a.download
+{
+    float: left;
+    width: 20px;
+    height: 50px;
+    display: block;
+    background: url('../images/download_gl_9x12.png') no-repeat 5px center;
+}
+table.songlist tr.album a.download:hover
+{
+    background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
+}
+table.songlist tr.album a.remove
+{
+    display: none;
+}
+table.songlist tr.album a.rate
+{
+    float: left;
+    height: 50px;
+    width: 20px;
+    display: block;
+    background: url('../images/star_wo_12x12.png') 2px center no-repeat;	
+}
+table.songlist tr.album a.rate:hover
+{
+    background: url('../images/star_lgo_12x12.png') 2px center no-repeat;
+}
+table.songlist tr.album a.favorite
+{
+    float: left;
+    height: 50px;
+    width: 20px;
+    margin: 0 5px 0 0;
+    display: block;
+    background: url('../images/star_yo_12x12.png') 2px center no-repeat;	
+}
+table.songlist tr.song
+{
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+table.songlist tr.song td
+{
+    font-size: 13px;
+    padding: 9px 10px;
+}
+table.songlist tr.song td.itemactions
+{
+    width: 100px;
+    padding-left: 27px;
+}
+table.songlist tr.song td.track
+{
+    width: 40px;
+    text-align: right;
+}
+
+table.songlist tr.song td.album
+{
+    padding: 0;
+    line-height: 31px;
+}
+table.songlist tr.song td.album img
+{
+    border: 1px solid #DEDEDE;
+    display: block;
+    float: left;
+    margin: 0 5px;
+    padding: 2px;
+}
+
+table.songlist tr.song td.time
+{
+    text-align: right;
+}
+table.songlist tr.song a.play
+{
+    float: left;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: 0;
+    background: url('../images/play_gl_6x8.png') no-repeat 7px center;
+}
+table.songlist tr.song a.play:hover
+{
+    background: url('../images/play_6x8.png') no-repeat 7px center #DEECFB;
+}
+table.songlist tr.song a.add
+{
+    float: left;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: 0;
+    background: url('../images/plus_gl_8x8.png') no-repeat 6px center;
+}
+table.songlist tr.song a.add:hover
+{
+    background: url('../images/plus_8x8.png') no-repeat 6px center #DEECFB;
+}
+table.songlist tr.song a.download
+{
+    float: left;
+    width: 20px;
+    height: 20px;
+    display: block;
+    background: url('../images/download_gl_9x12.png') no-repeat 5px center;
+}
+table.songlist tr.song a.download:hover
+{
+    background: url('../images/download_gd_9x12.png') no-repeat 5px center #DEECFB;
+}
+
+table.songlist tr.song a.rate
+{
+    float: left;
+    height: 20px;
+    width: 20px;
+    margin: 0;
+    display: block;
+    background: url('../images/star_wo_12x12.png') center 3px no-repeat;	
+}
+table.songlist tr.song a.rate:hover
+{
+    background: url('../images/star_lgo_12x12.png') center 3px no-repeat;
+}
+table.songlist tr.song a.favorite
+{
+    float: left;
+    height: 20px;
+    width: 20px;
+    margin: 0;
+    display: block;
+    background: url('../images/star_yo_12x12.png') center 3px no-repeat;	
+}
+table.songlist tr.playing
+{
+    background-color: #DEEBFA;
+}
+table.songlist tr.playing td:first-child
+{
+    background: url('../images/play_alt_gd_16x16.png') 8px 11px no-repeat;
+}
+table.songlist tr.selected
+{
+    color: #f2f2f2;
+    border-bottom: 1px solid #73ABE7;
+    background-color: #4B95E5;
+}
+table.songlist tr.selected td:first-child
+{
+    background: url('../images/check_8x7.png') 10px 16px no-repeat;
+}

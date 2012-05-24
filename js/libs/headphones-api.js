@@ -14,6 +14,8 @@ if($.cookie('username_headphones') != null){
     }
 }
 
+
+
 var versionHead;
 var missingAlbums = [];
 
@@ -31,7 +33,7 @@ function getIndexHead(refresh,artistid) {
             dataType: 'jsonp',
             data : {
                 cmd : 'getIndex'
-            },     
+            },       
             success: function (data) {  
                 hideLoad();
                 $.each(data, function (i, artist) {
@@ -181,7 +183,7 @@ function searchHead(name) {
     emptyAllHead();
     name=name.replace(/ /g,'%20');
     /*$.ajax({
-        url: '/apps/subphonic/templates/req.php',
+        url: '/apps/subphonic2/templates/req.php',
         type: 'POST',
         dataType: 'json',
         data: { 

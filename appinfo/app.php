@@ -6,10 +6,12 @@
 * later.
 * See the COPYING-README file.
 */
-OC_APP::registerAdmin('subphonic','settings');
 
+OCP\App::register( array( 
+  'order' => 10,
+  'id' => 'subphonic',
+  'name' => 'Subphonic' ));
 
-OC_App::register( array( 'order' => 70, 'id' => 'subphonic', 'name' => 'Subphonic' ));
+OCP\App::addNavigationEntry( array( 'id' => 'subphonic_index', 'order' => 70, 'href' => OC_Helper::linkTo( 'subphonic', 'index.php' ), 'icon' => OC_Helper::imagePath( 'subphonic', 'subsonic.png' ), 'name' => 'Subphonic' ));
 
-OC_App::addNavigationEntry( array( 'id' => 'subphonic_index', 'order' => 70, 'href' => OC_Helper::linkTo( 'subphonic', 'index.php' ), 'icon' => OC_Helper::imagePath( 'subphonic', 'subsonic.png' ), 'name' => 'Subphonic' ));
-
+OCP\APP::registerAdmin('subphonic','settings');

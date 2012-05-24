@@ -1,5 +1,4 @@
 <?php
-require_once('../../../lib/base.php');
 OC_Util::checkAdminUser();
 
 if(isset($_POST['addr_subsonic'])) OC_Appconfig::setValue( 'subphonic','addr_subsonic', $_POST['addr_subsonic'] );

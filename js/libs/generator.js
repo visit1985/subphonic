@@ -52,7 +52,7 @@ function generateAlbumHTMLHead(status, childid, parentid,title, artist, coverart
         html += '<a class=\"removewant\" href=\"\" title=\"'+language['tRemove']+'\"></a>';
     }
     html += '</td>';
-    html += '<td class=\"albumart\"><img src=\"http://ec1.images-amazon.com/images/P/'+coverart+'.01.jpg\" height=60 width=60 /></td>';
+    html += '<td class=\"albumart\"><img src=\"http://ec1.img-amazon.com/img/P/'+coverart+'.01.jpg\" height=60 width=60 /></td>';
     html += '<td class=\"album\">' + title + '</td>';
     html += '<td class=\"artist\">' + artist + '</td>';
     html += '<td class=\"type\">' + type + '</td>';
@@ -176,7 +176,7 @@ function generateSongHTMLHead(location, parentid, track, title, artist, album, c
     html += '<td class=\"track\">' + track + '</td>';
     html += '<td class=\"title\">' + title + '</td>';
     html += '<td class=\"artist\"><a href="javascript:getArtistHead(\''+parentid+'\',\'\',\'#AlbumRows\')">' + artist + '</a></td>';
-    html += '<td class=\"album\">' + album + '<img src=\"http://ec1.images-amazon.com/images/P/'+coverart+'.01.jpg\" height=25 width=25 /></td>';
+    html += '<td class=\"album\">' + album + '<img src=\"http://ec1.img-amazon.com/img/P/'+coverart+'.01.jpg\" height=25 width=25 /></td>';
     if(m != '' || s!=''){
         html += '<td class=\"time\">' + m + ':' + s + '</td>';
     }else{
