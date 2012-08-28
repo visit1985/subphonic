@@ -1,0 +1,407 @@
+﻿<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Subphonic</title>
+        <link rel="icon" href="images/subsonic_48x48.png" sizes="48x48"/>
+        <link rel="icon" href="images/subsonic_32x32.png" sizes="32x32"/>
+        <link href="style/Style.css" rel="stylesheet" type="text/css" />
+        <link href="js/contextMenu/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
+        <link href="js/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" type="text/css" />
+        <script src="js/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.ui.min.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.scrollTo-1.4.2-min.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.disable.text.select.pack.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.cookie.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.base64.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.periodic.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.shuffle.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.linkify-1.0-min.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery.liveFilter.js" type="text/javascript"></script>
+        <script src="js/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
+        <script src="js/sm/soundmanager2-jsmin.js" type="text/javascript"></script>
+        <script src="js/libs/utils.js" type="text/javascript"></script>
+        <script src="js/app.js" type="text/javascript"></script>
+        <script src="js/i18n/fr.js" type="text/javascript"></script>
+        <script src="js/i18n/en.js" type="text/javascript"></script>
+        <script src="js/language.js" type="text/javascript"></script>
+        <script src="js/libs/player.js" type="text/javascript"></script>
+        <script src="js/libs/subsonic-api.js" type="text/javascript"></script>
+        <script src="js/libs/headphones-api.js" type="text/javascript"></script>
+        <script src="js/libs/auth.js" type="text/javascript"></script>
+        <script src="js/libs/generator.js" type="text/javascript"></script>
+        <script src="js/libs/chat.js" type="text/javascript"></script>
+        
+        <script src="js/ui-load.js" type="text/javascript"></script>
+        <script src="js/ui-ready.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            soundManager.url = 'js/sm/swf';
+            soundManager.preferFlash = true;
+            soundManager.debugMode = false; 
+            //soundManager.flashVersion = 9; // optional: shiny features (default = 8)
+            //soundManager.useFlashBlock = false; // optionally, enable when you're ready to dive in
+        </script>
+    </head>
+    <body style="user-select: none; -khtml-user-select: none; -moz-user-select: none;">
+        <div id="container">
+            <div id="messages"></div>    
+            <div id="nav">
+                <ul class="tabs">
+                    <li><a href="#tabLibrary" class="first" id="liTabLibrary"><img src="images/headphones_gd_16x14.png" /></a></li>
+                    <li><a href="#tabCurrent" id="liTabCurrent"><img src="images/play_alt_gd_16x16.png" /></a></li>
+                    <li><a href="#tabPlaylists" id="liTabPlaylists"><img src="images/list_gd_16x14.png" /></a></li>
+                    <li><a href="#tabHeadphones" id="liTabHeadphones"><img src="images/headphones_plus_gd_16x14.png" /></a></li>
+                    <li><a href="#tabPreferences" id="liPreferences" class="last"><img src="images/cog_16x16.png" /></a></li>
+                </ul>
+                <div class="toploading"></div>
+            </div>
+            <div id="content">
+                <div id="tabLibrary" class="tabcontent">
+                    <div class="actions floatleft">
+                        <a href="#" class="button" id="action_RefreshArtists"><img src="images/reload_9x11.png" /></a>
+                        <a href="#" class="button" id="action_DecreaseWidth"><img src="images/minus_8x2.png" /></a>
+                        <a href="#" class="button" id="action_IncreaseWidth"><img src="images/plus_8x8.png" /></a>
+                    </div>
+                    <div class="subactions floatleft">
+                        <a href="#" class="button" id="action_SelectAll"></a>
+                        <a href="#" class="button" id="action_SelectNone"></a>
+                        <a href="#" class="button" id="action_AddToPlaylist"></a>
+                        <div id="submenu_AddToPlaylist" class="submenu shadow" style="display: none;"></div>
+                        <a href="#" class="button" id="action_AddToCurrent"></a>
+                        <a href="#" class="button" id="action_AddAllToCurrent"></a>
+                        <a href="#" class="button" id="action_PlayAlbum"><img src="images/play_gl_6x8.png" /></a>
+                        <input type="text" id="Search" class="medium" /><a href="#" class="button" id="action_Search"><img src="images/magnifying_glass_alt_12x12.png" /></a>
+                    </div>
+                    <div id="Albums" class="lgsection floatleft">
+                        <div class="loading"></div>
+                        <div id="Artists" class="smsection floatleft" tabindex="0">
+                            <div class="padder">
+                                <select id="MusicFolders">
+                                    <option value="All Folders" id="allForlder"></option>
+                                </select>
+                                <ul id="AutoAlbumContainer" class="simplelist mainlist noselect">
+                                    <li class="index" id="auto"></li>
+                                    <li class="item" id="newest"></li>
+                                    <li class="item" id="random"></li>
+                                    <li class="item" id="highest"></li>
+                                    <li class="item" id="recent"></li>
+                                    <li class="item" id="frequent"></li>
+                                </ul>
+                                <ul id="ArtistContainer" class="simplelist mainlist noselect"></ul>
+                            </div>
+                            <div id="BottomContainer"><ul id="BottomIndex"></ul></div>
+                        </div>
+                        <span id="addArtistForHead"></span>
+                        <table id="ArtistSearchContainer" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="ArtistHeader"></thead>
+                            <tbody id="ArtistRows"></tbody>
+                        </table>
+                        <table id="AlbumContainer" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="AlbumHeader"></thead>
+                            <tbody id="AlbumRows"></tbody>
+                        </table>
+                        <table id="SongContainer" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="SongHeader"></thead>
+                            <tbody id="SongRows"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="tabCurrent" class="tabcontent">
+                    <div class="actions floatleft">
+                        <a href="#" class="button" id="action_Shuffle"><img src="images/fork_11x12.png" /></a>
+                        <a href="#" class="button" id="action_Empty">Empty</a>
+                    </div>
+                    <div class="subactions floatleft">
+                        <a href="#" class="button" id="action_CurrentSelectAll"></a>
+                        <a href="#" class="button" id="action_CurrentSelectNone"></a>
+                        <a href="#" class="button" id="action_AddCurrentToPlaylist"></a>
+                        <div id="submenu_AddCurrentToPlaylist" class="submenu shadow" style="display: none;"></div>
+                    </div>
+                    <div id="CurrentPlaylist" class="fullsection floatleft noselect">
+                        <table id="CurrentPlaylistContainer" class="simplelist songlist" cellspacing="1">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="tabPlaylists" class="tabcontent">
+                    <div class="actions floatleft">
+                        <a href="#" class="button" id="action_NewPlaylist" onclick="newPlaylist(); return false;"></a>
+                        <a href="#" class="button" id="action_DeletePlaylist"></a>
+                        <a href="#" class="button" id="action_SavePlaylist"></a>
+                    </div>
+                    <div class="subactions floatleft">
+                        <a href="#" class="button" id="action_ShufflePlaylist"><img src="images/fork_11x12.png" /></a>
+                        <a href="#" class="button" id="action_RemoveSongs"></a>
+                    </div>
+                    <div class="clear"></div>
+                    <div id="Tracks" class="lgsection floatleft noselect">
+                        <div class="loading"></div>
+                        <div id="Playlists" class="smsection floatleft noselect">
+                            <div class="padder">
+                                <ul id="AutoPlaylistContainer" class="simplelist mainlist">
+                                    <li class="index" id="autoplaylist"></li>
+                                    <li class="item" id="randomPlaylist"><span id="spanRandomPlaylist"></span><div class="floatright"><a class="play" id="aRandomPlay" href=""></a></div><div class="floatright"><a class="add" id="aRandomAdd" href=""></a></div></li>
+                                </ul>
+                                <ul class="simplelist"><li class="index" id="savePlaylist"></li></ul>
+                                <ul id="PlaylistContainer" class="simplelist mainlist"></ul>
+                            </div>
+                        </div>
+                        <table id="TrackContainer" class="simplelist songlist">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div id="tabHeadphones" class="tabcontent">
+                    <div class="actions floatleft" id="action_artistHeadphone">
+                        <a href="#" class="button" id="action_refreshArtistsListHeadphone"><img src="images/reload_9x11.png" /></a>
+                    </div>
+                    <div class="subactions floatleft">
+                        <span id="haveTrackHead" style="font-size: 0.8em; margin-right: 5px;"></span>
+                        <a href="#" class="button" id="action_refreshArtistsHeadphone"></a>
+                        <a href="#" class="button" id="action_pauseArtistHeadphone"></a>
+                        <a href="#" class="button" id="action_resumeArtistHeadphone"></a>
+                        <a href="#" class="button" id="action_delArtistHeadphone"></a>
+                        <a href="#" class="button" id="action_wantMissingHeadphone"></a>
+                        <a href="#" class="button" id="action_removeAllWantedHeadphone"></a>
+                        <input type="text" id="SearchHead" class="medium" /><a href="#" class="button" id="Action_SearchHead"><img src="images/magnifying_glass_alt_12x12.png" /></a>
+                        <a href="#" class="button" id="action_maintenanceHeadphones"></a>
+                        <div id="submenu_maintenanceHeadphones" class="submenu shadow" style="display: none;"></div>
+                    </div>
+                    <div id="HeadphonesAlbums" class="lgsection floatleft">
+
+                        <div id="HeadphonesArtists" class="smsection floatleft" tabindex="0">
+                            <div class="padder">
+                                <ul id="headphonesSystem" class="simplelist mainlist noselect">
+                                    <li class="index" id="paramHead"></li>
+                                    <li class="item" id="getHistory"></li>
+                                    <li class="item" id="getLogs"></li>
+                                    <li class="item" id="getWanted"></li>
+                                    <li class="item" id="getUpcoming"></li>
+                                </ul>
+
+                                <ul class="simplelist mainlist noselect">
+                                    <li class="index" id="liArtist"></li>
+                                </ul>
+                                <div id="artist_filter_head">
+                                    <input class="filter" type="text" value="" />
+                                    <ul id="HeadphonesArtistContainer" class="simplelist mainlist noselect"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table id="ArtistSearchHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="ArtistHeaderHead"></thead>
+                            <tbody id="ArtistRowsHead"></tbody>
+                        </table>
+                        <table id="AlbumContainerHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="AlbumHeaderHead"></thead>
+                            <tbody id="AlbumRowsHead"></tbody>
+                        </table>
+                        <table id="SongContainerHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="SongHeaderHead"></thead>
+                            <tbody id="SongRowsHead"></tbody>
+                        </table>
+                        <table id="HistoryContainerHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="HistoryHeaderHead"></thead>
+                            <tbody id="HistoryRowsHead"></tbody>
+                        </table>
+                        <table id="WantUpContainerHead" class="simplelist songlist noselect" cellspacing="1">
+                            <thead id="WantUpHeaderHead"></thead>
+                            <tbody id="WantUpRowsHead"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div id="tabPreferences" class="tabcontent">
+                    <div class="actions floatleft">
+                        <a href="#" class="button" id="ResetPreferences"></a>
+                        <a href="#" class="button" id="SavePreferences"></a>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="lgsection floatleft">
+                        <div class="subsection floatleft">
+                            <h3 class="title" id="h3Login"></h3>
+                            <label for="Username" id="labelUsername"><span class="red">*</span></label><br />
+                            <input type="text" id="Username" name="Username" class="large"/><br />
+                            <label for="Password" id="labelPassword"><span class="red">*</span></label><br />
+                            <input type="password" id="Password" name="Password" class="large"/><br />
+                            <label for="Server" id="labelServer"><span class="red">*</span></label><br />
+                            <input type="text" id="Server" name="Server" class="xlarge"/><br />
+                        </div>
+                        <div class="subsection floatleft">
+                            <h3 class="title" id="h3LoginHeadphones"></h3>
+                            <label for="UsernameHeadphones" id="labelUsernameHeadphones"><span class="red">*</span></label><br />
+                            <input type="text" id="UsernameHeadphones" name="UsernameHeadphones" class="large"/><br />
+                            <label for="PasswordHeadphones" id="labelPasswordHeadphones"><span class="red">*</span></label><br />
+                            <input type="password" id="PasswordHeadphones" name="PasswordHeadphones" class="large"/><br />
+                            <label for="ServerHeadphones" id="labelServerHeadphones"><span class="red">*</span></label><br />
+                            <input type="text" id="ServerHeadphones" name="ServerHeadphones" class="xlarge"/><br />
+                            <label for="ApikeyHeadphones" id="labelApikeyHeadphones"><span class="red">*</span></label><br />
+                            <input type="text" id="ApikeyHeadphones" name="ApikeyHeadphones" class="xlarge"/><br />
+                        </div>
+                        <div class="subsection floatleft">
+                            <h3 class="title" id="keyboardShortcuts"></h3>
+                            <ul class="preferences">
+                                <li id="shortcutsAz"></li>
+                                <li id="shortcutsHome"></li>
+                                <li id="shortcutsSpacebar"></li>
+                                <li id="shortcutsNextTrack"></li>
+                                <li id="shortcutsPreviousTrack"></li>
+                                <li><span></span></li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="subsection floatleft">
+                            <h3 class="title" id="options"></h3>
+                            <label for="AutoAlbumSize" id="labelAutoAlbumSize"></label><br />
+                            <input type="text" id="AutoAlbumSize" name="AutoAlbumSize" class="large"/><br />
+                            <label for="AutoPlaylistSize" id="labelAutoPlaylistSize"></label><br />
+                            <input type="text" id="AutoPlaylistSize" name="AutoPlaylistSize" class="large"/><br />
+                            <label for="CacheSize" id="labelCacheSize"></label><br />
+                            <input type="text" id="CacheSize" name="CacheSize" class="large"/><br />
+                            <label for="ApplicationName" id="labelApplicationName"></label><br />
+                            <input type="text" id="ApplicationName" name="ApplicationName" class="large"/><br />
+                        </div>
+                        <div class="subsection floatleft">
+                            <div class="checkboxes">
+                                <div class="inputwrap"><input type="checkbox" id="HideAZ" name="HideAZ" value="1"/></div>
+                                <label for="HideAZ" id="labelHideAZ"></label>
+                                <div class="clear"></div>
+                                <div class="inputwrap"><input type="checkbox" id="EnableNotifications" name="EnableNotifications" value="1"/></div>
+                                <label for="EnableNotifications" id="labelEnableNotifications"></label>
+                                <div class="clear"></div>
+                                <div class="inputwrap"><input type="checkbox" id="ScrollTitle" name="ScrollTitle" value="1"/></div>
+                                <label for="ScrollTitle" id="labelScrollTitle"></label>
+                                <div class="clear"></div>
+                                <div class="inputwrap">
+                                    <label for="Maxbit" id="labelMaxbit"></label>
+                                    <select id="Maxbit" name="Maxbit">
+                                        <option value="0" id="unlimitedDebit"></option>
+                                        <option value="320">320</option>
+                                        <option value="192">192</option>
+                                        <option value="128">128</option>
+                                        <option value="64">64</option>
+                                    </select>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="inputwrap">
+                                    <label for="language" id="labellanguage">language</label>
+                                    <select id="language" name="language">
+                                        <option value="en">English</option>
+                                        <option value="fr">Français</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="subsection floatleft">
+                            <h3 class="title" id="changeLog"></h3>
+                            <ul id="ChangeLog" class="preferences">
+                                 <li class="log"><span class="version">05/05/2012 - Subphonic</span>
+                                    <span class="changes">Bug fix with Firefox 12</span>
+                                    <span class="changes">Change cache defaut to 0</span>
+                                </li>
+                                <li class="log"><span class="version">29/4/2012 - Subphonic</span>
+                                    <span class="changes">Functionalities headphones walking independently (no need to owncloud)[Alpha]</span>
+                                    <span class="changes">Add fonctionality for headphones [owncloud only] [Alpha]</span>
+                                    <span class="changes">Correct bug with big playlist</span>
+                                </li>
+                                <li class="log"><span class="version">28/4/2012 - Subphonic</span>
+                                    <span class="changes">Beginning integration of headphones [owncloud only] [Alpha]</span>
+                                    <span class="changes">Fixed problem with localhost owncloud</span>
+                                </li>
+                                <li class="log"><span class="version">26/4/2012 - Subphonic</span>
+                                    <span class="changes">Add langage system</span>
+                                    <span class="changes">Change bitrate</span>
+                                    <span class="changes">Improved cache</span>
+                                </li>
+                                <li class="log"><span class="version">24/4/2012 - Subphonic</span>
+                                    <span class="changes">Add cache system</span>
+                                    <span class="changes">Improved presentation when there is music and albums at the same time</span>
+                                    <span class="changes">Big improvement research</span>
+                                    <span class="changes">Play all button add music and album</span>
+                                    <span class="changes">Double click on music launch it</span>
+                                    <span class="changes">Changing track position</span>
+                                    <span class="changes">Sortable current playlist</span>
+                                    <span class="changes">Download a music or a playlist</span>
+                                    <span class="changes">In the playlists, click on the album can see it</span>
+                                    <span class="changes">In the playlists, click on the artist can see it</span>
+                                    <span class="changes">At the request of playing music it gets into the Queue</span>
+                                    <span class="changes">At the request of music from a playlist, music following additional automatic</span>
+                                    <span class="changes">Icon loading in the requests to the server</span>
+                                </li>
+
+                                <li><a href="#" id="ChangeLogShowMore">Show More</a></li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="subsection floatleft">
+                            <h3 class="title" id="thanks"></h3>
+                            <ul class="preferences">
+                                <li id="Subsonic"></li>
+                                <li id="Heaphones"></li>
+                                <li id="SubphonicBase"></li>
+                                <li id="icons"></li>
+                                <li id="audioLibrary"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div id="SideBar">
+                    <div id="NowPlaying">
+                        <div class="header" id="divNowPlaying"><img src="images/rss_12x12.png" /></div>
+                        <div id="NowPlayingList"><span class="user"></span></div>
+                    </div>
+                    <div id="Chat">
+                        <div class="header" id="divChat"><img src="images/chat_alt_stroke_12x12.png" /></div>
+                        <div id="ChatMsgs"></div>
+                        <div class="submit"><img src="images/comment_stroke_gl_12x11.png" /><input type="text" id="ChatMsg" class="chat"/></div>
+                    </div>
+                </div>
+                <!-- Audio Player -->
+                <div class="clear"></div>
+                <div id="player">
+                    <div id="playerleft" class="floatleft">
+                        <div class="playeractions floatleft">
+                            <a href="#" class="button" id="PreviousTrack"><img src="images/first_24x24.png" /></a>
+                            <a href="#" class="button" id="PlayTrack"><img src="images/play_24x32.png" /></a>
+                            <a href="#" class="button" id="NextTrack"><img src="images/last_24x24.png" /></a>
+                        </div>
+                        <div id="songdetails">
+                            <div id="coverart"><a id="coverartimage" href="images/albumdefault_120.jpg"><img src="images/albumdefault_56.jpg" alt=""/></a></div>
+                            <ul>
+                                <li id="songdetails_song" class="song"></li>
+                                <li id="songdetails_artist" class="album"></li>
+                            </ul>
+                            <div class="vertshade"></div>
+                        </div>
+                    </div>
+                    <div class="playeractionssmall"><a href="#" class="button" id="action_ToggleSideBar"><img src="images/arrow_right_gl_12x12.png" /></a></div>
+                    <div id="playermiddle">
+                        <div id="audiocontainer">
+                            <div class="audiojs" id="audio_wrapper0">
+                                <div class="scrubber"><div class="progress"></div><div class="loaded" ></div></div>
+                                <div class="time"><em class="played">00:00</em>/<strong class="duration">00:00</strong></div><div class="error-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div><!-- end #content -->
+        </div><!-- end #container -->
+
+        <div id="loading">
+            <img id="img_loading" src="images/load-circle.gif" />
+        </div><!-- end #loading -->
+    </body>
+</html>
