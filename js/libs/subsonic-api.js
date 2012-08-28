@@ -39,7 +39,13 @@ function loadArtists(id, refresh) {
                         indexes[0] = data["subsonic-response"].indexes.index;
                     }
                     
-                    rootdirectoryid =indexes[0].artist[0].id.substring(0,indexes[0].artist[0].id.lastIndexOf('2f'));
+                    //rootdirectoryid =indexes[0].artist[0].id.substring(0,indexes[0].artist[0].id.lastIndexOf('2f'));
+                    // There is a bug in the API that doesn't return a JSON array for artist id
+                    if ( indexes[0].artistindexes[0].artist.index.length > 0) {
+                        rootdirectoryid =indexes[0].artist[0].id.substring(0,indexes[0].artist[0].id.lastIndexOf('2f'));
+                    } else {
+                        rootdirectoryid =indexes[0].artist.id.substring(0,indexes[0].artist.id.lastIndexOf('2f'));
+                    }
 
                     $.each(indexes, function (i, index) {
                         if (index.name === '#') {
