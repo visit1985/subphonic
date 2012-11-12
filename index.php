@@ -1,10 +1,12 @@
 <?php
-
 /**
- * ownCloud - bookmarks plugin
+ * ownCloud - Subphonic app
  *
- * @author Arthur Schiwon
- * @copyright 2011 Arthur Schiwon blizzz@arthur-schiwon.de
+ * @author zoic21
+ * @copyright 2012 zoic21
+ *
+ * @author Michael Göhler
+ * @copyright 2012 Michael Göhler <somebody.here@gmx.de>
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -17,51 +19,45 @@
  * GNU AFFERO GENERAL PUBLIC LICENSE for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public 
- * License along with this library.  If not, see <http://www.gnu.org/licenses/>.
+ * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
+OCP\User::checkLoggedIn();
+OCP\App::checkAppEnabled('subphonic');
+OCP\App::setActiveNavigationEntry('subphonic');
 
-// Check if we are a user
-OC_Util::checkLoggedIn();
-OC_Util::checkAppEnabled('subphonic');
+$tmpl = new OCP\Template('subphonic', 'frame', 'user');
 
-OC_App::setActiveNavigationEntry('subphonic_index');
+$addr = OCP\Util::linkToAbsolute('subphonic', 'mini/index.html');
+$tmpl->assign('addr', $addr);
 
-
-$tmpl = new OC_Template('subphonic', 'frame', 'user');
-$url = OC_Appconfig::getValue("subphonic", "addr_subsonic", '');
-
-
+$url = OCP\Config::getAppValue('subphonic', 'addr_subsonic');
 $url = str_replace('localhost', $_SERVER['REMOTE_ADDR'], $url);
 $url = str_replace('127.0.0.1', $_SERVER['REMOTE_ADDR'], $url);
 $tmpl->assign('url', $url);
-$user = OC_Appconfig::getValue("subphonic", "user_subsonic", '');
+
+$user = OCP\Config::getAppValue('subphonic', 'user_subsonic');
 $tmpl->assign('user', $user);
-$pass = OC_Appconfig::getValue("subphonic", "pass_subsonic", '');
+
+$pass = OCP\Config::getAppValue('subphonic', 'pass_subsonic');
 $tmpl->assign('pass', $pass);
 
-$username = $_SESSION['user_id'];
-
-$query = OC_DB::prepare("SELECT configvalue FROM oc_preferences WHERE userid=? AND configkey = 'lang'");
-$result = $query->execute(array($username));
-
-$row = $result->fetchRow();
-if ($row) {
-    $lang = $row['configvalue'];
-} else {
-    $lang = '';
-}
+$lang = OCP\Config::getUserValue($_SESSION['user_id'], 'core', 'lang');
 $tmpl->assign('lang', $lang);
 
-$urlH = OC_Appconfig::getValue("subphonic", "addr_headphones", '');
+$urlH = OCP\Config::getAppValue('subphonic', 'addr_headphones');
 $tmpl->assign('urlH', $urlH);
-$userH = OC_Appconfig::getValue("subphonic", "user_headphones", '');
+
+$userH = OCP\Config::getAppValue('subphonic', 'user_headphones');
 $tmpl->assign('userH', $userH);
-$passH = OC_Appconfig::getValue("subphonic", "pass_headphones", '');
+
+$passH = OCP\Config::getAppValue('subphonic', 'pass_headphones');
 $tmpl->assign('passH', $passH);
-$apikeyH = OC_Appconfig::getValue("subphonic", "apikey_headphones", '');
+
+$apikeyH = OCP\Config::getAppValue('subphonic', 'apikey_headphones');
 $tmpl->assign('apikeyH', $apikeyH);
 
 $tmpl->printPage();
 ?>
+
