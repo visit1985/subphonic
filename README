@@ -1,6 +1,6 @@
-Subphonic est lecteur pour subsonic et permet aussi l'accès à headphones.
+Subphonic lets you play music from Subsonic in ownCloud.
 
-Remerciements : 
-tsquillario pour MiniSub (https://github.com/tsquillario/MiniSub)
-rembo10 pour Headphones (https://github.com/rembo10/headphones)
-Sindre pour Subsonic (http://www.subsonic.org)
+Thanks to: 
+	tsquillario for MiniSub (https://github.com/tsquillario/MiniSub)
+	rembo10 for Headphones (https://github.com/rembo10/headphones)
+	Sindre for Subsonic (http://www.subsonic.org)

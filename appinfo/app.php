@@ -1,17 +1,34 @@
 <?php
 /**
-* Copyright (c) 2011 Marvin Thomas Rabe <m.rabe@echtzeitraum.de>
-* Copyright (c) 2011 Arthur Schiwon <blizzz@arthur-schiwon.de>
-* This file is licensed under the Affero General Public License version 3 or
-* later.
-* See the COPYING-README file.
-*/
+ * ownCloud - Subphonic app
+ *
+ * @author zoic21
+ * @copyright 2012 zoic21
+ * 
+ * @author Michael Göhler
+ * @copyright 2012 Michael Göhler <somebody.here@gmx.de>
+ * 
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * License as published by the Free Software Foundation; either 
+ * version 3 of the License, or any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU AFFERO GENERAL PUBLIC LICENSE for more details.
+ *  
+ * You should have received a copy of the GNU Lesser General Public 
+ * License along with this library. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
 
-OCP\App::register( array( 
-  'order' => 10,
-  'id' => 'subphonic',
-  'name' => 'Subphonic' ));
+OCP\App::addNavigationEntry(array(
+	'id' => 'subphonic',
+	'order' => 90,
+	'href' => OCP\Util::linkTo('subphonic', 'index.php'),
+	'icon' => OCP\Util::imagePath( 'subphonic', 'subsonic.png' ),
+	'name' => 'Subphonic'
+));
 
-OC_App::addNavigationEntry( array( 'id' => 'subphonic_index', 'order' => 70, 'href' => OC_Helper::linkTo( 'subphonic', 'index.php' ), 'icon' => OC_Helper::imagePath( 'subphonic', 'subsonic.png' ), 'name' => 'Subphonic' ));
-
-OCP\APP::registerAdmin('subphonic','settings');
+OCP\App::registerAdmin('subphonic','settings');
