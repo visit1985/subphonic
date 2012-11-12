@@ -1,0 +1,38 @@
+2012-11-12	visit1985
+	* updated all the API calls
+	* fixed URL handling
+	* refeshed MiniSub
+
+2012-05-05	zoic21
+	* Bug fix with Firefox 12
+	* Change cache defaut to 0
+
+2012-04-29	zoic21
+	* Functionalities headphones walking independently (no need to owncloud) [Alpha]
+	* Add fonctionality for headphones [owncloud only] [Alpha]
+	* Correct bug with big playlist
+
+2012-04-28	zoic21
+	* Beginning integration of headphones [owncloud only] [Alpha]
+	* Fixed problem with localhost owncloud
+
+2012-04-26	zoic21
+	* Add langage system
+	* Change bitrate
+	* Improved cache
+
+2012-04-24	zoic21
+	* Add cache system
+	* Improved presentation when there is music and albums at the same time
+	* Big improvement research
+	* Play all button add music and album
+	* Double click on music launch it
+	* Changing track position
+	* Sortable current playlist
+	* Download a music or a playlist
+	* In the playlists, click on the album can see it
+	* In the playlists, click on the artist can see it
+	* At the request of playing music it gets into the Queue
+	* At the request of music from a playlist, music following additional automatic
+	* Icon loading in the requests to the server
+
