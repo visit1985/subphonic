@@ -1,6 +1,4 @@
 var scrobbled = false;
-
-
 function playSong(el, songid, albumid) {
     $.ajax({
         url: baseURL + '/getMusicDirectory.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + albumid,
@@ -11,7 +9,7 @@ function playSong(el, songid, albumid) {
             req.setRequestHeader('Authorization', auth);
         },
         success: function (data) {
-            var title, artist, album;
+            var title, artist, album, rating;
             if (data["subsonic-response"].directory !== undefined) {
                 // There is a bug in the API that doesn't return a JSON array for one artist
                 var children = [];
@@ -21,123 +19,111 @@ function playSong(el, songid, albumid) {
                     children[0] = data["subsonic-response"].directory.child;
                 }
                 $.each(children, function (i, child) {
-                    if (child.id === songid) {
+                    if (child.id == songid) {
                         title = child.title;
                         artist = child.artist;
                         album = child.album;
                         coverart = child.coverArt;
+                        rating = child.userRating;
                     }
                 });
+            }
+            if (rating == 5) {
+                $('#songdetails_rate').attr('class', 'favorite');
+            } else {
+                $('#songdetails_rate').attr('class', 'rate');
             }
             $('#songdetails_song').html(title);
             $('#songdetails_song').attr('parentid', albumid);
             $('#songdetails_song').attr('childid', songid);
             $('#songdetails_artist').html(artist + ' - ' + album);
-            $('#coverartimage').attr('href', baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + coverart);
-            $('#coverartimage img').attr('src', baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=50&id=' + coverart);
+            var coverartSrc, coverartFullSrc;
+            if (coverart == undefined) {
+                coverartSrc = 'images/albumdefault_50.jpg';
+                coverartFullSrc = '';
+            } else {
+                coverartSrc = baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=50&id=' + coverart;
+                coverartFullSrc = baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + coverart;
+            }
+            $('#coverartimage').attr('href', coverartFullSrc);
+            $('#coverartimage img').attr('src', coverartSrc);
             $('#playermiddle').css('visibility', 'visible');
             $('#songdetails').css('visibility', 'visible');
             // SoundManager Initialize
+            var salt = Math.floor(Math.random() * 100000);
             if (audio) {
                 soundManager.destroySound('audio');
             }
-            
-            inCache = false;
-            cacheID = -1;
-            $.each(cache, function (i) {
-                if(cache[i]['songid'] == songid && cache[i]['complete'] == 1){
-                    inCache = true;
-                    cacheID = i;
-                }
-            }); 
-            
-            if(inCache){
-                audio = cache[cacheID]['song'];
-                var duration = $('#audio_wrapper0').find(".duration");
-                duration.html((cache[cacheID]['dm'] < 10 ? '0' : '') + cache[cacheID]['dm'] + ':' + (cache[cacheID]['ds'] < 10 ? '0' : '') + cache[cacheID]['ds']);
-                var loaded = $('#audio_wrapper0').find(".loaded");
-                loaded.css('width', '100%');
-                var scrubber = $('#audio_wrapper0').find(".scrubber");
-                scrubber.unbind("click");
-                scrubber.click(function(e){
-                    var x = (e.pageX - this.offsetLeft)/scrubber.width();
-                    var position = Math.round(cache[cacheID]['dp']*1000*x);
-                    audio.play({
-                        position:position
+            soundManager.onready(function () {
+                if (debug) {
+                    console.log("SM HTML5 STATUS");
+                    $.each(soundManager.html5, function (key, value) {
+                        console.log(key + ': ' + value);
                     });
-                });
-                
-            }else{
-                var salt = Math.floor(Math.random() * 100000);
+                }
                 audio = soundManager.createSound({
                     id: 'audio',
-                    url: baseURL + '/stream.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&id=' + songid + '&maxBitRate='+ maxbit +'&salt=' + salt,
+                    url: baseURL + '/stream.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&id=' + songid + '&salt=' + salt,
                     stream: true,
                     whileloading: function () {
-                        if (debug) {
-                            console.log('loaded:' + this.bytesLoaded + ' total:' + this.bytesTotal);
-                        }
+                        if (debug) { console.log('loaded:' + this.bytesLoaded + ' total:' + this.bytesTotal); }
                         var percent = this.bytesLoaded / this.bytesTotal;
                         var scrubber = $('#audio_wrapper0').find(".scrubber");
                         var loaded = $('#audio_wrapper0').find(".loaded");
                         loaded.css('width', (scrubber.get(0).offsetWidth * percent) + 'px');
                     },
                     whileplaying: function () {
-                        //console.log('position:' + this.position + ' duration:' + this.duration);
+                        if (debug) { console.log('position:' + this.position + ' duration:' + this.duration); }
                         var percent = this.position / this.duration;
                         var scrubber = $('#audio_wrapper0').find(".scrubber");
                         var progress = $('#audio_wrapper0').find(".progress");
                         progress.css('width', (scrubber.get(0).offsetWidth * percent) + 'px');
+
                         var played = $('#audio_wrapper0').find(".played");
                         var p = (this.duration / 1000) * percent,
-                        m = Math.floor(p / 60),
-                        s = Math.floor(p % 60);
+                            m = Math.floor(p / 60),
+                            s = Math.floor(p % 60);
                         played.html((m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s);
-                        
+
                         // Scrobble song once percentage is reached
                         if (!scrobbled && p > 30 && (percent > 0.5 || p > 480)) {
+                            if (debug) { console.log("LAST.FM SCROBBLE"); }
                             scrobbleSong(true);
                         }
                     },
                     onload: function () {
                         var duration = $('#audio_wrapper0').find(".duration");
                         var dp = this.duration / 1000,
-                        dm = Math.floor(dp / 60),
-                        ds = Math.floor(dp % 60);
+                            dm = Math.floor(dp / 60),
+                            ds = Math.floor(dp % 60);
                         duration.html((dm < 10 ? '0' : '') + dm + ':' + (ds < 10 ? '0' : '') + ds);
                         var scrubber = $('#audio_wrapper0').find(".scrubber");
                         scrubber.unbind("click");
-                        scrubber.click(function(e){
-                            var x = (e.pageX - this.offsetLeft)/scrubber.width();
-                            var position = Math.round(dp*1000*x);
+                        scrubber.click(function (e) {
+                            var x = (e.pageX - this.offsetLeft) / scrubber.width();
+                            var position = Math.round(dp * 1000 * x);
                             audio.play({
-                                position:position
+                                position: position
                             });
-                        }); 
-
-                        updateCache();
+                        });
                     },
                     onfinish: function () {
                         var next = $('#CurrentPlaylistContainer tr.playing').next();
                         changeTrack(next);
                     }
                 });
-            }
-            soundManager.stopAll()
-            audio.play();
-            
+                audio.play('audio');
+            });
+
             $('table.songlist tr.song').removeClass('playing');
             $(el).addClass('playing');
             $('#PlayTrack').find('img').attr('src', 'images/pause_24x32.png');
             $('#PlayTrack').addClass('playing');
-            if(inCache){
-                updateCache();
-            }
             scrobbleSong(false);
             scrobbled = false;
 
             if ($.cookie('EnableNotifications')) {
-                showNotification(baseURL + '/getCoverArt.view?v=' + version + '&c=' + applicationName + '&f=jsonp&size=50&id=' + coverart, toHTML.un(title), toHTML.un(artist + ' - ' + album));
+                showNotification(coverartSrc, toHTML.un(title), toHTML.un(artist + ' - ' + album));
             }
             if ($.cookie('ScrollTitle')) {
                 scrollTitle(toHTML.un(artist) + ' - ' + toHTML.un(title));
@@ -147,89 +133,6 @@ function playSong(el, songid, albumid) {
         }
     });
 }
-
-function updateCache(){
-    var track = $('#CurrentPlaylistContainer tr.playing');
-    var temp_cache = new Array();
-    var no_found_track = new Array();
-
-    for(i=0;i<cacheSize;i++){
-        track = track.next();
-        find = false;
-        $.each(cache, function (j) {
-
-            if(cache[j]['songid'] == track.attr('childid') && track.attr('childid')!= undefined && cache[j]['complete'] == 1){
-                temp_cache.push(cache[j]);
-                find = true;
-            }
-        }); 
-        
-        if(!find && track.attr('childid')!= undefined){
-            no_found_track.push(track);
-        }
-        
-    }
-    
-    for(i=0;i<temp_cache.length;i++){
-        cache[i] = temp_cache[i];
-    }
-    setCache(no_found_track,temp_cache.length,0);
-}
-
-
-function setCache(list_track,numCache,current){
-    track = list_track[current];
-    if(track.attr('childid') != undefined){   
-        if(!$.isArray(cache[numCache])){
-            cache[numCache] = new Array();
-        }
-        cache[numCache]['songid'] =  track.attr('childid');
-        cache[numCache]['complete'] = 0;
-        var salt = Math.floor(Math.random() * 100000);
-        if (cache[numCache]['song']) {
-            soundManager.destroySound(cache[numCache]['songid']);
-        }
-        cache[numCache]['song'] = soundManager.createSound({
-            id: cache[numCache]['songid'],
-            url: baseURL + '/stream.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&id=' + cache[numCache]['songid'] + '&maxBitRate='+ maxbit + '&salt=' + salt,
-            whileplaying: function () {
-                var percent = this.position / this.duration;
-                var scrubber = $('#audio_wrapper0').find(".scrubber");
-                var progress = $('#audio_wrapper0').find(".progress");
-                progress.css('width', (scrubber.get(0).offsetWidth * percent) + 'px');
-
-                var played = $('#audio_wrapper0').find(".played");
-                var p = (this.duration / 1000) * percent,
-                m = Math.floor(p / 60),
-                s = Math.floor(p % 60);
-                played.html((m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s);
-
-                // Scrobble song once percentage is reached
-                if (!scrobbled && p > 30 && (percent > 0.5 || p > 480)) {
-                    scrobbleSong(true);
-                }
-            },
-            onload: function () {
-                var dp = this.duration / 1000,
-                dm = Math.floor(dp / 60),
-                ds = Math.floor(dp % 60);
-                cache[numCache]['dp'] = dp;
-                cache[numCache]['ds'] = ds;
-                cache[numCache]['dm'] = dm;
-                cache[numCache]['complete'] = 1;
-                if((numCache+1)<cacheSize && current<list_track.length){
-                    setCache(list_track,(numCache+1),current+1);
-                }
-            },
-            onfinish: function () {
-                var next = $('#CurrentPlaylistContainer tr.playing').next();
-                changeTrack(next);
-            }
-        });
-        cache[numCache]['song'].load();
-    }
-}
-
 function scrobbleSong(submission) {
     var songid = $('#songdetails_song').attr('childid');
     $.ajax({
@@ -247,20 +150,32 @@ function scrobbleSong(submission) {
         }
     });
 }
-
-
+function rateSong(songid, rating) {
+    $.ajax({
+        url: baseURL + '/setRating.view?u=' + username + '&p=' + passwordenc + '&v=' + version + '&c=' + applicationName + '&f=jsonp&id=' + songid + "&rating=" + rating,
+        method: 'GET',
+        dataType: 'jsonp',
+        timeout: 10000,
+        beforeSend: function (req) {
+            req.setRequestHeader('Authorization', auth);
+        },
+        success: function () {
+            updateMessage('Rating Updated!');
+        }
+    });
+}
 function playPauseSong() {
     var el = '#PlayTrack';
     if ($(el).hasClass('playing')) {
         $(el).find('img').attr('src', 'images/play_24x32.png');
         $(el).removeClass('playing');
         $(el).addClass('paused');
-        audio.pause();
+        soundManager.pause('audio');
     } else if ($(el).hasClass('paused')) {
         $(el).find('img').attr('src', 'images/pause_24x32.png');
         $(el).removeClass('paused');
         $(el).addClass('playing');
-        audio.resume();
+        soundManager.resume('audio');
     } else {
         // Start playing song
         var play = $('#CurrentPlaylistContainer tr.selected').first();
@@ -283,8 +198,6 @@ function changeTrack(next) {
         return false;
     }
 }
-
-
 function autoPlay() {
     var firstsong = $('#CurrentPlaylistContainer tr.song:first');
     var songid = $(firstsong).attr('childid');
