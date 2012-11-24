@@ -1,6 +1,6 @@
 <?php
 OCP\User::checkAdminUser();
-OCp\Util::addScript( "subphonic", "admin" );
+OCP\Util::addScript( "subphonic", "admin" );
 
 $tmpl = new OCP\Template('subphonic', 'settings');
 
