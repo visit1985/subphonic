@@ -1,5 +1,5 @@
 <?php
-OCP\Util::checkAdminUser();
+OCP\User::checkAdminUser();
 
 if(isset($_POST['addr_subsonic'])) OCP\Config::setAppValue( 'subphonic','addr_subsonic', $_POST['addr_subsonic'] );
 if(isset($_POST['user_subsonic'])) OCP\Config::setAppValue( 'subphonic','user_subsonic', $_POST['user_subsonic'] );
