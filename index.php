@@ -4,9 +4,7 @@
  *
  * @author zoic21
  * @copyright 2012 zoic21
- *
- * @author Michael Göhler
- * @copyright 2012 Michael Göhler <somebody.here@gmx.de>
+ * @copyright 2013 visit1985 <somebody.here@gmx.de>
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -23,40 +21,27 @@
  * 
  */
 
-OCP\User::checkLoggedIn();
-OCP\App::checkAppEnabled('subphonic');
-OCP\App::setActiveNavigationEntry('subphonic');
+\OCP\User::checkLoggedIn();
+\OCP\App::checkAppEnabled('subphonic');
 
-$tmpl = new OCP\Template('subphonic', 'frame', 'user');
+$tmpl = new \OCP\Template('subphonic', 'frame', 'user');
 
-$addr = OCP\Util::linkToAbsolute('subphonic', 'mini/index.html');
+$addr = \OCP\Util::linkToAbsolute('subphonic', 'minisub/index.html');
 $tmpl->assign('addr', $addr);
 
-$url = OCP\Config::getAppValue('subphonic', 'addr_subsonic');
+$url = \OCP\Config::getAppValue('subphonic', 'addr_subsonic');
 $url = str_replace('localhost', $_SERVER['REMOTE_ADDR'], $url);
 $url = str_replace('127.0.0.1', $_SERVER['REMOTE_ADDR'], $url);
 $tmpl->assign('url', $url);
 
-$user = OCP\Config::getAppValue('subphonic', 'user_subsonic');
+$user = \OCP\Config::getAppValue('subphonic', 'user_subsonic');
 $tmpl->assign('user', $user);
 
-$pass = OCP\Config::getAppValue('subphonic', 'pass_subsonic');
+$pass = \OCP\Config::getAppValue('subphonic', 'pass_subsonic');
 $tmpl->assign('pass', $pass);
 
-$lang = OCP\Config::getUserValue($_SESSION['user_id'], 'core', 'lang');
+$lang = \OCP\Config::getUserValue($_SESSION['user_id'], 'core', 'lang');
 $tmpl->assign('lang', $lang);
-
-$urlH = OCP\Config::getAppValue('subphonic', 'addr_headphones');
-$tmpl->assign('urlH', $urlH);
-
-$userH = OCP\Config::getAppValue('subphonic', 'user_headphones');
-$tmpl->assign('userH', $userH);
-
-$passH = OCP\Config::getAppValue('subphonic', 'pass_headphones');
-$tmpl->assign('passH', $passH);
-
-$apikeyH = OCP\Config::getAppValue('subphonic', 'apikey_headphones');
-$tmpl->assign('apikeyH', $apikeyH);
 
 $tmpl->printPage();
 ?>

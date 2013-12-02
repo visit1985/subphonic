@@ -153,7 +153,10 @@ function playSong(el, songid, albumid, title, artist, album, coverart, rating, s
                     var next = $('#CurrentPlaylistContainer tr.playing').next();
                     if (!changeTrack(next)) {
                         if (getCookie('AutoPilot')) {
-                        getRandomSongList('autoplayappend', '#CurrentPlaylistContainer tbody', '', '');
+                            getRandomSongList('autoplayappend', '#CurrentPlaylistContainer tbody', '', '');
+                        } else {
+                            next = $('#CurrentPlaylistContainer tr.song:first');
+                            changeTrack(next);
                         }
                     }
                 }

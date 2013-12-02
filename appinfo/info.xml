@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <info>
-	<id>subphonic</id>
-	<name>Subphonic</name>
-	<description>
-		Subphonic lets you play music from subsonic in owncloud.<br /><br />
-		Thanks to:<br />
-		tsquillario for MiniSub (https://github.com/tsquillario/MiniSub),<br />
-		Sindre for Subsonic (http://www.subsonic.org)<br /><br />
-        </description>
-	<version>2.0</version>
-	<licence>AGPL</licence>
-	<author>Zoic21 and visit1985</author>
-	<require>4.5</require>
+    <id>subphonic</id>
+    <name>Subphonic</name>
+    <description>
+        Subphonic lets you play music from subsonic in owncloud.<br /><br />
+        Thanks to:<br />
+        tsquillario for MiniSub (https://github.com/tsquillario/MiniSub),<br />
+        Sindre for Subsonic (http://www.subsonic.org)<br /><br />
+    </description>
+    <version>2.1</version>
+    <licence>AGPL</licence>
+    <author>zoic21, visit1985</author>
+    <require>5.0</require>
 </info>
