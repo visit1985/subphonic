@@ -3,13 +3,14 @@
     <id>subphonic</id>
     <name>Subphonic</name>
     <description>
-        Subphonic lets you play music from subsonic in owncloud.<br /><br />
-        Thanks to:<br />
-        tsquillario for MiniSub (https://github.com/tsquillario/MiniSub),<br />
-        Sindre for Subsonic (http://www.subsonic.org)<br /><br />
+        Lets you listen to music from Subsonic in ownCloud.
+        Credits go to
+        tsquillario for MiniSub (https://github.com/tsquillario/Jamstash)
+        and
+        Sindre for Subsonic (http://www.subsonic.org)
+        .
     </description>
-    <version>2.1</version>
     <licence>AGPL</licence>
     <author>zoic21, visit1985</author>
-    <require>5.0</require>
+    <requiremin>7.0</requiremin>
 </info>

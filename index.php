@@ -23,6 +23,7 @@
 
 \OCP\User::checkLoggedIn();
 \OCP\App::checkAppEnabled('subphonic');
+\OCP\App::setActiveNavigationEntry('subphonic');
 
 $tmpl = new \OCP\Template('subphonic', 'frame', 'user');
 

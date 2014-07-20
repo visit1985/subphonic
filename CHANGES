@@ -1,3 +1,8 @@
+2014-07-20  visit1985
+    * upgrade to 7.0
+    * support for ownClouds new drop-down menu
+    * iframe resizing fix
+
 2013-12-02  visit1985
     * upgrade to 5.0
     * added index route
