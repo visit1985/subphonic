@@ -38,7 +38,7 @@ $(window).resize(function () {
 });
 function resizeContent() {
     var screenwidth = $(window).width();
-    $('.tabcontent').css({ 'height': (($(window).height() - 125)) + 'px' });
+    $('.tabcontent').css({ 'height': (($(window).height() - 120)) + 'px' });
     $('.smsection').css({ 'height': (($(window).height() - 168)) + 'px' });
     var smheight = $('.smsection').height();
     var smwidth = $('.smsection').width();
