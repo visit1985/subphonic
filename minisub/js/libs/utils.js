@@ -267,23 +267,23 @@ function scrollTitle(text) {
 }
 // HTML5
 function requestPermissionIfRequired() {
-    if (!hasNotificationPermission() && (window.webkitNotifications)) {
-        window.webkitNotifications.requestPermission();
+    if (!hasNotificationPermission()) {
+        window.Notification.requestPermission();
     }
 }
 function hasNotificationPermission() {
-    return !!(window.webkitNotifications) && (window.webkitNotifications.checkPermission() == 0);
+    return (('Notification' in window) && (Notification.permission === 'granted'));
 }
 var notifications = new Array();
 function showNotification(pic, title, text, type, bind) {
     if (hasNotificationPermission()) {
         //closeAllNotifications()
         var popup;
-        if (type == 'text') {
-            popup = window.webkitNotifications.createNotification(pic, title, text);
-        } else if (type == 'html') {
-            popup = window.webkitNotifications.createHTMLNotification(text);
-        }
+		popup = new Notification(title, {
+			'body': text,
+			'icon' : pic
+		});
+
         if (bind = '#NextTrack') {
             popup.addEventListener('click', function () {
                 $(bind).click();
@@ -291,8 +291,8 @@ function showNotification(pic, title, text, type, bind) {
         }
         notifications.push(popup);
         setTimeout(function (notWin) {
-            notWin.cancel();
-        }, 20000, popup);
+            notWin.close();
+        }, 10000, popup);
         popup.show();
     } else {
         console.log("showNotification: No Permission");
@@ -300,7 +300,7 @@ function showNotification(pic, title, text, type, bind) {
 }
 function closeAllNotifications() {
     for (notification in notifications) {
-        notifications[notification].cancel();
+        notifications[notification].close();
     }
 }
 function browserStorageCheck() {
